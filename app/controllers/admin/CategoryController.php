@@ -31,6 +31,10 @@ class CategoryController extends BaseController {
 			$tmp[] = Category::where('parent_id','=',$v->id)->count();
 		}
 		$data = compact("result", "tmp");
+		// echo '<pre>';
+		// print_r($data);
+		// echo '</pre>';
+		// exit;
 		$this->layout->content = View::make('admin.category.index',['title'=>'Danh mục sản phẩm'])->with('data',$data);
 	}
 	public function postCreate(){
@@ -51,6 +55,23 @@ class CategoryController extends BaseController {
 	    $banner->icon = null;
 	    $banner->save();
 	    return Redirect::to('admin/category')->with('message', 'Tạo thành công!');
+	}
+	public function getDelete($id = null){
+		$data = Category::with('cate')->where('id',$id);
+		foreach($data->get() as $value){
+			if (count($value->cate) != 0){
+				foreach($value->cate as $k => $v){
+					$category = Category::find($v->id);
+					$data_img = Product::where('category_id',$v->id)->get();
+					foreach($data_img as $i => $j){
+						Image::delete_img($j->id);
+					}
+					$category->delete();
+				}
+			}
+		$data->delete();	
+		}
+		return Redirect::to('admin/category')->with('message', 'Xóa thành công!');
 	}
 
 }

@@ -37,7 +37,9 @@ Route::group(['prefix'=>'/admin'],function(){
  	Route::get('/blocks/delete/{id}',array('as'=>'delete.block','uses'=>'BlocksController@delete'));
  	Route::controller('/category','CategoryController');
 	Route::controller('/product','ProductController');
-
+	Route::controller('/order','OrdersController');
+    Route::controller('/comment','CommentController');
+    Route::controller('/news','NewsController');
 });
 
 

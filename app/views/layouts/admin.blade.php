@@ -330,7 +330,7 @@
               </ul>
             </li>
             <li class="header">Dữ liệu</li>
-            <li class="treeview <?php if(Request::segment(2) == 'category' || Request::segment(2) == 'product') echo 'active';?>" >
+            <li class="treeview <?php if(Request::segment(2) == 'category' || Request::segment(2) == 'product' ) echo 'active';?>" >
               <a href="#">
                <i class="fa fa-briefcase"></i>
                 <span>Sản phẩm</span>
@@ -341,28 +341,23 @@
                 <li><a href="{{ URL::to('admin/product/')}}"><i class="fa fa-circle-o"></i> Sản phẩm</a></li>
               </ul>
             </li>
-            <li class="treeview">
+            <li class="treeview <?php if(Request::segment(2) == 'order' || Request::segment(2) == 'comment' ) echo 'active';?>">
               <a href="#">
                 <i class="fa fa-shopping-cart"></i>
                 <span>Bán hàng</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="pages/UI/general.html"><i class="fa fa-calendar-o"></i> Đặt hàng</a></li>
-                <li><a href="pages/UI/icons.html"><i class="fa fa-comment-o"></i> Phản hồi</a></li>
+                <li><a href="{{ URL::to('admin/order/')}}"><i class="fa fa-calendar-o"></i> Đặt hàng</a></li>
+                <li><a href="{{ URL::to('admin/comment/')}}"><i class="fa fa-comment-o"></i> Phản hồi</a></li>
                 <li><a href="pages/UI/buttons.html"><i class="fa fa-user"></i> Khách hàng</a></li>
               </ul>
             </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-edit"></i> <span>Tin tức</span>
-                <i class="fa fa-angle-left pull-right"></i>
+            <li class="treeview <?php if(Request::segment(2) == 'news'){echo 'active';}?>">
+              <a href="{{ URL::to('admin/news')}}">
+                <i class="fa fa-book"></i>
+                <span>Tin tức</span>
               </a>
-              <ul class="treeview-menu">
-                <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
-                <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-                <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
-              </ul>
             </li>
           </ul>
         </section>
@@ -563,8 +558,11 @@
     </script> 
      <script>
       $(document).ready(function(){
+        $('.rm-text').contents().filter(function(){
+          return this.nodeType == Node.TEXT_NODE;
+        }).remove();     
         $("#addColor").click(function(){
-          $(this).parent().append('<p><input type="text" class="form-control" name="color[]" placeholder="Nhập mã màu"></p>');
+          $(this).parent().append('<p><input type="text" class="form-control" id="mycolor" name="color[]" placeholder="Nhập mã màu"></p>');
         });
        $("#upload").change(function() {
            var inp = document.getElementById('upload');

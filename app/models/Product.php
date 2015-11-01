@@ -27,7 +27,11 @@ class Product extends Eloquent  {
         return $this->hasMany('Color');
     }
 
-    
+    public  function comment()
+    {
+        return $this->hasMany('Comment')->where('parent_id','0');
+    }
+
     public function delete()
     {
         // delete all related photos 

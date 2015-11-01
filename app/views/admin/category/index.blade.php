@@ -34,7 +34,7 @@
  --><!--                     <img class="img-circle" src="{{ URL::asset('public/css/dist/img/user7-128x128.jpg')}}" alt="User Avatar">
  -->                  </div><!-- /.widget-user-image -->
                   <h3 class="widget-user-username"><?php echo $v->name;?></h3>
-                  <h5 class="widget-user-desc">Lead Developer</h5>
+                  <h5 class="widget-user-desc">Danh mục cha</h5>
                 </div>
                 <div class="box-footer no-padding">
                   <ul class="nav nav-stacked">
@@ -67,6 +67,8 @@
                     <li><a href="#">Số sản phẩm <span class="pull-right badge bg-aqua">5</span></a></li>
                     <li><a href="#">Sản phẩm khuyến mãi <span class="pull-right badge bg-green">12</span></a></li>
                     <li><a href="#">Sản phẩm giảm giá <span class="pull-right badge bg-red">842</span></a></li>
+                    <li><a href="javascript:void(0)" onclick="redirect('{{ URL::to('admin/category/delete', $v->id) }}')">Xóa danh mục  <i class="pull-right fa fa-trash fa-1x"></i></a></li>
+
                   </ul>
                 </div>
               </div><!-- /.widget-user -->
@@ -104,3 +106,13 @@
   </div>
 </div>
 
+<script type="text/javascript">
+  function redirect(data){
+    if (confirm("Các dữ liệu liên quan sẽ bị xóa , bạn chắc chắn xóa không ?") == true) {
+       window.location.href = data;
+    } else {
+       return false;
+    }
+
+  }
+</script>

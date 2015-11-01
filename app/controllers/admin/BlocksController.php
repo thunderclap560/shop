@@ -43,6 +43,10 @@ class BlocksController extends BaseController {
 
 	public function delete($id=null){
 		$data = Block::find($id);
+		$image_old = $data->name;
+		$destinationPath = public_path().'/upload/image/';			
+		$path = realpath($destinationPath . $image_old);
+		if(file_exists($path) && !empty($image_old)) unlink($path);
 		$data->delete();
 		return Redirect::to('admin/blocks')->with('message', 'Xóa hình thành công!');
 	}

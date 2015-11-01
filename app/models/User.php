@@ -30,4 +30,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     'password_confirmation'=>'required|alpha_num|between:6,12'
     );
 
+    public function orders()
+    {
+        return $this->hasMany('Order');
+    }
+
+    
+
 }
