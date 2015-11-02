@@ -4,12 +4,14 @@
 	<div class="col-md-12">
 		 <div class="box box-primary">
                 <div class="box-header with-border">
-                  <h3 class="box-title">{{ $title }}</h3>
+                  <h1 class="box-title">{{ $title }}</h1>
+                            @include('layouts.common.thumb')
+
                 </div><!-- /.box-header -->
                 <div class="row">
                   <div class="box-header">
                   <div class="col-md-2">
-                    <button class="btn btn-block btn-success" data-toggle="modal" data-target="#addCategory">Thêm danh mục </button>
+                    <button class="btn btn-block btn-success" data-toggle="modal" data-target="#addCategory">Thêm lĩnh vực </button>
                   </div>
                 <div class="col-md-10">
                     @if(Session::has('message'))          
@@ -34,7 +36,7 @@
  --><!--                     <img class="img-circle" src="{{ URL::asset('public/css/dist/img/user7-128x128.jpg')}}" alt="User Avatar">
  -->                  </div><!-- /.widget-user-image -->
                   <h3 class="widget-user-username"><?php echo $v->name;?></h3>
-                  <h5 class="widget-user-desc">Danh mục cha</h5>
+                  <h5 class="widget-user-desc">Lĩnh vực</h5>
                 </div>
                 <div class="box-footer no-padding">
                   <ul class="nav nav-stacked">
@@ -63,12 +65,35 @@
                           </div>
                         </div>                     
                     </li>
-                    <li><a href="#">Số loại danh mục con <span class="pull-right badge bg-blue"><?php echo $data['tmp'][$k];?></span></a></li>
-                    <li><a href="#">Số sản phẩm <span class="pull-right badge bg-aqua">5</span></a></li>
-                    <li><a href="#">Sản phẩm khuyến mãi <span class="pull-right badge bg-green">12</span></a></li>
-                    <li><a href="#">Sản phẩm giảm giá <span class="pull-right badge bg-red">842</span></a></li>
+                    <li><a href="{{ URL::to('admin/category/child/'.$v->id) }}">Tổng danh mục con <span class="pull-right badge bg-blue"><?php echo $data['tmp'][$k];?></span></a></li>
+                    <li><a href="#">Tổng sản phẩm <span class="pull-right badge bg-blue"><?php if (empty($data['product'][$v->id])) {echo 0;}else{echo $data['product'][$v->id];}?></span></a></li>
+                    <li><a href="javascript:void(0)" data-toggle="modal" data-target="#edit_cate{{$v->id}}" >Sửa danh mục  <i class="pull-right fa fa-edit fa-1x"></i></a></li>
                     <li><a href="javascript:void(0)" onclick="redirect('{{ URL::to('admin/category/delete', $v->id) }}')">Xóa danh mục  <i class="pull-right fa fa-trash fa-1x"></i></a></li>
-
+                     <!-- Modal edit -->
+                        <div class="modal fade" id="edit_cate{{$v->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel"><a href="">{{ $v->name }} >> Sửa danh mục </a></h4>
+                              </div>
+                              <div class="modal-body">
+                                {{ Form::model($v,array('url'=>array('admin/category/edit',$v->id), 'class'=>'form-signup')) }}                 
+                                <p>{{ Form::text('name', null, array('class'=>'form-control', 'placeholder'=>'Nhập tên danh mục ','required')) }}</p>
+                                <p>{{ Form::text('color', null, array('class'=>'form-control','placeholder'=>'Nhập mã màu','required')) }}
+<!--                                   <input class="form-control" id="mycolor" name="color" placeholder="Chọn màu" />
+ -->                                </p>
+                                <p >{{ Form::text('icon', null, array('class'=>'form-control', 'placeholder'=>'Ex: <i class="fa fa-amazon"></i>')) }} </p>
+                                <p class="help-block"><i>Xem danh sách <a href="http://fortawesome.github.io/Font-Awesome/icons/" target="_blank">tại đây</a></i></p>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">OK </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                {{ Form::close() }}
+                              </div>
+                            </div>
+                          </div>
+                        </div>   
                   </ul>
                 </div>
               </div><!-- /.widget-user -->
@@ -91,8 +116,7 @@
       <div class="modal-body">
         {{ Form::open(array('url'=>'admin/category/create', 'class'=>'form-signup')) }}                 
         <p>{{ Form::text('name', null, array('class'=>'form-control', 'placeholder'=>'Nhập tên danh mục')) }}</p>
-                <p><input class="form-control" id="mycolor" name="color" placeholder="Chọn màu" /></p>
-
+        <p><input class="form-control" id="mycolor" name="color" placeholder="Chọn màu" /></p>
         <p >{{ Form::text('icon', null, array('class'=>'form-control', 'placeholder'=>'Ex: <i class="fa fa-amazon"></i>')) }} </p>
         <p class="help-block"><i>Xem danh sách <a href="http://fortawesome.github.io/Font-Awesome/icons/" target="_blank">tại đây</a></i></p>
         {{ Form::hidden('parent_id', 0, array('class'=>'form-control colorPicker evo-cp0', 'placeholder'=>'Nhập tên danh mục')) }} 

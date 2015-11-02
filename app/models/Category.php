@@ -5,9 +5,13 @@ class Category extends Eloquent  {
 	public $timestamps = false;
 
 	// public static $rules = array(
-	// 	'name'=>'required',
-	// 	'parent_id'=>'required'
-	// 	);
+	// 'name'=>'required',
+	// 'parent_id'=>'required'
+	// );
+    public static $rules_add = array(
+    'name'=>'required',
+    'parent_id'=>'required'
+    );
 
 	public function products()
     {
@@ -23,9 +27,15 @@ class Category extends Eloquent  {
         return $this->hasManyThrough('Image','Product');
     }
 
+    public function colors()
+    {
+        return $this->hasManyThrough('Color','Product');
+    }
+
     public function delete()
     {
         $this->posts()->delete();
+        $this->colors()->delete();
        $this->products()->where('category_id',$this->id)->delete();
        parent::delete();
     }

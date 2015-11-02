@@ -337,7 +337,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{ URL::to('admin/category/')}}"><i class="fa fa-circle-o"></i> Danh mục</a></li>
+                <li><a href="{{ URL::to('admin/category/')}}"><i class="fa fa-circle-o"></i> Lĩnh vực</a></li>
+                <li><a href="{{ URL::to('admin/category/list-all')}}"><i class="fa fa-circle-o"></i> Danh mục</a></li>
                 <li><a href="{{ URL::to('admin/product/')}}"><i class="fa fa-circle-o"></i> Sản phẩm</a></li>
               </ul>
             </li>
@@ -370,7 +371,7 @@
         <div class="pull-right hidden-xs">
           
         </div>
-        <strong>Copyright &copy; 2014-2015 <a href="">Admin Cpanel</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2014-2015 <a href="">Thunder Clap</a>.</strong> All rights reserved.
       </footer>
 
       <!-- Control Sidebar -->
@@ -611,7 +612,7 @@
         $('#example2').DataTable({
           "paging": true,
           "lengthChange": false,
-          "searching": false,
+          "searching": true,
           "ordering": true,
           "info": true,
           "autoWidth": false
