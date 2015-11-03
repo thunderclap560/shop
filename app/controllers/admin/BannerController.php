@@ -10,7 +10,7 @@ class BannerController extends BaseController {
 	public function index(){
 
 		$data = Banners::where('parent_id','=',0)->get();
-		$this->layout->content = View::make('admin.banner',['title'=>'Quản lí hình ảnh danh mục khuyến mãi'])->withData($data);
+		$this->layout->content = View::make('admin.banner',['title'=>'Blocks khuyến mãi'])->withData($data);
 	}
 	public function create(){
 		$validator = Validator::make(Input::all(), Banners::$rules);
@@ -56,8 +56,8 @@ class BannerController extends BaseController {
 	}
 	public function view($id = null){
 			$data = Banners::where('parent_id','=',$id)->get();
-
-			$this->layout->content = View::make('admin.banner_view',['title'=>'Danh sách hình ảnh'])->withData($data);
+			$data2 = Banners::find($id);
+			$this->layout->content = View::make('admin.banner_view',['title'=>'Danh sách hình ảnh'])->withData($data)->with('data2',$data2);
 	}
 	public function upload($id = null){
 			$files = Input::file('images');

@@ -6,6 +6,21 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">{{ $title }}</h3>
                 </div><!-- /.box-header -->
+                 <?php 
+              Breadcrumbs::register('home', function($breadcrumbs) {
+                $breadcrumbs->push('Home', URL::to('/admin/'));
+              });
+              Breadcrumbs::register('child', function($breadcrumbs) {
+                $breadcrumbs->parent('home');
+                $breadcrumbs->push('Danh sách block khuyến mãi ', URL::to('/admin/'.Request::segment(2)));
+              });
+              Breadcrumbs::register('child-child', function($breadcrumbs,$data) {
+                $breadcrumbs->parent('child');
+                $breadcrumbs->push($data->name, URL::to('/admin/'.Request::segment(2)));
+              });
+              echo Breadcrumbs::render('child-child',$data);
+          ?>
+
                  @if(Session::has('message'))					
 					           <div class="alert alert-success alert-dismissable" style="margin-left:20px;margin-right:20px;">
                     	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

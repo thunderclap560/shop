@@ -32,6 +32,8 @@ class ProductController extends BaseController {
 			$data = Product::find($id);
 			Image::delete_img($id);
 			$data->image()->delete();
+			$data->color()->delete();
+			$data->order()->delete();
 			$data->delete();
 			return Redirect::to('admin/product')->with('message', 'Xóa sản phẩm thành công!');	
 	}

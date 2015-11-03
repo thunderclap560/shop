@@ -40,6 +40,7 @@ Route::group(['prefix'=>'/admin'],function(){
 	Route::controller('/order','OrdersController');
     Route::controller('/comment','CommentController');
     Route::controller('/news','NewsController');
+    Route::controller('/coupon','CouponController');
 });
 
 

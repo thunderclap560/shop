@@ -5,7 +5,16 @@
             {{ $title }}
             <small></small>
           </h1>
-          @include('layouts.common.thumb')
+          <?php 
+              Breadcrumbs::register('home', function($breadcrumbs) {
+                $breadcrumbs->push('Home', URL::to('/admin/'));
+              });
+              Breadcrumbs::register('child', function($breadcrumbs) {
+                $breadcrumbs->parent('home');
+                $breadcrumbs->push('Danh sách block khuyến mãi ', URL::to('/admin/'.Request::segment(2)));
+              });
+              echo Breadcrumbs::render('child');
+          ?>
         </section>
        <section class="content">
           <div class="row">
@@ -13,7 +22,7 @@
               <div class="box">
                 <div class="col-xs-2">
                 <div class="box-header">
-                  <button class="btn btn-block btn-success" data-toggle="modal" data-target="#myModal">Thêm danh mục </button>
+                  <button class="btn btn-block btn-success" data-toggle="modal" data-target="#myModal">Thêm blocks </button>
                 </div><!-- /.box-header -->
               </div>
               <div class="col-xs-10">

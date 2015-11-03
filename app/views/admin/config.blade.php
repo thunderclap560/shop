@@ -6,9 +6,11 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">{{ $title }}</h3>
                 </div><!-- /.box-header -->
+                @include('layouts.common.thumb')
+
                  @if(Session::has('message'))
-					
-					<div class="alert alert-success alert-dismissable" style="margin-left:20px;margin-right:20px;">
+
+					     <div class="alert alert-success alert-dismissable" style="margin-left:20px;margin-right:20px;">
                     	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                    		</h4>
                     	{{ Session::get('message') }}

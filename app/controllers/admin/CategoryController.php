@@ -21,12 +21,16 @@ class CategoryController extends BaseController {
 				$product[$v->id][] = Product::where('category_id','=',$j->id)->count();				
 			}
 		}
+		if($product){
+
+
 		foreach($product as $n => $m){
 			for($i=0; $i<count($m);$i++){
 				$num += $m[$i]; 				
 			}
 			$product[$n] = $num;
 			$num = "";
+		}
 		}
 		$data = compact("result", "tmp","product");		
 		// echo '<pre>';
@@ -85,11 +89,10 @@ class CategoryController extends BaseController {
 		$this->layout->content = View::make('admin.category.list',['title'=>'Danh mục sản phẩm'])->with('data',$data)->with('menu','Danh sách danh mục sản phẩm');
 	}
 	public function getChild($id=null){
-		$data = Category::where('parent_id',$id)->get();
+		$data = Category::with('products')->where('parent_id', $id)->get();
 		$this->layout->content = View::make('admin.category.child',['title'=>'Danh mục sản phẩm'])
 		->with('data',$data)
-		->with('menu','Danh sách chuyên mục')
-		->with('parent',Category::find($id)->name);
+		->with('parent',Category::find($id));
 	}
 	public function postEditChild($id = null){
 		$data = Category::find($id);
@@ -103,9 +106,13 @@ class CategoryController extends BaseController {
 		$data->save();
 		return Redirect::to('admin/category/list-all')->with('message', 'Sửa thành công!');
 	}
-	public function getAddChild(){
+	public function getAddChild($id = null){
 		$data = DB::table('categories')->where('parent_id',0)->lists('name','id');
-		$this->layout->content = View::make('admin.category.add-child',['title'=>'Thêm danh mục'])->with('data',$data);
+		if($id != null) {
+		$this->layout->content = View::make('admin.category.add-child',['title'=>'Thêm danh mục'])->with('data',$data)->with('parent',Category::find($id));	
+		}else{
+		$this->layout->content = View::make('admin.category.add-child',['title'=>'Thêm danh mục'])->with('data',$data);	
+		}
 	}
 	public function postAddChild($id = null){
 		$validator = Validator::make(Input::all(), Category::$rules_add);

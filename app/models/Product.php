@@ -26,6 +26,10 @@ class Product extends Eloquent  {
     {
         return $this->hasMany('Color');
     }
+    public  function order()
+    {
+        return $this->hasMany('Detail');
+    }
 
     public  function comment()
     {
@@ -36,6 +40,8 @@ class Product extends Eloquent  {
     {
         // delete all related photos 
         $this->image()->delete();
+        $this->color()->delete();
+        $this->order()->delete();
         $data = Image::where("product_id", $this->id)->delete();
         return parent::delete();
     }

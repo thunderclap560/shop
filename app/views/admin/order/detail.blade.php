@@ -5,7 +5,21 @@
             {{ $title }}
             <small></small>
           </h1>
-          @include('layouts.common.thumb')
+           <?php 
+            Breadcrumbs::register('home', function($breadcrumbs) {
+                $breadcrumbs->push('Home', URL::to('/admin/'));
+            });
+            Breadcrumbs::register('child', function($breadcrumbs) {
+                $breadcrumbs->parent('home');
+                $breadcrumbs->push('Danh sách đơn hàng', URL::to('/admin/'.Request::segment(2)));
+            });
+            Breadcrumbs::register('category', function($breadcrumbs) {
+                $breadcrumbs->parent('child');
+                $breadcrumbs->push('Chi tiết đơn hàng', URL::to('/admin/'.Request::segment(3)));
+
+            });
+             echo Breadcrumbs::render('category');
+          ?>
         </section>
        <section class="content">
           <div class="row">

@@ -19,7 +19,7 @@ class OrdersController extends BaseController {
 	}
 
 	public function getContact($id=null){
-	$data = Order::with('users')->get();
+	$data = Order::with('users')->where('id',$id)->get();
 	$this->layout->content = View::make('admin.product.contact',['title'=>'Khách đặt hàng'])->with('data',$data);
 	}
 
