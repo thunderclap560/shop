@@ -21,13 +21,14 @@ class CategoryController extends BaseController {
 				$product[$v->id][] = Product::where('category_id','=',$j->id)->count();				
 			}
 		}
+		if($product){
 		foreach($product as $n => $m){
 			for($i=0; $i<count($m);$i++){
 				$num += $m[$i]; 				
 			}
 			$product[$n] = $num;
 			$num = "";
-		}
+		}}
 		$data = compact("result", "tmp","product");		
 		// echo '<pre>';
 		// print_r($data['product']);
@@ -87,9 +88,7 @@ class CategoryController extends BaseController {
 	public function getChild($id=null){
 		$data = Category::where('parent_id',$id)->get();
 		$this->layout->content = View::make('admin.category.child',['title'=>'Danh mục sản phẩm'])
-		->with('data',$data)
-		->with('menu','Danh sách chuyên mục')
-		->with('parent',Category::find($id)->name);
+		->with('data',$data);
 	}
 	public function postEditChild($id = null){
 		$data = Category::find($id);

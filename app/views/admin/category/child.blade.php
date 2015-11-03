@@ -5,21 +5,6 @@
             {{ $title }}
             <small></small>
           </h1>
-          <?php 
-            Breadcrumbs::register('home', function($breadcrumbs) {
-                $breadcrumbs->push('Home', URL::to('/admin/'));
-            });
-            Breadcrumbs::register('category', function($breadcrumbs) {
-                $breadcrumbs->parent('home');
-                $breadcrumbs->push('Chuyên mục ', URL::to('/admin/'.Request::segment(4)));
-            });
-            Breadcrumbs::register('list', function($breadcrumbs) {
-                $breadcrumbs->parent('category');
-                $breadcrumbs->push('Danh sách sản phẩm', URL::to('/admin/'.Request::segment(4)));
-            });
-
-             echo Breadcrumbs::render('list');
-          ?>
            @include('layouts.common.thumb')
           <!-- <ol class="breadcrumb">
             <li><a href="{{URL::to('admin/dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>

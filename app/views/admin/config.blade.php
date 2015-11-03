@@ -5,7 +5,10 @@
 		 <div class="box box-primary">
                 <div class="box-header with-border">
                   <h3 class="box-title">{{ $title }}</h3>
+
                 </div><!-- /.box-header -->
+                          @include('layouts.common.thumb')
+
                  @if(Session::has('message'))
 					
 					<div class="alert alert-success alert-dismissable" style="margin-left:20px;margin-right:20px;">

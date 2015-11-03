@@ -5,9 +5,10 @@
 		 <div class="box box-primary">
                 <div class="box-header with-border">
                   <h1 class="box-title">{{ $title }}</h1>
-                            @include('layouts.common.thumb')
 
                 </div><!-- /.box-header -->
+                                            @include('layouts.common.thumb')
+
                 <div class="row">
                   <div class="box-header">
                   <div class="col-md-2">
