@@ -6,6 +6,23 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">{{ $title }}</h3>
                 </div><!-- /.box-header -->
+                    <?php 
+                  Breadcrumbs::register('home', function($breadcrumbs) {
+                      $breadcrumbs->push('Home', URL::to('/admin/'));
+                  });
+                   Breadcrumbs::register('list', function($breadcrumbs) {
+                      $breadcrumbs->parent('home');
+                      $breadcrumbs->push('Danh sách sản phẩm',URL::to('admin/product'));
+
+                  });
+                  Breadcrumbs::register('category', function($breadcrumbs,$data) {
+                      $breadcrumbs->parent('list');
+                      $breadcrumbs->push($data->name);
+
+                  });
+                 
+                    echo Breadcrumbs::render('category',$data);
+                ?>
                  @if(Session::has('message'))
 					
 					<div class="alert alert-success alert-dismissable" style="margin-left:20px;margin-right:20px;">

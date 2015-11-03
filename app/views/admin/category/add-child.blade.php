@@ -6,8 +6,31 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">{{ $title }}</h3>
                 </div><!-- /.box-header -->
-                                                 @include('layouts.common.thumb')
+                    <?php 
+                  Breadcrumbs::register('home', function($breadcrumbs) {
+                      $breadcrumbs->push('Home', URL::to('/admin/'));
+                  });
+                   Breadcrumbs::register('list', function($breadcrumbs) {
+                      $breadcrumbs->parent('home');
+                      $breadcrumbs->push('Danh sách danh mục sản phẩm',URL::to('admin/category/list-all'));
+                  });
+                  Breadcrumbs::register('category', function($breadcrumbs) {
+                      $breadcrumbs->parent('list');
+                      $breadcrumbs->push('Thêm danh mục');
 
+                  });
+                  $tmp = Request::segment(4);
+                  if($tmp){
+                  Breadcrumbs::register('child', function($breadcrumbs,$parent) {
+                      $breadcrumbs->parent('list');
+                      $breadcrumbs->push($parent->name,URL::to('admin/category/list-all'));
+                  });
+                  echo Breadcrumbs::render('child',$parent);
+                  }else{
+                      echo Breadcrumbs::render('category');
+                  }
+
+                ?>
                  @if(Session::has('message'))
 					
 					<div class="alert alert-success alert-dismissable" style="margin-left:20px;margin-right:20px;">

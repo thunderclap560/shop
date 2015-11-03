@@ -31,8 +31,21 @@
                       <div class="box-header with-border">
                         <h3 class="box-title">{{ $title }}</h3>
                       </div><!-- /.box-header -->
-                       @include('layouts.common.thumb')
-                      <div class="box-header">
+                      <?php 
+                              Breadcrumbs::register('home', function($breadcrumbs) {
+                                $breadcrumbs->push('Home', URL::to('/admin/'));
+                              });
+                              Breadcrumbs::register('child', function($breadcrumbs) {
+                                $breadcrumbs->parent('home');
+                                $breadcrumbs->push('Danh sách block khuyến mãi ', URL::to('/admin/'.Request::segment(2)));
+                              });
+                              Breadcrumbs::register('child-child', function($breadcrumbs,$data2) {
+                                $breadcrumbs->parent('child');
+                                $breadcrumbs->push($data2->name, URL::to('/admin/'.Request::segment(2)));
+                              });
+                              echo Breadcrumbs::render('child-child',$data2);
+                          ?>
+                    <div class="box-header">
                     @if(Session::has('message'))          
                      <ul class="list-group">
                          <li class="list-group-item list-group-item-success" style="color:green"><i class="fa fa-info-circle"></i> {{ Session::get('message') }}</li>

@@ -32,10 +32,16 @@ class Category extends Eloquent  {
         return $this->hasManyThrough('Color','Product');
     }
 
+     public function orders()
+    {
+        return $this->hasManyThrough('Detail','Product');
+    }
+
     public function delete()
     {
         $this->posts()->delete();
         $this->colors()->delete();
+        $this->orders()->delete();
        $this->products()->where('category_id',$this->id)->delete();
        parent::delete();
     }
