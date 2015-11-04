@@ -11,10 +11,8 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+
+
 
 Route::controller('users', 'UsersController');
 
@@ -43,4 +41,4 @@ Route::group(['prefix'=>'/admin'],function(){
     Route::controller('/coupon','CouponController');
 });
 
-
+Route::controller('/','HomeController');

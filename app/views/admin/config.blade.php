@@ -60,7 +60,7 @@
                       <p class="help-block">Hình ảnh logo</p>
                   </div>
                   <div class="col-md-4">
-                    <img src="{{ URL::asset('public/upload/image/'.$data->logo)}}" alt="" class="img-reponsive" style="width:100%">
+                    <img src="{{ URL::asset('public/upload/image/'.$data->logo)}}" alt="" class="img-reponsive">
                   </div>
                   </div>
 					<div class="clearfix"></div>
