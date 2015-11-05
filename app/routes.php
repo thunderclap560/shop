@@ -39,6 +39,7 @@ Route::group(['prefix'=>'/admin'],function(){
     Route::controller('/comment','CommentController');
     Route::controller('/news','NewsController');
     Route::controller('/coupon','CouponController');
+    Route::controller('/adver','AdvertiseController');
 });
 
 Route::controller('/','HomeController');

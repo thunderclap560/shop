@@ -13,7 +13,7 @@
                     <div class="vertical-menu-content is-home">
                         <ul class="vertical-menu-list">
                         	<style>
-								.icon-menu-next i{
+								.icon-menu-next>i{
 									padding-top:10px;
 									width: 30px;
 								}
@@ -175,9 +175,72 @@
                                 <!-- Best-view -->
                                 <div class="tab-panel" id="best-view">
                                    <div class="box-left">
-                                       <div class="banner-img">
-                                            <a href="#"><img src="public/front/assets/data/banner-product1.jpg" alt="Banner Product"></a>
+                                   <div class="deal-product">
+                                            <div class="deal-product-head">
+                                                <h3><span>Deals of The Day</span></h3>
+                                            </div>
+                                            <ul class="owl-carousel" data-items="1" data-nav="true" data-dots="false">
+                                                <li class="deal-product-content">
+                                                    <div class="col-sm-5 deal-product-image">
+                                                        <a href="#"><img src="public/front/assets/data/p54.jpg" alt="Prodcut"></a>
+                                                    </div>
+                                                    <div class="col-sm-7 deal-product-info">
+                                                        <p><a href="#">Top Selling Product 1</a></p>
+                                                        <div class="price">
+                                                            <span class="product-price">$38.95</span>
+                                                            <span class="old-price">$52.00</span>
+                                                            <span  class="sale-price">-15%</span>
+                                                        </div>
+                                                        <div class="show-count-down">
+                                                            <span class="countdown-lastest" data-y="2015" data-m="7" data-d="1" data-h="00" data-i="00" data-s="00"></span>
+                                                        </div>
+                                                        <div class="product-star">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-half-o"></i>
+                                                        </div>
+                                                        <div class="product-desc">
+                                                            Sound performance tuning includes the smallest details like...
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="deal-product-content">
+                                                    <div class="col-sm-5 deal-product-image">
+                                                        <a href="#"><img src="public/front/assets/data/p58.jpg" alt="Prodcut"></a>
+                                                    </div>
+                                                    <div class="col-sm-7 deal-product-info">
+                                                        <p><a href="#">Top Selling Product 2</a></p>
+                                                        <div class="price">
+                                                            <span class="product-price">$38.95</span>
+                                                            <span class="old-price">$52.00</span>
+                                                            <span  class="sale-price">-15%</span>
+                                                        </div>
+                                                        <div class="show-count-down">
+                                                            <span class="countdown-lastest" data-y="2015" data-m="10" data-d="1" data-h="00" data-i="00" data-s="00"></span>
+                                                        </div>
+                                                        <div class="product-star">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-half-o"></i>
+                                                        </div>
+                                                        <div class="product-desc">
+                                                            Sound performance tuning includes the smallest details like...
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
                                         </div>
+                                        <ul class="owl-intab owl-carousel" data-loop="true" data-items="1" data-dots="false" data-nav="true">
+                                            <li><a href="#"><img src="public/front/assets/data/sport1.jpg" alt="Image"></a></li>
+                                            <li><a href="#"><img src="public/front/assets/data/sport1.jpg" alt="Image"></a></li>
+                                        </ul>
+                                       <!-- <div class="banner-img">
+                                            <a href="#"><img src="public/front/assets/data/banner-product1.jpg" alt="Banner Product"></a>
+                                        </div> -->
                                    </div>
                                    <div class="box-right">
                                        <ul class="product-list row">

@@ -160,6 +160,12 @@
                 <span>Tin tức</span>
               </a>
             </li>
+            <li class="treeview <?php if(Request::segment(2) == 'adver'){echo 'active';}?>">
+              <a href="{{ URL::to('admin/adver')}}">
+                <i class="fa fa-bookmark"></i>
+                <span>Quảng Cáo</span>
+              </a>
+            </li>
             
           </ul>
         </section>
