@@ -18,6 +18,16 @@ class Category extends Eloquent  {
         return $this->hasMany('Product');
     }
 
+    public function products_best_view()
+    {
+        return $this->hasMany('Product')->orderBy('view','desc');
+    }
+
+    public function products_order_news()
+    {
+        return $this->hasMany('Product')->orderBy('id','desc');
+    }
+
     public function cate(){
     	return $this->hasMany('Category','parent_id');
     }
