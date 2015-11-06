@@ -10,7 +10,7 @@ class Advertises extends Eloquent  {
 		);
 
 	public function category(){
-		$this->hasMany('Category','advertise_id');
+		return $this->belongsToMany('Category','category_advertise');
 	}
 }
 ?>

@@ -37,6 +37,7 @@
                       <tr>
                         <th>STT</th>
                         <th>Hình Ảnh</th>
+                        <th>Nằm tại</th>
                         <th>URL</th>
                         <th></th>
                       </tr>
@@ -46,11 +47,12 @@
                       <tr>
                         <td><?php echo $k +=1 ;?></td>
                         <td>
-                        <img src="{{ URL::asset('public/upload/image/'.$v->image)}}" alt="" class="img-reponsive">
+                        <img src="{{ URL::asset('public/upload/image/'.$v->image)}}" alt="" class="img-reponsive" width="200">
                         </td>
+                        <td><?php foreach($v->category as $k_category => $v_category){echo $v_category->name .' ';}?></td>
                         <td><?php echo $v->link ;?></td>
                         <td>
-                           <a class="btn btn-app">
+                           <a class="btn btn-app" href="{{URL::to('admin/adver/edit/'.$v->id)}}">
                              <i class="fa fa-edit"></i> Sửa
                           </a>
                           <a class="btn btn-app" onclick="redirect('{{ URL::to('admin/adver/delete', $v->id) }}')">
