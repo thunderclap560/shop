@@ -26,6 +26,7 @@ class HomeController extends BaseController {
         foreach ($categories as $category) {
             $subArr = array();
             $subArr['name'] = $category->name;
+            $subArr['id'] = $category->id;
             if(!$category->products->isEmpty()){
             	$subArr['product'] = $category->products;
             	$subArr['products_best_view'] = $category->products_best_view;
@@ -56,6 +57,11 @@ class HomeController extends BaseController {
    //          echo '</pre>';
    //          exit;
 		$latest = Product::orderBy('id','desc')->get();
+        $data = Advertises::with('category')->get();
+        // echo '<pre>';
+        //     print_r($data);
+        //     echo '</pre>';
+        //     exit;
 		return View::make('hello')->with([
 			'config'=> $this->config,
 			'slide'=>$this->slide,
@@ -65,6 +71,7 @@ class HomeController extends BaseController {
 			'latest'=>$latest,
 			'slide_footer'=>$this->slide_footer,
 			'new'=>$this->news,
+            'data_adver'=>$data
 			]);
 	}
 

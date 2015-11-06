@@ -63,6 +63,7 @@ class AdvertiseController extends BaseController {
 			$data->image = $image_old;
 		}
 		$data->link  = Input::get('link');
+		$data->type = 1 ;
 		$data->save();
 		$data->category()->sync(Input::get('categories'));
 
@@ -81,6 +82,7 @@ class AdvertiseController extends BaseController {
     		$data = new Advertises;
     		$data->image = $imageName;
 		    $data->link  = Input::get('link');
+		    $data->type = 1;
 		    if($data->save()){
 		    	$max_id = DB::table('advertise')->max('id');
 		    	foreach(Input::get('categories') as $k => $v){
