@@ -31,9 +31,10 @@
                       <label for="exampleInputEmail1"></label>
                       {{ Form::text('link', null, ['class' => 'form-control','placeholder'=>'Nhập URL ']) }}
                     </div>
+                    
                     <div class="form-group">
-                      {{ Form::label('category', 'Thuộc danh mục');}}
-                      {{ Form::select('category', $category,$cate,array('class' => 'form-control','multiple'=>'multiple','name'=>'categories[]')) }}
+                      {{ Form::label('category', 'Nằm tại vị trí');}}
+                      {{ Form::select('category',[0=>'Hủy'] + $category,$cate,array('class' => 'form-control','multiple'=>'multiple','name'=>'categories[]')) }}
                     </div>
                   </div><!-- /.box-body -->
 

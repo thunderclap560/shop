@@ -55,9 +55,11 @@
                            <a class="btn btn-app" href="{{URL::to('admin/adver/edit/'.$v->id)}}">
                              <i class="fa fa-edit"></i> Sửa
                           </a>
+                          <?php if($v->parent_id != 1){?>
                           <a class="btn btn-app" onclick="redirect('{{ URL::to('admin/adver/delete', $v->id) }}')">
                              <i class="fa fa-trash"></i> Xóa
                           </a>
+                          <?php }?>
                         </td>
 
                       </tr>

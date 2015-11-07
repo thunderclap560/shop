@@ -381,7 +381,7 @@
                                         </div> -->
                                         <div class="deal-product">
                                             <div class="deal-product-head">
-                                                <h3><span>Sản phẩm khuyến mãi</span></h3>
+                                                <h3><span>Tin khuyến mãi</span></h3>
                                             </div>
                                             <ul class="owl-carousel" data-items="1" data-nav="true" data-dots="false">
                                                 <?php 
@@ -403,9 +403,6 @@
                                                             <span class="old-price">$52.00</span>
                                                             <span  class="sale-price">-15%</span>
                                                         </div>
-                                                        <div class="show-count-down">
-                                                            <span class="countdown-lastest" data-y="2015" data-m="7" data-d="1" data-h="00" data-i="00" data-s="00"></span>
-                                                        </div>
                                                         <div class="product-star">
                                                             <i class="fa fa-star"></i>
                                                             <i class="fa fa-star"></i>
@@ -421,9 +418,14 @@
                                                 <?php  }}?>
                                             </ul>
                                         </div>
-                                        <ul class="owl-intab owl-carousel" data-loop="true" data-items="1" data-dots="false" data-nav="true">
-                                            <li><a href="#"><img src="public/front/assets/data/sport1.jpg" alt="Image"></a></li>
-                                            <li><a href="#"><img src="public/front/assets/data/sport1.jpg" alt="Image"></a></li>
+                                        <?php  
+                                        foreach($data_adver as $child){
+                                            if($child->type == 1 && $child->parent_id == 1){
+                                        ?>
+                                        <ul class="" data-loop="true" data-items="1" data-dots="false" data-nav="true">
+                                        <?php  //if($child->type == 1 && $child->parent_id == 1){?> 
+                                            <li><a href="#"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Image"></a></li>
+                                        <?php }}?>
                                         </ul>
                                                 
                                         <?php  } } }} ?>

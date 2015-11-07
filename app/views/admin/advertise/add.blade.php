@@ -47,10 +47,6 @@
                       {{ Form::label('link', 'Đường dẫn');}}
                       {{ Form::text('link', null, ['class' => 'form-control','placeholder'=>'Nhập địa chỉ']) }}
                     </div>
-                    <div class="form-group">
-                      {{ Form::label('category_id', 'Thuộc danh mục');}}
-                      {{ Form::select('category_id', $categories, null,array('class' => 'form-control','multiple'=>'multiple','name'=>'categories[]')) }}
-                    </div> 
                      <div class="form-group">
                     <button type="submit" class="btn btn-primary">OK</button>
                   </div>

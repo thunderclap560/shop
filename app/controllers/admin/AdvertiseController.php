@@ -63,11 +63,18 @@ class AdvertiseController extends BaseController {
 			$data->image = $image_old;
 		}
 		$data->link  = Input::get('link');
-		$data->type = 1 ;
-		$data->save();
+		if($id == 1)
+		{
+			$data->type = null ;
+			$data->parent_id = 1 ;
+		}else{
+			$data->type = 1 ;
+		}	
+		$data->save();		
 		$data->category()->sync(Input::get('categories'));
-
 		return Redirect::to('admin/adver')->with('message', 'Cập nhật thành công!');
+		
+
 	}
 	public function postAdd(){
 			$validator = Validator::make(Input::all(), Advertises::$rules);
@@ -83,15 +90,7 @@ class AdvertiseController extends BaseController {
     		$data->image = $imageName;
 		    $data->link  = Input::get('link');
 		    $data->type = 1;
-		    if($data->save()){
-		    	$max_id = DB::table('advertise')->max('id');
-		    	foreach(Input::get('categories') as $k => $v){
-		    		$CategoryAdvertise = new CategoryAdvertise;
-		    		$CategoryAdvertise->category_id = $v;
-		    		$CategoryAdvertise->advertises_id = $max_id;
-		    		$CategoryAdvertise->save();
-		    	}
-		    }
+		    $data->save();
 
 		    return Redirect::to('admin/adver')->with('message', 'Thêm hình khuyến mãi thành công!');	
 
