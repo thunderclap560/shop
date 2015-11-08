@@ -223,6 +223,14 @@
 
 <script type="text/javascript" src="{{ URL::asset('public/front/lib/countdown/jquery.countdown.js') }}"></script>
 
+<script type="text/javascript" src="{{ URL::asset('public/front/assets/lib/jquery.elevatezoom.js')}}"></script>
+
+
+<script type="text/javascript" src="{{ URL::asset('public/front/assets/lib/jquery-ui/jquery-ui.min.js')}}"></script>
+
+
+<script type="text/javascript" src="{{ URL::asset('public/front/assets/lib/fancyBox/jquery.fancybox.js')}}"></script>
+
 <script type="text/javascript" src="{{ URL::asset('public/front/assets/js/jquery.actual.min.js') }}"></script>
 
 <script type="text/javascript" src="{{ URL::asset('public/front/assets/js/theme-script.js') }}"></script>

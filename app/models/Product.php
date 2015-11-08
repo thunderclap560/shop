@@ -15,7 +15,7 @@ class Product extends Eloquent  {
 		);
 	public function products()
     {
-        return $this->belongsTo('Category');
+        return $this->belongsTo('Category','category_id');
     }
     public  function image()
     {

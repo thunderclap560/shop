@@ -12,6 +12,7 @@
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/lib/jquery.bxslider/jquery.bxslider.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/lib/owl.carousel/owl.carousel.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/lib/jquery-ui/jquery-ui.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/lib/fancyBox/jquery.fancybox.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/css/animate.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/css/reset.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/css/style.css') }}" />
@@ -29,14 +30,15 @@
 <meta property="og:description" content="{{ $config->desc }}">
 <meta property="og:url" content="http://saokpop.com/">
 </head>
-<body class="home option2">
+<?php $action = Route::currentRouteAction();?>
+<body class="<?php if($action == 'HomeController@getIndex') {echo 'home option2';}else{echo 'product-page right-sidebar';}?>">
 <!-- HEADER -->
 <div id="header" class="header">
     <div class="top-header">
         <div class="container">
             <div class="nav-top-links">
-                <a class="first-item" href="#"><img alt="phone" src="public/front/assets/images/phone.png" />{{ $config->phone }}</a>
-                <a href="mailto:{{ $config->email }}"><img alt="email" src="public/front/assets/images/email.png" />Liên hệ qua email</a>
+                <a class="first-item" href="#"><img alt="phone" src="{{URL::to('public/front/assets/images/phone.png')}}" />{{ $config->phone }}</a>
+                <a href="mailto:{{ $config->email }}"><img alt="email" src="{{URL::to('public/front/assets/images/email.png')}}" />Liên hệ qua email</a>
             </div>
             <div class="currency" style="display:none">
                 <div class="dropdown">
@@ -84,7 +86,11 @@
 </div>
 <!-- end header -->
 <!-- Home slideder-->
+@if ($action == 'HomeController@getIndex')
 @include('layouts.common.slide')
+@else 
+@include('layouts.common.product')
+@endif
 <!-- END Home slideder-->
 @yield('main')
 

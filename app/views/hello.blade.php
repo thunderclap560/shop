@@ -83,7 +83,7 @@
                        <?php foreach($latest as $late){?>
                         <li>
                             <div class="left-block">
-                                <a href="#"><img class="img-responsive" alt="product" src="public/front/assets/data/ld9.jpg" /></a>
+                                <a href="{{URL::to('view/'.$late->id)}}"><img class="img-responsive" alt="product" src="public/front/assets/data/ld9.jpg" /></a>
                                 <div class="quick-view">
                                         <a title="Add to my wishlist" class="heart" href="#"></a>
                                         <a title="Add to compare" class="compare" href="#"></a>

@@ -51,11 +51,6 @@ class HomeController extends BaseController {
 
 	public function getIndex()
 	{
-	
-		 // echo '<pre>';
-   //          print_r($this->slide_footer);
-   //          echo '</pre>';
-   //          exit;
 		$latest = Product::orderBy('id','desc')->get();
         $data = Advertises::with('category')->get();
         // echo '<pre>';
@@ -74,5 +69,23 @@ class HomeController extends BaseController {
             'data_adver'=>$data
 			]);
 	}
+
+    public function getView($id=null){
+        $thumb = Product::with('products')->find($id);
+        $parent_cate = Category::find($thumb->products->parent_id);
+        $thum_off = array();
+        $thum_off[]= $thumb;
+        $thum_off[]= $parent_cate;
+        return View::make('view')->with([
+            'config'=> $this->config,
+            'slide'=>$this->slide,
+            'category'=>$this->category,
+            'menu_home'=>$this->menu_home,
+            'menu'=>$this->menu,
+            'slide_footer'=>$this->slide_footer,
+            'new'=>$this->news,
+            'thum_off'=>$thum_off
+            ]);
+    }
 
 }
