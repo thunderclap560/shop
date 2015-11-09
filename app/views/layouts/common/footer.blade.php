@@ -76,34 +76,34 @@
                     <ul id="trademark-list">
                         <li id="payment-methods">Xác nhận thanh toán: </li>
                         <li>
-                            <a href="#"><img src="public/front/assets/data/trademark-ups.jpg"  alt="ups"/></a>
+                            <a href="#"><img src="{{URL::asset('public/front/assets/data/trademark-ups.jpg')}}"  alt="ups"/></a>
                         </li>
                         <li>
-                            <a href="#"><img src="public/front/assets/data/trademark-qiwi.jpg"  alt="ups"/></a>
+                            <a href="#"><img src="{{URL::asset('public/front/assets/data/trademark-qiwi.jpg')}}"  alt="ups"/></a>
                         </li>
                         <li>
-                            <a href="#"><img src="public/front/assets/data/trademark-wu.jpg"  alt="ups"/></a>
+                            <a href="#"><img src="{{URL::asset('public/front/assets/data/trademark-wu.jpg')}}"  alt="ups"/></a>
                         </li>
                         <li>
-                            <a href="#"><img src="public/front/assets/data/trademark-cn.jpg"  alt="ups"/></a>
+                            <a href="#"><img src="{{URL::asset('public/front/assets/data/trademark-cn.jpg')}}"  alt="ups"/></a>
                         </li>
                         <li>
-                            <a href="#"><img src="public/front/assets/data/trademark-visa.jpg"  alt="ups"/></a>
+                            <a href="#"><img src="{{URL::asset('public/front/assets/data/trademark-visa.jpg')}}"  alt="ups"/></a>
                         </li>
                         <li>
-                            <a href="#"><img src="public/front/assets/data/trademark-mc.jpg"  alt="ups"/></a>
+                            <a href="#"><img src="{{URL::asset('public/front/assets/data/trademark-mc.jpg')}}"  alt="ups"/></a>
                         </li>
                         <li>
-                            <a href="#"><img src="public/front/assets/data/trademark-ems.jpg"  alt="ups"/></a>
+                            <a href="#"><img src="{{URL::asset('public/front/assets/data/trademark-ems.jpg')}}"  alt="ups"/></a>
                         </li>
                         <li>
-                            <a href="#"><img src="public/front/assets/data/trademark-dhl.jpg"  alt="ups"/></a>
+                            <a href="#"><img src="{{URL::asset('public/front/assets/data/trademark-dhl.jpg')}}"  alt="ups"/></a>
                         </li>
                         <li>
-                            <a href="#"><img src="public/front/assets/data/trademark-fe.jpg"  alt="ups"/></a>
+                            <a href="#"><img src="{{URL::asset('public/front/assets/data/trademark-fe.jpg')}}"  alt="ups"/></a>
                         </li>
                         <li>
-                            <a href="#"><img src="public/front/assets/data/trademark-wm.jpg"  alt="ups"/></a>
+                            <a href="#"><img src="{{URL::asset('public/front/assets/data/trademark-wm.jpg')}}"  alt="ups"/></a>
                         </li>
                     </ul> 
                 </div>
@@ -235,6 +235,21 @@
 
 <script type="text/javascript" src="{{ URL::asset('public/front/assets/js/theme-script.js') }}"></script>
 
+<script>
+    $(document).ready(function(){
+         $("#add_cart").click(function(data){
+            $(this).text('Thêm thành công');
+            setTimeout(function(){
+            $("#add_cart").text('Thêm vào giỏ hàng').fadeIn();
+            },2000);
+            var id = $('#id_cart').val(); 
+            var qty = $('#option-product-qty').val();
+            $.get('{{URL::to("cart")}}',{id:id,qty:qty},function(data){
+                $(".notify-cart").text(data);
+            });
+    });
+})
+</script>
 </body>
 
 <!-- Mirrored from kutethemes.com/demo/kuteshop/html/index2.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jul 2015 07:19:33 GMT -->

@@ -1,7 +1,7 @@
 <div class="container main-header">
         <div class="row">
             <div class="col-xs-12 col-sm-3 logo">
-                <a href="index-2.html"><img alt="Kute Shop" src="{{ URL::asset('public/upload/image/'.$config->logo)}}" /></a>
+                <a href="{{URL::to('/')}}"><img alt="Kute Shop" src="{{ URL::asset('public/upload/image/'.$config->logo)}}" /></a>
             </div>
             <div class="col-xs-7 col-sm-7 header-search-box">
                 <form class="form-inline">
@@ -21,9 +21,9 @@
                 <a title="Compare" href="#" class="btn-compare">compare</a>
                 <a title="My wishlist" href="#" class="btn-heart">wishlist</a>
                 <div class="btn-cart" id="cart-block">
-                    <a title="My cart" href="cart.html">Cart</a>
-                    <span class="notify notify-right">2</span>
-                    <div class="cart-block">
+                    <a title="Giỏ hàng của bạn" href="{{URL::to('check-out')}}">Cart</a>
+                    <span class="notify notify-right notify-cart">0</span>
+                    <!-- <div class="cart-block">
                         <div class="cart-block-content">
                             <h5 class="cart-title">2 Items in my cart</h5>
                             <div class="cart-block-list">
@@ -64,7 +64,7 @@
                                 <a href="order.html" class="btn-check-out">Checkout</a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
             </div>

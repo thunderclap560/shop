@@ -21,6 +21,10 @@ class Product extends Eloquent  {
     {
         return $this->hasMany('Image');
     }
+    public  function image_detail()
+    {
+        return $this->hasMany('Image');
+    }
 
     public  function color()
     {

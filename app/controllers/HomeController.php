@@ -35,10 +35,6 @@ class HomeController extends BaseController {
             $subArr['icon'] = $category->icon;
             $subArr['color'] = $category->color;
             $subCategories = Category::with('products','products_best_view','products_order_news')->where('parent_id', '=', $category->id)->get();
-            // echo '<pre>';
-            // print_r($subCategories);
-            // echo '</pre>';
-            // exit;
             if (!$subCategories->isEmpty()) {
                 $result = $this->getAllCategories($subCategories);
                 $subArr['sub'] = $result;
@@ -53,10 +49,6 @@ class HomeController extends BaseController {
 	{
 		$latest = Product::orderBy('id','desc')->get();
         $data = Advertises::with('category')->get();
-        // echo '<pre>';
-        //     print_r($data);
-        //     echo '</pre>';
-        //     exit;
 		return View::make('hello')->with([
 			'config'=> $this->config,
 			'slide'=>$this->slide,
@@ -71,21 +63,41 @@ class HomeController extends BaseController {
 	}
 
     public function getView($id=null){
-        $thumb = Product::with('products')->find($id);
+        // echo '<pre>';
+        // print_r(Session::get('product'));
+        // echo '</pre>';
+        // exit;
+        $thumb = Product::with('products','color','image_detail')->find($id);
+        $latest = Product::orderBy('id','desc')->get();
         $parent_cate = Category::find($thumb->products->parent_id);
         $thum_off = array();
         $thum_off[]= $thumb;
         $thum_off[]= $parent_cate;
+        $rand = Product::orderByRaw("RAND()")->get();
+        $ads = Banners::where('parent_id','!=','0')->get();
         return View::make('view')->with([
             'config'=> $this->config,
             'slide'=>$this->slide,
             'category'=>$this->category,
             'menu_home'=>$this->menu_home,
             'menu'=>$this->menu,
+            'latest'=>$latest,
             'slide_footer'=>$this->slide_footer,
-            'new'=>$this->news,
-            'thum_off'=>$thum_off
+            'thum_off'=>$thum_off,
+            'rand'=>$rand,
+            'title'=>$thum_off[0]->name,
+            'desc'=>$thum_off[0]->short_detail,
+            'ads'=>$ads
             ]);
+    }
+    public function getCart(){
+        
+        $cart = new Cart;
+        $cart->addProduct($_GET['id'],$_GET['qty']);
+        return $cart->getCount();
+    }
+    public function getCheckOut(){
+        return View::make('check-out');
     }
 
 }

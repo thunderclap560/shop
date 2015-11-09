@@ -20,14 +20,20 @@
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/css/option2.css') }}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
    
-<title>{{ $config->title }}</title>
+<title>
+    @if (isset($title))
+           {{ $title }} 
+    @else
+            {{ $config->title  }} 
+    @endif  
+   </title>
 <meta name="robots" content="noodp,noydir">
 <meta name="description" content="{{ $config->desc }}">
 <link rel="canonical" href="http://saokpop.com/">
 <meta property="og:locale" content="vi_VN">
 <meta property="og:type" content="website">
-<meta property="og:title" content="{{ $config->title }}">
-<meta property="og:description" content="{{ $config->desc }}">
+<meta property="og:title" content="{{ $config->desc}} ">
+<meta property="og:description" content="{{$config->title}}">
 <meta property="og:url" content="http://saokpop.com/">
 </head>
 <?php $action = Route::currentRouteAction();?>
@@ -49,18 +55,7 @@
                       </ul>
                 </div>
             </div>
-            <div class="language " style="display:none">
-                <div class="dropdown">
-                      <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-                      <img alt="email" src="public/front/assets/images/fr.jpg" />French
-                      
-                      </a>
-                      <ul class="dropdown-menu" role="menu">
-                        <li><a href="#"><img alt="email" src="public/front/assets/images/en.jpg" />English</a></li>
-                        <li><a href="#"><img alt="email" src="public/front/assets/images/fr.jpg" />French</a></li>
-                    </ul>
-                </div>
-            </div>
+            
             
             <div class="support-link">
                 <a href="#">Hỗ trợ</a>
@@ -111,6 +106,7 @@
         <!-- end banner bottom -->
 
         <!-- blog list -->
+        @if ($action == 'HomeController@getIndex')
         <div class="blog-list">
             <h2 class="page-heading">
                 <span class="page-heading-title">Tin tức</span>
@@ -137,6 +133,7 @@
                 </ul>
             </div>
         </div>
+        @endif
         <!-- ./blog list -->
         <!-- service 2 -->
         <div class="services2">
@@ -146,7 +143,7 @@
                         <div class="row">
                             <div class="col-sm-6 image">
                                 <div class="icon">
-                                    <img src="public/front/assets/data/icon-s1.png" alt="service">
+                                    <img src="{{URL::asset('public/front/assets/data/icon-s1.png')}}" alt="service">
                                 </div>
                                 <h3 class="title"><a href="#">Great Value</a></h3>
                             </div>
@@ -161,7 +158,7 @@
                         <div class="row">
                             <div class="col-sm-6 image">
                                 <div class="icon">
-                                    <img src="public/front/assets/data/icon-s2.png" alt="service">
+                                    <img src="{{URL::asset('public/front/assets/data/icon-s2.png')}}" alt="service">
                                 </div>
                                 <h3 class="title"><a href="#">Worldwide Delivery</a></h3>
                             </div>
@@ -176,7 +173,7 @@
                         <div class="row">
                             <div class="col-sm-6 image">
                                 <div class="icon">
-                                    <img src="public/front/assets/data/icon-s3.png" alt="service">
+                                    <img src="{{URL::asset('public/front/assets/data/icon-s3.png')}}" alt="service">
                                 </div>
                                 <h3 class="title"><a href="#">Safe Payment</a></h3>
                             </div>
@@ -191,7 +188,7 @@
                         <div class="row">
                             <div class="col-sm-6 image">
                                 <div class="icon">
-                                    <img src="public/front/assets/data/icon-s4.png" alt="service">
+                                    <img src="{{URL::asset('public/front/assets/data/icon-s4.png')}}" alt="service">
                                 </div>
                                 <h3 class="title"><a href="#">Shop with Confidence</a></h3>
                             </div>
@@ -206,7 +203,7 @@
                         <div class="row">
                             <div class="col-sm-6 image">
                                 <div class="icon">
-                                    <img src="public/front/assets/data/icon-s5.png" alt="service">
+                                    <img src="{{URL::asset('public/front/assets/data/icon-s5.png')}}" alt="service">
                                 </div>
                                 <h3 class="title"><a href="#">24/7 Help Center</a></h3>
                             </div>
@@ -221,7 +218,7 @@
                         <div class="row">
                             <div class="col-sm-6 image">
                                 <div class="icon">
-                                    <img src="public/front/assets/data/icon-s6.png" alt="service">
+                                    <img src="{{URL::asset('public/front/assets/data/icon-s6.png')}}" alt="service">
                                 </div>
                                 <h3 class="title"><a href="#">Shop On-The-Go</a></h3>
                             </div>
