@@ -250,6 +250,34 @@
     });
 })
 </script>
+<script>
+    function format1(n, currency) {
+    return n.toFixed(2).replace(/./g, function(c, i, a) {
+        return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
+    }) + " " + currency;
+    }
+    function delete_product(data){
+        var total  =  parseInt($("#total_price_not").text());
+        var before_price = parseInt($(data).parent().prev().text());
+        console.log(total);
+        console.log(before_price);
+        if (confirm("Bạn có muốn xóa không ?") == true) {
+            var id = $(data).attr("data");
+            $.get('{{URL::to("cart-delete")}}',{id:id},function(value){
+            $(data).parent().parent().hide(550);
+                var after_price = format1(total - before_price,"VNĐ");
+                var res = after_price.replace(".00", " ");
+                $("#total_price").text(res);
+                var count_cart = parseInt($(".notify-cart").text());
+                count_cart--;
+                $(".notify-cart").text(count_cart);
+
+            });
+        }else{
+            return false;
+        }
+    }
+</script>
 </body>
 
 <!-- Mirrored from kutethemes.com/demo/kuteshop/html/index2.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jul 2015 07:19:33 GMT -->

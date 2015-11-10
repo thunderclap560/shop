@@ -96,8 +96,42 @@ class HomeController extends BaseController {
         $cart->addProduct($_GET['id'],$_GET['qty']);
         return $cart->getCount();
     }
+    public function getCartDelete(){
+        
+        $cart = Session::get('product');
+        foreach ($cart as $key => $value) 
+        if($key == $_GET['id'] ){
+           unset($cart[$key]);  
+        }
+        Session::put('product' ,$cart);
+    }
     public function getCheckOut(){
-        return View::make('check-out');
+        $cart = new Cart;
+        $carts = $cart->readProduct();
+        if (null!=$carts) {
+            $key =0;
+            foreach ($carts as $productId => $count) {               
+                $product[$key] = Product::with('color')->find($productId);
+                $product[$key]->count = $count;
+                $key++;
+            }
+        }
+        if(empty($product)){
+            $product = array();
+        }
+        // echo '<pre>';
+        // print_r($carts);
+        // echo '</pre>';
+        // exit;
+        return View::make('check-out')->with([
+            'config'=> $this->config,
+            'category'=>$this->category,
+            'menu_home'=>$this->menu_home,
+            'menu'=>$this->menu,
+            'slide_footer'=>$this->slide_footer,
+            'count_product'=>$cart->getCount(),
+            'product'=>$product
+            ]);
     }
 
 }

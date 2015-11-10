@@ -22,7 +22,17 @@
                 <a title="My wishlist" href="#" class="btn-heart">wishlist</a>
                 <div class="btn-cart" id="cart-block">
                     <a title="Giỏ hàng của bạn" href="{{URL::to('check-out')}}">Cart</a>
-                    <span class="notify notify-right notify-cart">0</span>
+                    <span class="notify notify-right notify-cart">
+                        <?php 
+                            $cart = new Cart;
+                            $carts = $cart->readProduct();
+                        ?>
+                        @if (Session::has('product'))
+                            {{count($carts)}}
+                        @else
+                            0
+                        @endif
+                    </span>
                     <!-- <div class="cart-block">
                         <div class="cart-block-content">
                             <h5 class="cart-title">2 Items in my cart</h5>
