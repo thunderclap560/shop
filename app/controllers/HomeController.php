@@ -105,7 +105,48 @@ class HomeController extends BaseController {
         }
         Session::put('product' ,$cart);
     }
+    public function getCouponDelete(){
+        
+        $data = Session::get('coupon');
+        if(null!=$data){
+        $data_coupon = array();
+        $data_coupon[$data[0]->code]=$data[0]->value;
+        }
+        foreach ($data_coupon as $key => $value) 
+        if($key == $_GET['code'] ){
+           unset($data_coupon[$key]);  
+        }
+        Session::put('coupon' ,$data_coupon);
+    }
+    public function postUpdate(){
+        $product_id = Input::get('id');
+        $cart = array();
+        foreach (Input::get('count') as $index=>$count) {
+                    if ($count>0) {
+                        $productId = $product_id[$index];
+                        $cart[$productId] = $count;
+
+                    }
+                }
+        Session::put('product' ,$cart);
+        return Redirect::to('check-out')->with('message', 'Cập nhật giỏ hàng thành công!');  
+    }
+    public function postUpdateCoupon(){
+        $coupon = Input::get('coupon');
+        $code = Coupon::where('code',$coupon)->get();
+        
+        if(count($code) != 0){
+            Session::put('coupon' ,$code);
+            return Redirect::to('check-out')->with('message', 'Sử dụng coupon thành công!');
+        }else{
+            return Redirect::to('check-out')->with('message', 'Coupon không tồn tại!');
+        }
+    }
     public function getCheckOut(){
+        // echo '<pre>';
+        // print_r(Session::get('coupon'));
+        // echo '</pre>';
+        // exit;
         $cart = new Cart;
         $carts = $cart->readProduct();
         if (null!=$carts) {
@@ -119,10 +160,14 @@ class HomeController extends BaseController {
         if(empty($product)){
             $product = array();
         }
-        // echo '<pre>';
-        // print_r($carts);
-        // echo '</pre>';
-        // exit;
+        $data= Session::get('coupon');
+        if(null!=$data){
+        $data_coupon = array();
+        $data_coupon[$data[0]->code]=$data[0]->value;
+        }
+        if(empty($data_coupon)){
+            $data_coupon = array();
+        }
         return View::make('check-out')->with([
             'config'=> $this->config,
             'category'=>$this->category,
@@ -130,7 +175,9 @@ class HomeController extends BaseController {
             'menu'=>$this->menu,
             'slide_footer'=>$this->slide_footer,
             'count_product'=>$cart->getCount(),
-            'product'=>$product
+            'product'=>$product,
+            'title'=>'Giỏ hàng của bạn',
+            'data_coupon'=>$data_coupon
             ]);
     }
 

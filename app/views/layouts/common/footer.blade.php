@@ -251,6 +251,18 @@
 })
 </script>
 <script>
+    function delete_coupon(data){
+        if (confirm("Xác nhận không dùng mã giảm giá ?") == true) {
+            var code = $(data).attr("data");
+             $.get('{{URL::to("coupon-delete")}}',{code:code},function(value){
+                    //$(".coupon").css('display','block');
+                    //$(".cfr-coupon").css('display','none');
+                    window.location.href = '{{URL::to("check-out")}}';
+             });
+        }else{
+            return false;
+        }
+    }
     function format1(n, currency) {
     return n.toFixed(2).replace(/./g, function(c, i, a) {
         return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
