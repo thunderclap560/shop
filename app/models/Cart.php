@@ -1,6 +1,26 @@
 <?php
  
 class Cart extends Eloquent  {
+	public function addColor($productId,$color){
+		$allColors = $this->readColor();
+		if (null!=$allColors) {
+			if (array_key_exists($productId, $allColors)) {
+				$allColors[$productId] = $color;
+			} else {
+				$allColors[$productId] = $color;
+			}
+		} else {
+			$allColors[$productId] = $color;
+		}
+		
+		$this->saveColor($allColors);
+	}
+	public function readColor() {
+		return Session::get('color');
+	}
+	public function saveColor($data) {
+		return Session::put('color',$data);
+	}
 	public function addProduct($productId,$qty) {
 		$allProducts = $this->readProduct();
 		if (null!=$allProducts) {

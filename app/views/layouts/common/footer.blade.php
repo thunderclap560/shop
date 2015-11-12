@@ -263,6 +263,19 @@
             return false;
         }
     }
+    function color(data){
+        var color = $(data).attr('data');
+        var id = $(data).attr('uid');
+        if($('.check-color').length){
+        $('.check-color').remove();
+         }
+        $(data).prev().html('<span class="check-color" style="position:relative;top:-6px;left:4px"> X </span>');
+        $.get('{{URL::to("add-color")}}',{color:color,id:id},function(value){
+            console.log(value);
+                    //$(".coupon").css('display','block');
+                    //$(".cfr-coupon").css('display','none');
+             });
+    }
     function format1(n, currency) {
     return n.toFixed(2).replace(/./g, function(c, i, a) {
         return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
@@ -271,15 +284,22 @@
     function delete_product(data){
         var total  =  parseInt($("#total_price_not").text());
         var before_price = parseInt($(data).parent().prev().text());
-        console.log(total);
-        console.log(before_price);
         if (confirm("Bạn có muốn xóa không ?") == true) {
             var id = $(data).attr("data");
             $.get('{{URL::to("cart-delete")}}',{id:id},function(value){
             $(data).parent().parent().hide(550);
                 var after_price = format1(total - before_price,"VNĐ");
                 var res = after_price.replace(".00", " ");
+                <?php $check = Session::get('coupon'); ?>
+                @if (count($check) == 0)
                 $("#total_price").text(res);
+                @else
+                var a = <?php echo $check[0]->value;?>;
+                before_price -= (before_price*a)/100 ;
+                after_price = format1(total - before_price,"VNĐ");
+                res = after_price.replace(".00", " ");
+                $("#total_price").text(res);
+                @endif
                 var count_cart = parseInt($(".notify-cart").text());
                 count_cart--;
                 $(".notify-cart").text(count_cart);

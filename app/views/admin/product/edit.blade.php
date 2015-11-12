@@ -52,7 +52,7 @@
                     </div>
                     <div class="form-group">
                       {{ Form::label('price', 'Giá sản phẩm');}}
-                      {{ Form::text('price', null, ['class' => 'form-control','placeholder'=>'Nhập giá sản phẩm']) }}
+                      {{ Form::text('price', null, ['class' => 'form-control price-before','placeholder'=>'Nhập giá sản phẩm']) }}
                     </div>
                     <div class="form-group">
                       {{ Form::label('status', 'Tình trạng');}}
@@ -80,7 +80,11 @@
                             <div class="box-header with-border">
                               <div class="form-group">
                                 {{ Form::label('sales', 'Sản phẩm khuyến mãi');}}
-                                {{ Form::select('sales',array('0' => 'Không', '1' => 'Có'), $data->sales ,array('class' => 'form-control')) }}
+                                {{ Form::select('sales',array('0' => 'Không', '1' => 'Có'), $data->sales ,array('class' => 'form-control sales-option')) }}
+                              </div>
+                              <div class="form-group" id="sale-open" style="<?php if($data->price_sales == 0){echo 'display:none';}?>">
+                                {{ Form::label('price_sales', 'Giá khuyến mãi');}}
+                                {{ Form::text('price_sales', null, ['class' => 'form-control sales-value','placeholder'=>'Nhập giá khuyến mãi']) }}
                               </div>
                             <div class="form-group">
                                 {{ Form::label('feature', 'Sản phẩm nổi bật');}}

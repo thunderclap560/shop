@@ -215,6 +215,12 @@
                                 </div>
                                 <!-- product-imge-->
                             </div>
+                            <?php 
+                            // echo '<pre>';
+                            // print_r(Session::get('color'));
+                            // echo '</pre>';
+                            ?>
+
                             <div class="pb-right-column col-xs-12 col-sm-6">
                                 <h1 class="product-name">{{$thum_off[0]->name}}</h1>
                                 <div class="product-comments">
@@ -228,9 +234,24 @@
                                    
                                 </div>
                                 <div class="product-price-group">
-                                    <span class="price">{{number_format($thum_off[0]->price)}} VNĐ</span>
-                                    <span class="old-price">$52.00</span>
-                                    <span class="discount">-30%</span>
+                                    <span class="price">
+                                        @if($thum_off[0]->price_sales == null)
+                                        {{number_format($thum_off[0]->price)}}
+                                        @else 
+                                         {{number_format($thum_off[0]->price_sales)}}
+                                        @endif
+                                         VNĐ
+                                    </span>
+                                    <span class="old-price">
+                                        @if($thum_off[0]->price_sales != null)
+                                        {{number_format($thum_off[0]->price)}}
+                                        @endif
+                                    </span> @if($thum_off[0]->price_sales != null)
+                                    <span class="discount">
+                                       
+                                        - {{number_format((($thum_off[0]->price - $thum_off[0]->price_sales)/$thum_off[0]->price)*100)}}%
+                                        
+                                    </span>@endif
                                 </div>
                                 <div class="info-orther">
                                     <p>Mã sản phẩm: {{$thum_off[0]->code}}</p>
@@ -248,7 +269,16 @@
                                             <ul class="list-color">
                                                 <?php foreach($thum_off[0]->color as $vthum_off_color){?>
                                                 
-                                                <li style="background:{{$vthum_off_color->name}};"><a href="#">{{$vthum_off_color->name}}</a></li>
+                                                <li style="background:{{$vthum_off_color->name}};">
+                                                    <span>
+                                                        @if(count(Session::get('color')) != 0)
+                                                        @foreach(Session::get('color') as $k_check_color => $v_check_color)
+                                                            @if($v_check_color == $vthum_off_color->name)
+                                                            <span class="check-color" style="position:relative;top:-6px;left:4px"> X </span>
+                                                            @endif
+                                                        @endforeach
+                                                        @endif
+                                                    </span><a href="javascript:void(0)" data = '{{$vthum_off_color->name}}' uid="{{$thum_off[0]->id}}" onclick="color(this)">{{$vthum_off_color->name}}</a></li>
                                                
                                                 <?php }?>
                                             </ul>

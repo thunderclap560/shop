@@ -141,7 +141,18 @@
                             <td class="cart_description">
                                 <p class="product-name"><a href="#">{{$products->name}} </a></p>
                                 <small class="cart_ref">Mã sản phẩm : {{$products->code}}</small><br>
-                                <small><a href="#">Màu sắc : {{$products->code}}</a></small><br>   
+                                <small>
+                                    @if(count(Session::get('color')) != 0)
+                                        @foreach(Session::get('color') as $k_check_color => $v_check_color)
+                                            @if($k_check_color == $products->id)
+                                                <a href="#">Màu sắc : {{$v_check_color}}</a>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        <a href="#">Màu sắc : Không có</a>
+                                    @endif
+                                </small>
+                                <br>   
                             </td>
                             <td class="cart_avail"><span class="label label-success">Còn hàng</span></td>
                             <td class="price"><span>{{number_format($products->price)}} VNĐ</span></td>
@@ -169,7 +180,11 @@
                             <td colspan="3">Phí (VAT)</td>
                             <td colspan="2">0 VNĐ</td>
                         </tr>
-
+                        <?php 
+                        // echo '<pre>';
+                        // print_r();
+                        // echo '</pre>';
+                        ?>
                         <tr>
                             <td colspan="3"><strong>Tổng chi phí</strong></td>
                             <td colspan="2"> 
