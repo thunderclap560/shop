@@ -19,5 +19,25 @@ class Helpers{
 		return TRUE;
 	}
 
+	public static function comment($data){
+		foreach($data as $k => $v){
+			echo '<div class="comment row">';
+            echo '<div class="col-sm-3 author">';
+            if($v->user_id == 1){
+            echo '<span style="top:5px;right:10px" class="notify notify-right notify-cart">Admin</span>';                               
+            }else{
+            echo '<span style="top:5px;right:10px" class="notify notify-right notify-cart">Reply</span>';                               
+            }
+            echo '</div>';
+            echo '<div class="col-sm-9 commnet-dettail">';
+            echo  $v->content;                               
+            echo '</div></div>';                                        
+			if(count($v->allReplies ) != 0){
+				Helpers::comment($v->allReplies);	
+			}
+		}
+		return TRUE;
+	}
+
 }
 ?>

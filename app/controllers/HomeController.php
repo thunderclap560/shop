@@ -63,10 +63,7 @@ class HomeController extends BaseController {
 	}
 
     public function getView($id=null){
-        // echo '<pre>';
-        // print_r(Session::get('product'));
-        // echo '</pre>';
-        // exit;
+        
         $thumb = Product::with('products','color','image_detail')->find($id);
         $latest = Product::orderBy('id','desc')->get();
         $parent_cate = Category::find($thumb->products->parent_id);
@@ -75,6 +72,11 @@ class HomeController extends BaseController {
         $thum_off[]= $parent_cate;
         $rand = Product::orderByRaw("RAND()")->get();
         $ads = Banners::where('parent_id','!=','0')->get();
+        $comment = Product::with(['comment','comment.users','comment.allReplies'])->where('id',$id)->get();
+        // echo '<pre>';
+        // print_r($comment);
+        // echo '</pre>';
+        // exit;
         return View::make('view')->with([
             'config'=> $this->config,
             'slide'=>$this->slide,
@@ -87,7 +89,8 @@ class HomeController extends BaseController {
             'rand'=>$rand,
             'title'=>$thum_off[0]->name,
             'desc'=>$thum_off[0]->short_detail,
-            'ads'=>$ads
+            'ads'=>$ads,
+            'comment'=>$comment
             ]);
     }
     public function getCart(){

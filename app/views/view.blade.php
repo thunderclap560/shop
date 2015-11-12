@@ -369,10 +369,14 @@
                                 </div>
                                 <div id="reviews" class="tab-panel">
                                     <div class="product-comments-block-tab">
+                                        <?php ?>
+                                        @foreach($comment[0]->comment as  $v_comment)
+                                        <!-- -->
+
                                         <div class="comment row">
                                             <div class="col-sm-3 author">
                                                 <div class="grade">
-                                                    <span>Grade</span>
+                                                    <span>Đánh giá</span>
                                                     <span class="reviewRating">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
@@ -382,38 +386,32 @@
                                                     </span>
                                                 </div>
                                                 <div class="info-author">
-                                                    <span><strong>Jame</strong></span>
+                                                    <span><strong>{{$v_comment->users->lastname}}</strong></span>
                                                     <em>04/08/2015</em>
                                                 </div>
                                             </div>
                                             <div class="col-sm-9 commnet-dettail">
-                                                Phasellus accumsan cursus velit. Pellentesque egestas, neque sit amet convallis pulvinar
+                                              {{$v_comment->content}}
                                             </div>
                                         </div>
+                                        {{ Helpers::comment($v_comment->allReplies)}}
+                                        
+                                        <!-- -->
+                                        @endforeach
+                                        <?php ?>
                                         <div class="comment row">
                                             <div class="col-sm-3 author">
                                                 <div class="grade">
-                                                    <span>Grade</span>
-                                                    <span class="reviewRating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </span>
-                                                </div>
-                                                <div class="info-author">
-                                                    <span><strong>Author</strong></span>
-                                                    <em>04/08/2015</em>
+                                                    <a class="btn-comment" href="#">Viết nhận xét !</a>
                                                 </div>
                                             </div>
                                             <div class="col-sm-9 commnet-dettail">
-                                                Phasellus accumsan cursus velit. Pellentesque egestas, neque sit amet convallis pulvinar
+                                                <textarea class="form-control"></textarea>
+                                                <a class="btn-comment btn-warning" href="#">Đăng</a>
+
                                             </div>
                                         </div>
-                                        <p>
-                                            <a class="btn-comment" href="#">Write your review !</a>
-                                        </p>
+                                        
                                     </div>
                                     
                                 </div>
