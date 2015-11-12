@@ -366,6 +366,24 @@
     </script> 
      <script>
       $(document).ready(function(){
+        $(".sales-value").keydown(function(){
+        var sval =  parseInt($(".price-before").val());
+        var change = parseInt($(this).val());
+          if(sval < change){
+            $(".price-before").css('border','solid 1px red');
+            alert('Giá khuyến mãi không được lớn hơn giá ban đầu !');
+          }         
+        });
+        $(".sales-option").on('change',function(){
+          var sales = $(this).val();
+          if(sales == 1){
+            $("#sale-open").css('display','block');
+            $(".sales-value").val(" ");
+          }else{
+            $("#sale-open").css('display','none');
+            // $(".sales-value").focus();
+          }
+        });
         $('.rm-text').contents().filter(function(){
           return this.nodeType == Node.TEXT_NODE;
         }).remove();     

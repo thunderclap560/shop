@@ -10,8 +10,8 @@ class Product extends Eloquent  {
 		'price'=>'required|integer',
 		'image'=>'required|image',
 		'status'=>'required',
-		'long_detail'=>'required|max:500',
-		'short_detail'=>'required|max:255'
+		'long_detail'=>'required|max:1500',
+		'short_detail'=>'required|max:500'
 		);
 	public function products()
     {

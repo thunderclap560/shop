@@ -78,6 +78,9 @@ class ProductController extends BaseController {
 	    $data->feature  = Input::get('feature');
 	    $data->category_id  = Input::get('category_id');
 	    $data->sales  = Input::get('sales');
+	    if(Input::get('price_sales')){
+	    	$data->price_sales  = Input::get('price_sales');
+	    }
 	    $data->feature  = Input::get('feature');
 	   	$data->save();
 

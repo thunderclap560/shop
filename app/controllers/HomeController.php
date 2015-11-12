@@ -105,6 +105,14 @@ class HomeController extends BaseController {
         }
         Session::put('product' ,$cart);
     }
+    public function getAddColor(){
+        $cart = new Cart;
+        $cart->addColor($_GET['id'],$_GET['color']);
+        // echo '<pre>';
+        // print_r(Session::get('color'));
+        // echo '</pre>';
+        // Session::forget('color');
+    }
     public function getCouponDelete(){
         
         $data = Session::get('coupon');
