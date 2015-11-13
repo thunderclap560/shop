@@ -99,6 +99,39 @@ class HomeController extends BaseController {
         $cart->addProduct($_GET['id'],$_GET['qty']);
         return $cart->getCount();
     }
+    public function getComment(){
+        $user_id = User::find($_GET['uid'])->lastname;
+        $tmp = array();
+        $tmp['uid']=  $user_id;
+        $tmp['product']= $_GET['product'];
+        $tmp['parent_id']= 0;
+        $tmp['comment']= $_GET['comment'];
+        $tmp['rate']= $_GET['rate'];
+        $comment = new Comment;
+        $comment->user_id = $_GET['uid'];
+        $comment->product_id = $_GET['product'];
+        $comment->parent_id = 0;
+        $comment->content = $_GET['comment'];
+        $comment->rates = $_GET['rate'];
+        if($comment->save()){
+            return View::make('comment')->with(['data'=>$tmp]);
+        }
+    }
+    public function getReply(){
+        $tmp = array();
+        $tmp['product']=  $_GET['product'];;
+        $tmp['parent_id']=  $_GET['parent_id'];
+        $tmp['comment']= $_GET['comment'];
+        $comment = new Comment;
+        $comment->user_id = 2;
+        $comment->product_id = $_GET['product'];
+        $comment->parent_id = $_GET['parent_id'];
+        $comment->content = $_GET['comment'];
+
+        if($comment->save()){
+            return View::make('reply')->with(['data'=>$tmp]);
+        }
+    }
     public function getCartDelete(){
         
         $cart = Session::get('product');

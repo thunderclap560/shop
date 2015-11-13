@@ -30,7 +30,11 @@ class Helpers{
             }
             echo '</div>';
             echo '<div class="col-sm-9 commnet-dettail">';
+            if($v->user_id == 1){
+            echo  '<strong>'.$v->content.'</strong>';                               
+            }else{
             echo  $v->content;                               
+            }
             echo '</div></div>';                                        
 			if(count($v->allReplies ) != 0){
 				Helpers::comment($v->allReplies);	

@@ -1,6 +1,18 @@
 @extends('layouts.front')
  
 @section('content')
+<style>
+.reply-each{
+    display:none;
+    right:30px;
+    position:absolute;
+}
+.comment:hover .reply-each {
+    display:block;
+    right:30px;
+    position:absolute;
+}
+</style>
 <div id="nav-top-menu" class="nav-top-menu">
         <div class="container">
             <div class="row">
@@ -368,21 +380,20 @@
                                     </table>
                                 </div>
                                 <div id="reviews" class="tab-panel">
-                                    <div class="product-comments-block-tab">
+                                    <div class="product-comments-block-tab" >
                                         <?php ?>
                                         @foreach($comment[0]->comment as  $v_comment)
                                         <!-- -->
-
                                         <div class="comment row">
                                             <div class="col-sm-3 author">
                                                 <div class="grade">
                                                     <span>Đánh giá</span>
                                                     <span class="reviewRating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <?php $k =$v_comment->rates ;?>
+                                                        @for($m=0;$m < $k;$m++ )
+                                                            <i class="fa fa-star"></i>
+                                                        @endfor
+                                                        
                                                     </span>
                                                 </div>
                                                 <div class="info-author">
@@ -392,23 +403,26 @@
                                             </div>
                                             <div class="col-sm-9 commnet-dettail">
                                               {{$v_comment->content}}
+                                            <button class="btn btn-primary btn-xs reply-each" data="{{$v_comment->id}}" product="{{$thum_off[0]->id}}">Trả lời</button>
                                             </div>
                                         </div>
+
                                         {{ Helpers::comment($v_comment->allReplies)}}
                                         
                                         <!-- -->
                                         @endforeach
                                         <?php ?>
+                                        <div class="append-comment"></div>
                                         <div class="comment row">
                                             <div class="col-sm-3 author">
                                                 <div class="grade">
-                                                    <a class="btn-comment" href="#">Viết nhận xét !</a>
+                                                    <a class="btn-comment" href="#">Nhận xét !</a>
                                                 </div>
                                             </div>
                                             <div class="col-sm-9 commnet-dettail">
-                                                <textarea class="form-control"></textarea>
-                                                <a class="btn-comment btn-warning" href="#">Đăng</a>
-
+                                                <textarea placeholder="Viết vài lời nhận xét" class="form-control" rows="6" id="content-comment" uid="2" data="{{$thum_off[0]->id}}"></textarea>
+                                                <p><div style="margin-top:20px" id="default"></div></p>
+                                                <a class="btn-comment btn-warning" href="javascript:void(0)" id="reply-comment">Đăng</a>
                                             </div>
                                         </div>
                                         

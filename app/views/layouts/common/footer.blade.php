@@ -234,20 +234,61 @@
 <script type="text/javascript" src="{{ URL::asset('public/front/assets/js/jquery.actual.min.js') }}"></script>
 
 <script type="text/javascript" src="{{ URL::asset('public/front/assets/js/theme-script.js') }}"></script>
-
 <script>
+    function post(data){
+        var comment = $(data).prev().val();
+        var parent_id = $(data).prev().attr('data');
+        var product = $(data).prev().attr('product');
+        if(comment.length === 0){
+            alert('Hãy nhập câu trả lời');
+            $(data).prev().focus();
+            return false;
+        }else{
+            $.get('{{URL::to("reply")}}',{comment:comment,parent_id:parent_id,product:product},function(value){
+            $(data).parent().append(value);
+            $(data).prev().val(' ');
+            });    
+        }
+    }   
     $(document).ready(function(){
-         $("#add_cart").click(function(data){
-            $(this).text('Thêm thành công');
-            setTimeout(function(){
-            $("#add_cart").text('Thêm vào giỏ hàng').fadeIn();
-            },2000);
-            var id = $('#id_cart').val(); 
-            var qty = $('#option-product-qty').val();
-            $.get('{{URL::to("cart")}}',{id:id,qty:qty},function(data){
-                $(".notify-cart").text(data);
-            });
-    });
+        $(".reply-each").on('click',function(){
+            var data = $(this).attr('data');
+            var product = $(this).attr('product');
+            $(this).parent().append('<textarea data = "'+data+'" product = "'+product+'" placeholder="Viết trả lời ..." class="form-control" rows="2" style="margin-top:5px"></textarea>');
+            $(this).parent().append('<button class="btn btn-primary btn-xs" style="margin-top:5px" onclick="post(this)"> Đăng </button>');
+        });
+        $('.product-comments-block-tab').contents().filter(function(){
+          return this.nodeType == Node.TEXT_NODE;
+        }).remove();  
+        $("#reply-comment").click(function(){
+            if($("#content-comment").val().length === 0){
+                alert('Hãy nhập vài lời nhận xét');
+                $("#content-comment").focus();
+                return false;
+            }else{
+                var rate = $("input[name=score]").val();
+                var comment = $("#content-comment").val();
+                var uid = $("#content-comment").attr('uid');
+                var product = $("#content-comment").attr('data');
+                $.get('{{URL::to("comment")}}',{rate:rate,comment:comment,uid:uid,product:product},function(data){
+                        $("input[name=score]").val(' ');
+                        $("#content-comment").val(' ');
+                        $('#reply-comment').parent().parent().prev().append(data);
+                    }); 
+            }
+           
+        });
+        $("#add_cart").click(function(data){
+                $(this).text('Thêm thành công');
+                setTimeout(function(){
+                $("#add_cart").text('Thêm vào giỏ hàng').fadeIn();
+                },2000);
+                var id = $('#id_cart').val(); 
+                var qty = $('#option-product-qty').val();
+                $.get('{{URL::to("cart")}}',{id:id,qty:qty},function(data){
+                    $(".notify-cart").text(data);
+                });
+        });
 })
 </script>
 <script>
@@ -310,6 +351,15 @@
         }
     }
 </script>
+<script type="text/javascript" src="{{ URL::asset('public/js/jquery.raty.js') }}"></script>
+<script>
+  $.fn.raty.defaults.path = "{{URL::asset('public/front/votes')}}";
+
+  $(function() {
+    $('#default').raty();
+  });
+</script>
+
 </body>
 
 <!-- Mirrored from kutethemes.com/demo/kuteshop/html/index2.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jul 2015 07:19:33 GMT -->
