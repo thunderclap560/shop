@@ -53,7 +53,7 @@
                         <td><?php echo $v->code ;?></td>
                         <td><?php echo number_format($v->price) ;?> VNĐ</td>
                         <td><?php if($v->status == 0){echo 'Hết hàng';}else{echo 'Còn hàng';}?></td>
-                        <td><?php echo $v->short_detail ;?></td>
+                        <td style="width:100px"><div><?php echo $v->short_detail ;?></div></td>
                         <td><img src="{{ URL::asset('public/upload/image/'.$v->image)}}" style="width:100px" alt=""></td>
                         <td>
                           <a class="btn btn-app" href="{{ URL::route('admin.banner.view', $v->id) }}" >

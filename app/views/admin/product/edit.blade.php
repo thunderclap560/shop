@@ -82,19 +82,24 @@
                                 {{ Form::label('sales', 'Sản phẩm khuyến mãi');}}
                                 {{ Form::select('sales',array('0' => 'Không', '1' => 'Có'), $data->sales ,array('class' => 'form-control sales-option')) }}
                               </div>
-                              <div class="form-group" id="sale-open" style="<?php if($data->price_sales == 0){echo 'display:none';}?>">
+                              <div class="form-group" id="sale-open" style="<?php if($data->sales == 0){echo 'display:none';}?>">
                                 {{ Form::label('price_sales', 'Giá khuyến mãi');}}
-                                {{ Form::text('price_sales', null, ['class' => 'form-control sales-value','placeholder'=>'Nhập giá khuyến mãi']) }}
+                                {{ Form::number('price_sales', null, ['class' => 'form-control sales-value','placeholder'=>'Nhập giá khuyến mãi']) }}
                               </div>
                             <div class="form-group">
                                 {{ Form::label('feature', 'Sản phẩm nổi bật');}}
                                 {{ Form::select('feature', array('0' => 'Không', '1' => 'Có'), $data->feature,array('class' => 'form-control')) }}
                             </div>
                             <div class="form-group">
+                               {{ Form::label('size', 'Size');}}
+                              {{ Form::select('size', ['0'=>'Free Size','1'=>'XS','2'=>'S','3'=>'M','4'=>'L','5'=>'XL','6'=>'XXL'], null,array('class' => 'form-control')) }}
+                            </div>
+                            <div class="form-group">
                                 {{ Form::label('color', 'Màu sắc') }}  <span style="cursor:pointer" title="Thêm màu" id="addColor"><i class="fa fa-plus-square"></i></span>
                                 <p>
                                   <p class="help-block">Màu sắc hiện có</p>
                                     <?php foreach($color as $k_color => $v_color){ ?>
+                                    @if($v_color->name != null)
                                     <div class="btn-group">
                                       <button type="button" style="background-color:{{$v_color->name}};color:white" class="btn btn-sm">Tùy chọn</button>
                                       <button type="button" style="background-color:{{$v_color->name}};color:white" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -105,6 +110,7 @@
                                         <li><a href="javascript:void(0)" id="trash-{{$v_color->id}}"  onclick="check_color({{$v_color->id}})">Xóa màu này</a></li>                                      
                                       </ul>
                                     </div>
+                                    @endif
                                   <?php }?>
                              </p> 
                             </div>

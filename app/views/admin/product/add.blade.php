@@ -76,12 +76,20 @@
                       {{ Form::select('category_id', $categories, null,array('class' => 'form-control')) }}
                     </div>
                     <div class="form-group">
-                       {{ Form::label('sales', 'Sản phẩm khuyến mãi');}}
-                      {{ Form::select('sales', ['0'=>'Không','1'=>'Có'], null,array('class' => 'form-control')) }}
+                      {{ Form::label('sales', 'Sản phẩm khuyến mãi');}}
+                      {{ Form::select('sales',array('1' => 'Có','0' => 'Không'), null ,array('class' => 'form-control sales-option')) }}
+                    </div>
+                    <div class="form-group" id="sale-open">
+                      {{ Form::label('price_sales', 'Giá khuyến mãi');}}
+                      {{ Form::number('price_sales', null, ['class' => 'form-control sales-value','placeholder'=>'Nhập giá khuyến mãi']) }}
                     </div>
                     <div class="form-group">
                        {{ Form::label('feature', 'Sản phẩm nổi bật');}}
                       {{ Form::select('feature', ['0'=>'Không','1'=>'Có'], null,array('class' => 'form-control')) }}
+                    </div>
+                    <div class="form-group">
+                       {{ Form::label('size', 'Size');}}
+                      {{ Form::select('size', ['0'=>'Free Size','1'=>'XS','2'=>'S','3'=>'M','4'=>'L','5'=>'XL','6'=>'XXL'], null,array('class' => 'form-control')) }}
                     </div>
                      <div class="form-group">
                         {{ Form::label('color', 'Màu sắc') }}  <span style="cursor:pointer" id="addColor"><i class="fa fa-plus-square"></i></span>

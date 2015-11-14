@@ -37,6 +37,7 @@ class DashboardController extends BaseController {
 				    $data->phone = Input::get('phone');
 				    $data->address = Input::get('address');
 				    $data->policy = Input::get('policy');
+				    $data->tutorial = Input::get('tutorial');
 				   	$data->save();
 				   	return Redirect::to('admin/config/1')->with('message', 'Cập nhật thành công!');
         			}else{
@@ -51,6 +52,7 @@ class DashboardController extends BaseController {
 				    $data->phone = Input::get('phone');
 				    $data->address = Input::get('address');
 				    $data->policy = Input::get('policy');
+				    $data->tutorial = Input::get('tutorial');
 				    $data->logo = $image_old->logo;
 				   	$data->save();
 				   	return Redirect::to('admin/config/1')->with('message', 'Cập nhật thành công!');

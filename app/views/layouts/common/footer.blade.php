@@ -235,8 +235,10 @@
 
 <script type="text/javascript" src="{{ URL::asset('public/front/assets/js/theme-script.js') }}"></script>
 <script>
+    var check_empty_comment;
     function post(data){
         var comment = $(data).prev().val();
+        check_empty_comment = comment;
         var parent_id = $(data).prev().attr('data');
         var product = $(data).prev().attr('product');
         if(comment.length === 0){
@@ -246,7 +248,7 @@
         }else{
             $.get('{{URL::to("reply")}}',{comment:comment,parent_id:parent_id,product:product},function(value){
             $(data).parent().append(value);
-            $(data).prev().val(' ');
+            $(data).prev().val('');
             });    
         }
     }   
@@ -271,8 +273,8 @@
                 var uid = $("#content-comment").attr('uid');
                 var product = $("#content-comment").attr('data');
                 $.get('{{URL::to("comment")}}',{rate:rate,comment:comment,uid:uid,product:product},function(data){
-                        $("input[name=score]").val(' ');
-                        $("#content-comment").val(' ');
+                        $("input[name=score]").val('');
+                        $("#content-comment").val('');
                         $('#reply-comment').parent().parent().prev().append(data);
                     }); 
             }

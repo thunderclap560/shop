@@ -378,9 +378,12 @@
           var sales = $(this).val();
           if(sales == 1){
             $("#sale-open").css('display','block');
-            $(".sales-value").val(" ");
+            $(".sales-value").val("");
+            $(".sales-value").prop('required',true);
           }else{
             $("#sale-open").css('display','none');
+            $(".sales-value").val("");
+            $(".sales-value").prop('required',false);
             // $(".sales-value").focus();
           }
         });

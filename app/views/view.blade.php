@@ -135,13 +135,13 @@
                                             <a href="#">{{$late->name}}</a>
                                         </p>
                                         <p class="product-price">{{number_format($late->price)}} VNĐ</p>
-                                        <p class="product-star">
+                                        <!-- <p class="product-star">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star-half-o"></i>
-                                        </p>
+                                        </p> -->
                                     </div>
                                 </li>
                                <?php } ?>
@@ -236,13 +236,13 @@
                             <div class="pb-right-column col-xs-12 col-sm-6">
                                 <h1 class="product-name">{{$thum_off[0]->name}}</h1>
                                 <div class="product-comments">
-                                    <div class="product-star">
+                                    <!-- <div class="product-star">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-half-o"></i>
-                                    </div>
+                                    </div> -->
                                    
                                 </div>
                                 <div class="product-price-group">
@@ -315,10 +315,11 @@
                                     <div class="attributes">
                                         <div class="attribute-label">Size:</div>
                                         <div class="attribute-list">
+                                            <?php $size = ['0'=>'Free Size','1'=>'XS','2'=>'S','3'=>'M','4'=>'L','5'=>'XL','6'=>'XXL']; ?>
                                             <select>
-                                                <option value="1">X</option>
-                                                <option value="2">XL</option>
-                                                <option value="3">XXL</option>
+                                                @foreach($size as $k_size => $v_size)
+                                                <option value="{{$k_size}}" <?php if($k_size == $thum_off[0]->size) echo 'selected';?>>{{$v_size}}</option>
+                                                @endforeach
                                             </select>
                                             <a id="size_chart" class="fancybox" href="{{URL::asset('public/front/assets/data/size-chart.jpg')}}">Size Chart</a>
                                         </div>
@@ -347,7 +348,7 @@
                                     <a aria-expanded="false" data-toggle="tab" href="#product-detail">Chi tiết sản phẩm</a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab" href="#reviews">Đánh giá</a>
+                                    <a data-toggle="tab" href="#reviews">Đánh giá - Nhận xét</a>
                                 </li>
                                 <li>
                                     <a aria-expanded="true" data-toggle="tab" href="#information">Hướng dẫn mua hàng</a>
@@ -364,20 +365,7 @@
 
                                 </div>
                                 <div id="information" class="tab-panel">
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <td width="200">Compositions</td>
-                                            <td>Cotton</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Styles</td>
-                                            <td>Girly</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Properties</td>
-                                            <td>Colorful Dress</td>
-                                        </tr>
-                                    </table>
+                                   <p>{{$config->tutorial}}</p> 
                                 </div>
                                 <div id="reviews" class="tab-panel">
                                     <div class="product-comments-block-tab" >
@@ -430,11 +418,7 @@
                                     
                                 </div>
                                 <div id="extra-tabs" class="tab-panel">
-                                    <p>Phasellus accumsan cursus velit. Pellentesque egestas, neque sit amet convallis pulvinar, justo nulla eleifend augue, ac auctor orci leo non est. Sed lectus. Sed a libero. Vestibulum eu odio.</p>
-
-                                    <p>Maecenas vestibulum mollis diam. In consectetuer turpis ut velit. Curabitur at lacus ac velit ornare lobortis. Praesent ac sem eget est egestas volutpat. Nam eget dui.</p>
-
-                                    <p>Maecenas nec odio et ante tincidunt tempus. Vestibulum suscipit nulla quis orci. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc. Aenean ut eros et nisl sagittis vestibulum. Aliquam eu nunc.</p> 
+                                    <p>{{$config->policy}}</p> 
                                 </div>
                                 <div id="guarantees" class="tab-panel">
                                     <p>Phasellus accumsan cursus velit. Pellentesque egestas, neque sit amet convallis pulvinar, justo nulla eleifend augue, ac auctor orci leo non est. Sed lectus. Sed a libero. Vestibulum eu odio.</p>

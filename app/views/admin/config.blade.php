@@ -52,6 +52,10 @@
                       {{ Form::label('policy', 'Điều khoản sử dụng');}}
                       {{ Form::textarea('policy', null, ['class' => 'form-control','placeholder'=>'Nhập quyền hạn sử dụng']) }}
                     </div>
+                    <div class="form-group">
+                      {{ Form::label('tutorial', 'Hướng dẫn thanh toán');}}
+                      {{ Form::textarea('tutorial', null, ['class' => 'form-control','placeholder'=>'Nhập hướng dẫn thanh toán']) }}
+                    </div>
                   </div><!-- /.box-body -->
 
                   <div class="box-body" style="float:left;padding-left:100px">                	

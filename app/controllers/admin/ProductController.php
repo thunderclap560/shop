@@ -77,10 +77,15 @@ class ProductController extends BaseController {
 	    $data->sales  = Input::get('sales');
 	    $data->feature  = Input::get('feature');
 	    $data->category_id  = Input::get('category_id');
+	    $data->size  = Input::get('size');
 	    $data->sales  = Input::get('sales');
-	    if(Input::get('price_sales')){
-	    	$data->price_sales  = Input::get('price_sales');
-	    }
+	    if($data->sales == 1){
+		    if(Input::get('price_sales')){
+		    	$data->price_sales  = Input::get('price_sales');
+		    }
+		}else{
+			$data->price_sales = null;
+		}
 	    $data->feature  = Input::get('feature');
 	   	$data->save();
 
@@ -122,7 +127,11 @@ class ProductController extends BaseController {
 		  	$data->long_detail  = Input::get('long_detail');
 		    $data->short_detail  = Input::get('short_detail');
 		    $data->category_id  = Input::get('category_id');
+		    $data->size  = Input::get('size');
 		    $data->sales  = Input::get('sales');
+		    if(Input::get('price_sales')){
+	    	$data->price_sales  = Input::get('price_sales');
+	    }
 	    	$data->feature  = Input::get('feature');
 		   	$data->save();
 		   	$max_id = DB::table('products')->max('id');
@@ -143,10 +152,12 @@ class ProductController extends BaseController {
 			$color = Input::get('color');
 			if($color){
 			foreach($color as $kcolor => $vcolor){
+				if(!empty($vcolor)){
 					$data_color = new Color;
 	        		$data_color->name = $vcolor;
 				    $data_color->product_id  = 	$max_id ;
 				   	$data_color->save();
+				   	}
 			}
 			}
 		   	return Redirect::to('admin/product')->with('message', 'Thêm sản phẩm thành công!');	
