@@ -165,14 +165,15 @@
                     <span class="page-heading-title2">Sản phẩm yêu thích</span>
                 </h2>
                 <ul class="row list-wishlist">
+                    @foreach($data as $datas)
                     <li class="col-sm-3">
                         <div class="product-img">
-                            <a href="#"><img src="assets/data/wishlist1.jpg" alt="Product"></a>
+                            <a href="{{URL::to('view/'.$datas->id)}}"><img src="{{URL::asset('public/upload/image/'.$datas->image)}}" alt="Product"></a>
                         </div>
                         <h5 class="product-name">
-                            <a href="#">Adipiscing aliquet sed in lacus, Liqui-gels 24</a>
+                            <a href="#">{{$datas->name}}</a>
                         </h5>
-                        <div class="qty">
+                       <!--  <div class="qty">
                             <label>Quantity</label>
                             <input type="text" class="form-control input input-sm">
                         </div>
@@ -181,13 +182,13 @@
                             <select class="form-control input iput-sm">
                                 <option>Medium</option>
                             </select>
-                        </div>
+                        </div> -->
                         <div class="button-action">
-                            <button class="button button-sm">Save</button>
-                            <a href="#"><i class="fa fa-close"></i></a>
+                            <button class="button button-sm">Mua hàng</button>
+                            <a href="javascript:void(0)"><i class="fa fa-close"></i></a>
                         </div>
                     </li>
-                    
+                    @endforeach
                 </ul>
             </div>
             <!-- ./ Center colunm -->

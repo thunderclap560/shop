@@ -149,6 +149,11 @@ class HomeController extends BaseController {
         // echo '</pre>';
         // Session::forget('color');
     }
+    public function getFavoriteAdd(){
+        $favo = Session::get('favorite');
+        $favo[] = $_GET['id'];
+        Session::put('favorite',$favo);
+    }
     public function getCouponDelete(){
         
         $data = Session::get('coupon');
@@ -260,6 +265,12 @@ class HomeController extends BaseController {
     public function getWishList(){
         $ads = Banners::where('parent_id','!=','0')->get();
         $latest = Product::orderBy('id','desc')->get();
+        $product = Session::get('favorite');
+        $tmp = array();
+        for($i=0;$i<count($product);$i++){
+            $data = Product::find($product[$i]);
+            $tmp[]=$data;
+        }
          return View::make('wish')->with([
             'config'=> $this->config,
             'category'=>$this->category,
@@ -269,6 +280,7 @@ class HomeController extends BaseController {
             'title'=>'Sản Phẩm Yêu Thích',
             'ads'=>$ads,
             'latest'=>$latest,
+            'data'=>$tmp
             ]);
     }
     public function postOrderAdd(){

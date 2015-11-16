@@ -315,6 +315,12 @@
 })
 </script>
 <script>
+    function favorite(data){
+        var id = $(data).attr('data');
+        $.get('{{URL::to("favorite-add")}}',{id:id},function(value){
+            
+        });
+    }
     function delete_coupon(data){
         if (confirm("Xác nhận không dùng mã giảm giá ?") == true) {
             var code = $(data).attr("data");

@@ -18,8 +18,21 @@
                 </form>
             </div>
             <div class="col-xs-5 col-sm-2 group-button-header">
-                <a title="Compare" href="#" class="btn-compare">compare</a>
-                <a title="My wishlist" href="#" class="btn-heart">wishlist</a>
+<!--                 <a title="Compare" href="#" class="btn-compare">compare</a>
+ -->            <div class="btn-cart" style="background:none">   
+                    <a title="Sản Phẩm Yêu Thích" href="{{URL::to('wish-list')}}" class="btn-heart">wishlist</a>
+                    <?php
+                    $favo = Session::get('favorite');
+                    
+                    ?>
+                    <span class="notify notify-right"> 
+                    @if (Session::has('favorite'))
+                    {{count($favo)}}
+                    @else
+                    0
+                    @endif</span>
+
+                </div>
                 <div class="btn-cart" id="cart-block">
                     <a title="Giỏ hàng của bạn" href="{{URL::to('check-out')}}">Cart</a>
                     <span class="notify notify-right notify-cart">
