@@ -299,17 +299,10 @@
                                     <div class="attributes">
                                         <div class="attribute-label">Số Lượng:</div>
                                         <div class="attribute-list product-qty">
-                                            <div class="qty">
-                                                <input id="option-product-qty" type="text" value="1">
+                                            <div class="">
+                                                <input id="option-product-qty" type="number" value="1">
                                             </div>
-                                            <div class="btn-plus">
-                                                <a href="#" class="btn-plus-up">
-                                                    <i class="fa fa-caret-up"></i>
-                                                </a>
-                                                <a href="#" class="btn-plus-down">
-                                                    <i class="fa fa-caret-down"></i>
-                                                </a>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                     <div class="attributes">

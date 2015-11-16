@@ -153,9 +153,13 @@
                   </ul>
                 </div><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->
-              <div id="elevator-1" class="floor-elevator">
-                    <a href="#" class="btn-elevator up disabled fa fa-angle-up"></a>
-                    <a href="#elevator-2" class="btn-elevator down fa fa-angle-down"></a>
+              <div id="elevator-{{$v_menu_cate['id']}}" class="floor-elevator">
+              <?php 
+              $down=$v_menu_cate['id']-1;
+              $up = $v_menu_cate['id']+1;
+              ?>
+                    <a href="#elevator-{{$down}}" class="btn-elevator up fa fa-angle-up"></a>
+                    <a href="#elevator-{{$up}}" class="btn-elevator down fa fa-angle-down"></a>
               </div>
             </nav>
            <div class="product-featured clearfix">
@@ -185,20 +189,20 @@
                                                 ?>
                                                 <li class="col-sm-4">
                                                     <div class="right-block">
-                                                        <h5 class="product-name"><a href="#"><?php echo $k_product_menu->name;?></a></h5>
+                                                        <h5 class="product-name"><a href="{{URL::to('view/'.$k_product_menu->id)}}"><?php echo $k_product_menu->name;?></a></h5>
                                                         <div class="content_price">
                                                             <span class="price product-price"><?php echo number_format($k_product_menu->price);?> VNĐ</span>
                                                         </div>
                                                     </div>
                                                     <div class="left-block">
-                                                        <a href="#"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
+                                                        <a href="{{URL::to('view/'.$k_product_menu->id)}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
                                                         <div class="quick-view">
                                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                                                 <a title="Add to compare" class="compare" href="#"></a>
                                                                 <a title="Quick view" class="search" href="#"></a>
                                                         </div>
                                                         <div class="add-to-cart">
-                                                            <a title="Add to Cart" href="#">Thêm vào giỏ hàng</a>
+                                                            <a title="Add to Cart" href="{{URL::to('view/'.$k_product_menu->id)}}">Chi tiết sản phẩm</a>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -221,20 +225,20 @@
                                                 ?>
                                                 <li class="col-sm-4">
                                                     <div class="right-block">
-                                                        <h5 class="product-name"><a href="#"><?php echo $k_product_menu->name;?></a></h5>
+                                                        <h5 class="product-name"><a href="{{URL::to('view/'.$k_product_menu->id)}}"><?php echo $k_product_menu->name;?></a></h5>
                                                         <div class="content_price">
                                                             <span class="price product-price"><?php echo number_format($k_product_menu->price);?> VNĐ</span>
                                                         </div>
                                                     </div>
                                                     <div class="left-block">
-                                                        <a href="#"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
+                                                        <a href="{{URL::to('view/'.$k_product_menu->id)}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
                                                         <div class="quick-view">
                                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                                                 <a title="Add to compare" class="compare" href="#"></a>
                                                                 <a title="Quick view" class="search" href="#"></a>
                                                         </div>
                                                         <div class="add-to-cart">
-                                                            <a title="Add to Cart" href="#">Thêm vào giỏ hàng</a>
+                                                            <a title="Add to Cart" href="{{URL::to('view/'.$k_product_menu->id)}}">Chi tiết sản phẩm</a>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -258,20 +262,20 @@
                                                 ?>
                                                 <li class="col-sm-4">
                                                     <div class="right-block">
-                                                        <h5 class="product-name"><a href="#"><?php echo $k_product_menu->name;?></a></h5>
+                                                        <h5 class="product-name"><a href="{{URL::to('view/'.$k_product_menu->id)}}"><?php echo $k_product_menu->name;?></a></h5>
                                                         <div class="content_price">
                                                             <span class="price product-price"><?php echo number_format($k_product_menu->price);?> VNĐ</span>
                                                         </div>
                                                     </div>
                                                     <div class="left-block">
-                                                        <a href="#"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
+                                                        <a href="{{URL::to('view/'.$k_product_menu->id)}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
                                                         <div class="quick-view">
                                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                                                 <a title="Add to compare" class="compare" href="#"></a>
                                                                 <a title="Quick view" class="search" href="#"></a>
                                                         </div>
                                                         <div class="add-to-cart">
-                                                            <a title="Add to Cart" href="#">Thêm vào giỏ hàng</a>
+                                                            <a title="Add to Cart" href="{{URL::to('view/'.$k_product_menu->id)}}">Chi tiết sản phẩm</a>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -366,20 +370,20 @@
                                                 ?>
                                                 <li class="col-sm-4">
                                                     <div class="right-block">
-                                                        <h5 class="product-name"><a href="#"><?php echo $k_product_menu->name;?></a></h5>
+                                                        <h5 class="product-name"><a href="{{URL::to('view/'.$k_product_menu->id)}}"><?php echo $k_product_menu->name;?></a></h5>
                                                         <div class="content_price">
                                                             <span class="price product-price"><?php echo number_format($k_product_menu->price);?> VNĐ</span>
                                                         </div>
                                                     </div>
                                                     <div class="left-block">
-                                                        <a href="#"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
+                                                        <a href="{{URL::to('view/'.$k_product_menu->id)}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
                                                         <div class="quick-view">
                                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                                                 <a title="Add to compare" class="compare" href="#"></a>
                                                                 <a title="Quick view" class="search" href="#"></a>
                                                         </div>
                                                         <div class="add-to-cart">
-                                                            <a title="Add to Cart" href="#">Thêm vào giỏ hàng</a>
+                                                            <a title="Add to Cart" href="{{URL::to('view/'.$k_product_menu->id)}}">Chi tiết sản phẩm</a>
                                                         </div>
                                                     </div>
                                                 </li>

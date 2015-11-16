@@ -35,6 +35,14 @@ class Cart extends Eloquent  {
 		
 		$this->saveProduct($allProducts);
 	}
+	public function ajaxCount(){
+		$allProducts = $this->readProduct();
+		if (count($allProducts)<1) {
+			return 0;
+		}else{
+			return count($allProducts);
+		}
+	}
 	public function getCount() {
 		$allProducts = $this->readProduct();
 		

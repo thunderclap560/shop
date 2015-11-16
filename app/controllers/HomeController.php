@@ -97,7 +97,7 @@ class HomeController extends BaseController {
         
         $cart = new Cart;
         $cart->addProduct($_GET['id'],$_GET['qty']);
-        return $cart->getCount();
+        return $cart->ajaxCount();
     }
     public function getComment(){
         $user_id = User::find($_GET['uid'])->lastname;
@@ -218,9 +218,42 @@ class HomeController extends BaseController {
             'menu_home'=>$this->menu_home,
             'menu'=>$this->menu,
             'slide_footer'=>$this->slide_footer,
-            'count_product'=>$cart->getCount(),
+            'count_product'=>$cart->ajaxCount(),
             'product'=>$product,
             'title'=>'Giỏ hàng của bạn',
+            'data_coupon'=>$data_coupon
+            ]);
+    }
+    public function getOrder(){
+        $cart = new Cart;
+        $carts = $cart->readProduct();
+        if (null!=$carts) {
+            $key =0;
+            foreach ($carts as $productId => $count) {               
+                $product[$key] = Product::with('color')->find($productId);
+                $product[$key]->count = $count;
+                $key++;
+            }
+        }
+        if(empty($product)){
+            $product = array();
+        }
+        $data= Session::get('coupon');
+        if(null!=$data){
+        $data_coupon = array();
+        $data_coupon[$data[0]->code]=$data[0]->value;
+        }
+        if(empty($data_coupon)){
+            $data_coupon = array();
+        }
+        return View::make('order')->with([
+            'config'=> $this->config,
+            'category'=>$this->category,
+            'menu_home'=>$this->menu_home,
+            'menu'=>$this->menu,
+            'slide_footer'=>$this->slide_footer,
+            'title'=>'Thanh toán',
+            'product'=>$product,
             'data_coupon'=>$data_coupon
             ]);
     }

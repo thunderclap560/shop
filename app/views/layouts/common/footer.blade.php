@@ -253,6 +253,9 @@
         }
     }   
     $(document).ready(function(){
+        $("#step-1").click(function(){
+            $("#run-detail-order").fadeIn(900);
+        });
         $(".reply-each").on('click',function(){
             var data = $(this).attr('data');
             var product = $(this).attr('product');
@@ -331,21 +334,29 @@
             var id = $(data).attr("data");
             $.get('{{URL::to("cart-delete")}}',{id:id},function(value){
             $(data).parent().parent().hide(550);
+            $(data).parent().parent().remove();
                 var after_price = format1(total - before_price,"VNĐ");
                 var res = after_price.replace(".00", " ");
                 <?php $check = Session::get('coupon'); ?>
                 @if (count($check) == 0)
                 $("#total_price").text(res);
+                $("#total_price_not").text(total - before_price);
                 @else
                 var a = <?php echo $check[0]->value;?>;
                 before_price -= (before_price*a)/100 ;
                 after_price = format1(total - before_price,"VNĐ");
                 res = after_price.replace(".00", " ");
                 $("#total_price").text(res);
+                $("#total_price_not").text(total - before_price);
                 @endif
-                var count_cart = parseInt($(".notify-cart").text());
+                var count_cart = parseInt($(".notify-cart-count").text());
                 count_cart--;
+                $(".notify-cart-count").text(count_cart);
                 $(".notify-cart").text(count_cart);
+                if(count_cart == 0){
+                    $(".order-detail-content").hide(550);
+                    $(".update-cart").hide(550);
+                }
 
             });
         }else{

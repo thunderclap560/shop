@@ -65,53 +65,125 @@
 
 @stop
 @section('main')
+<!-- page wapper-->
 <div class="columns-container">
     <div class="container" id="columns">
         <!-- breadcrumb -->
         <div class="breadcrumb clearfix">
             <a class="home" href="{{URL::to('/')}}" title="Return to Home">Trang chủ</a>
             <span class="navigation-pipe">&nbsp;</span>
-            <span class="navigation_page">Giỏ hàng </span>
+            <span class="navigation_page">Thanh toán</span>
         </div>
         <!-- ./breadcrumb -->
         <!-- page heading-->
-        <h2 class="page-heading no-line">
-            <span class="page-heading-title2">Giỏ hàng của bạn</span>
+        <h2 class="page-heading">
+            <span class="page-heading-title2">Thanh Toán</span>
         </h2>
         <!-- ../page heading-->
-        <div class="page-content page-order">
-            <!-- <ul class="step">
-                <li class="current-step"><span>01. Summary</span></li>
-                <li><span>02. Sign in</span></li>
-                <li><span>03. Address</span></li>
-                <li><span>04. Shipping</span></li>
-                <li><span>05. Payment</span></li>
-            </ul> -->
-            <div class="heading-counter warning">
-			@if ($product)
-            	Bạn đã mua:
-                <span><span class="notify-cart-count">{{$count_product}}</span> sản phẩm</span>
-            @else
-				Bạn chưa mua sản phẩm nào !
-            @endif
-            </div>
-             {{ Form::open(['url' => ['update']])}}
-            <div class="heading-counter warning row update-cart">
-                    
-                        @if(Session::has('message')) 
-                        <div class="text-left alert alert-success col-md-6">
-                        {{ Session::get('message') }}
-                        </div>
-                        @endif
-                    @if ($product)
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-warning"> <i class="fa fa-refresh" style="padding-top:3px"></i> Cập nhật giỏ hàng</button>
+        <div class="page-content checkout-page">
+            <div id="zero-step">
+            <h3 class="checkout-sep">1. Phương thức thanh toán</h3>
+            <div class="box-border">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4>Bạn là khách hàng mới ?</h4>
+                        <p>Đăng kí với chúng tôi để có thể thanh toán an toàn hơn</p>
+                        <ul>
+                            <li><label><input type="radio" name="radio1">Khách hàng mới</label></li>
+                            <li><label><input type="radio" name="radio1">Đã có tài khoản</label></li>
+                        </ul>
+                        <br>
+                        <h4>Tại sao bạn cần có tài khoản ?</h4>
+                        <p><i class="fa fa-check-circle text-primary"></i> Thanh toán nhanh và dễ dàng hơn</p>
+                        <p><i class="fa fa-check-circle text-primary"></i> Dễ dàng kiểm tra hóa đơn và xác thực tình trạng mua hàng</p>
+                         <a href="#detail-order" id="step-1"><button class="button">Tiếp tục</button></a>
                     </div>
-                    @endif
+                    <div class="col-sm-6">
+                        <h4>Đăng nhập</h4>
+                        <p>Bạn đã có tài khoản, hãy điền đầy đủ thông tin :</p>
+                        <label>Địa chỉ Email</label>
+                        <input type="text" class="form-control input">
+                        <label>Mật khẩu</label>
+                        <input type="password" class="form-control input">
+                        <p><a href="#">Quên mật khẩu?</a></p>
+                        <a href="#"><button class="button">Đăng nhập</button></a>
+                    </div>
+
+                </div>
             </div>
-            @if ($product)
-            <div class="order-detail-content">
-                <table class="table table-bordered table-responsive cart_summary">
+            </div>
+            <div id="detail-order"></div><br><br><br>
+            <div id="run-detail-order" style="display:none">
+            <h3 class="checkout-sep" >2. Thông tin đặt hàng</h3>
+            <div class="box-border">
+                <ul>
+                    <li class="row">
+                        <div class="col-sm-6">
+                            <label for="first_name" class="required">First Name</label>
+                            <input type="text" class="input form-control" name="" id="first_name">
+                        </div><!--/ [col] -->
+                        <div class="col-sm-6">
+                            <label for="last_name" class="required">Last Name</label>
+                            <input type="text" name="" class="input form-control" id="last_name">
+                        </div><!--/ [col] -->
+                    </li><!--/ .row -->
+                    <li class="row">
+                      
+                        <div class="col-sm-6">
+                            <label for="email_address" class="required">Email Address</label>
+                            <input type="text" class="input form-control" name="" id="email_address">
+                        </div><!--/ [col] -->
+                    </li><!--/ .row -->
+                    <li class="row"> 
+                        <div class="col-xs-12">
+
+                            <label for="address" class="required">Địa chỉ</label>
+                            <input type="text" class="input form-control" name="" id="address">
+
+                        </div><!--/ [col] -->
+
+                    </li><!-- / .row -->
+
+                    <li class="row">
+
+                        <div class="col-sm-6">
+                            
+                            <label for="city" class="required">Thành Phố</label>
+                            <input class="input form-control" type="text" name="" id="city">
+
+                        </div><!--/ [col] -->
+
+                        <div class="col-sm-6">
+                            <label for="city" class="required">Số Điện Thoại</label>
+                            <input class="input form-control" type="text" name="" id="city">
+                        </div><!--/ [col] -->
+                    </li><!--/ .row -->
+
+                 
+                    <li>
+                        <button class="button">Tiếp Tục</button>
+                    </li>
+                </ul>
+            </div>
+            </div>
+            <h3 class="checkout-sep">3. Phương thức thanh toán</h3>
+            <div class="box-border">
+                <ul class="shipping_method">
+                    <li>
+                        <p class="subcaption bold">Free Shipping</p>
+                        <label for="radio_button_3"><input type="radio" checked name="radio_3" id="radio_button_3">Free $0</label>
+                    </li>
+
+                    <li>
+                        <p class="subcaption bold">Chuyển khoản</p>
+                        <label for="radio_button_4"><input type="radio" name="radio_3" id="radio_button_4"> Standard Shipping $5.00</label>
+                    </li>
+                </ul>
+                <button class="button">Tiếp tục</button>
+            </div>
+            <h3 class="checkout-sep">5. Xác nhận đơn hàng</h3>
+            <div class="box-border">
+           		<table class="table table-bordered table-responsive cart_summary">
                     <thead>
                         <tr>
                             <th class="cart_product">Sản Phẩm</th>
@@ -120,7 +192,6 @@
                             <th>Giá tiền</th>
                             <th>Số lượng</th>
                             <th>Tổng tiền</th>
-                            <th  class="action"><i class="fa fa-trash-o"></i></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -149,7 +220,7 @@
                             <td class="cart_avail"><span class="label label-success">Còn hàng</span></td>
                             <td class="price"><span>{{number_format($products->price)}} VNĐ</span></td>
                             <td class="qty">
-                                <input class="form-control input-sm" type="number" name="count[]" value="{{$products->count}}">
+                                <input class="form-control input-sm" type="number" name="count[]" value="{{$products->count}}" disabled>
                                 <input type="hidden" name="id[]" value="{{$products->id}}"/>
                             </td>
                             <td class="price">
@@ -159,9 +230,6 @@
                                 ?>
                             </td>
                             <td class="price" style="display:none"><span>{{$products->price * $products->count}}</span></td>
-                            <td class="action">
-                                <a href="javascript:void(0)" data="{{$products->id}}" onclick = "delete_product(this)">Xóa sản phẩm</a>
-                            </td>
                         </tr>
                      @endforeach  
                     </tbody>
@@ -182,7 +250,7 @@
                             <td colspan="2"> 
 
                                 <strong id="total_price">
-                                    @if($data_coupon)
+                                    @if(isset($data_coupon))
                                     @foreach($data_coupon as $k_coupon => $v_coupon)
                                     <?php 
                                     $count -= ($count*$v_coupon)/100;
@@ -198,30 +266,21 @@
                         </tr>
                         <tr>
                         <td colspan="10">
-                            <div class="coupon" <?php if($data_coupon){echo 'style="display:none"';}?>>
-                                {{ Form::open(['url' => ['update-coupon']])}}
-                                 <input required type="text" class="label-succes" style="padding: 0;height: 34px;width: 190px; border:solid 1px #DAD2D2; padding: 0 15px;" id="coupon_code" name="coupon" placeholder="Nhập mã giảm giá"> 
-                                 <input type="submit" class="button" name="apply_coupon" value="Áp dụng">
-                                {{Form::close()}}
-                            </div>
+                            
                             <div class="cfr-coupon">
-                            @if($data_coupon)                               
+                            @if(isset($data_coupon))                               
                                 @foreach($data_coupon as $k_coupon => $v_coupon)
                                 <i>(Mã giảm giá : {{$k_coupon}})</i> - 
-                                {{$v_coupon}}% <a href="javascript:void(0)" data="{{$k_coupon}}" onclick="delete_coupon(this)">x</a>
+                                {{$v_coupon}}%
                                 @endforeach
                             @endif
                             </div>
                         </td>
                         </tr>
                     </tfoot>    
-                </table>
-                <div class="cart_navigation">
-                    <a class="prev-btn btn-warning" href="{{URL::to('/')}}">Tiếp tục mua hàng</a>
-                    <a class="next-btn" href="{{URL::to('/order')}}">Tiến hành thanh toán</a>
-                </div>
+                </table>    	
+                <button class="button pull-right">Đồng ý</button>
             </div>
-            @endif
         </div>
     </div>
 </div>
