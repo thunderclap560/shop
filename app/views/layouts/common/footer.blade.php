@@ -253,8 +253,26 @@
         }
     }   
     $(document).ready(function(){
+        @if(Session::has('order'))
+        alert("{{Session::get('order')}}");
+        @endif
+        @if (Request::segment(1) == 'order')
+            @if(count($errors->all()) != 0)
+            $("#detail-order").fadeIn(900);
+                $('html, body').animate({
+                        scrollTop: $("#detail-order").offset().top
+                    }, 900);
+            @endif
+        @endif
         $("#step-1").click(function(){
-            $("#run-detail-order").fadeIn(900);
+            if ($(".have-account").is(":checked")) {
+                $("#detail-order").fadeIn(900);
+                $('html, body').animate({
+                        scrollTop: $("#detail-order").offset().top
+                    }, 900);
+            }else{
+                $(".login-register").fadeIn(900);
+            }
         });
         $(".reply-each").on('click',function(){
             var data = $(this).attr('data');

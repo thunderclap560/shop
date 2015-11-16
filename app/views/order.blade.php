@@ -65,6 +65,7 @@
 
 @stop
 @section('main')
+@if($product)
 <!-- page wapper-->
 <div class="columns-container">
     <div class="container" id="columns">
@@ -89,16 +90,16 @@
                         <h4>Bạn là khách hàng mới ?</h4>
                         <p>Đăng kí với chúng tôi để có thể thanh toán an toàn hơn</p>
                         <ul>
-                            <li><label><input type="radio" name="radio1">Khách hàng mới</label></li>
-                            <li><label><input type="radio" name="radio1">Đã có tài khoản</label></li>
+                            <li><label><input type="radio" name="radio1" class="have-account">Khách hàng mới</label></li>
+                            <li><label><input type="radio" name="radio1" >Đã có tài khoản</label></li>
                         </ul>
                         <br>
                         <h4>Tại sao bạn cần có tài khoản ?</h4>
                         <p><i class="fa fa-check-circle text-primary"></i> Thanh toán nhanh và dễ dàng hơn</p>
                         <p><i class="fa fa-check-circle text-primary"></i> Dễ dàng kiểm tra hóa đơn và xác thực tình trạng mua hàng</p>
-                         <a href="#detail-order" id="step-1"><button class="button">Tiếp tục</button></a>
+                         <a href="javascript:void(0)" id="step-1"><button class="button">Tiếp tục</button></a>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 login-register" style="display:none">
                         <h4>Đăng nhập</h4>
                         <p>Bạn đã có tài khoản, hãy điền đầy đủ thông tin :</p>
                         <label>Địa chỉ Email</label>
@@ -112,56 +113,55 @@
                 </div>
             </div>
             </div>
-            <div id="detail-order"></div><br><br><br>
-            <div id="run-detail-order" style="display:none">
+
+            <div id="detail-order" style="display:none">
+                            <br><br><br><br><br>
+            <div id="run-detail-order" >
             <h3 class="checkout-sep" >2. Thông tin đặt hàng</h3>
             <div class="box-border">
+                 {{ Form::open(['url' => ['order-add'],'id'=>'order-form'])}}
                 <ul>
                     <li class="row">
                         <div class="col-sm-6">
                             <label for="first_name" class="required">First Name</label>
-                            <input type="text" class="input form-control" name="" id="first_name">
+                            {{ Form::text('firstname', null, ['class' => 'input form-control','placeholder'=>'Nhập họ của bạn ']) }}
+                            <span style="color:red">{{$errors->first('firstname')}} </span>
                         </div><!--/ [col] -->
                         <div class="col-sm-6">
                             <label for="last_name" class="required">Last Name</label>
-                            <input type="text" name="" class="input form-control" id="last_name">
+                            {{ Form::text('lastname', null, ['class' => 'input form-control','placeholder'=>'Nhập tên của bạn ']) }}
+                            <span style="color:red">{{$errors->first('lastname')}} </span>
                         </div><!--/ [col] -->
                     </li><!--/ .row -->
-                    <li class="row">
-                      
+                    <li class="row">                      
                         <div class="col-sm-6">
                             <label for="email_address" class="required">Email Address</label>
-                            <input type="text" class="input form-control" name="" id="email_address">
+                            {{ Form::text('email', null, ['class' => 'input form-control','placeholder'=>'Nhập địa chỉ email của bạn ']) }}
+                            <span style="color:red">{{$errors->first('email')}} </span>
                         </div><!--/ [col] -->
                     </li><!--/ .row -->
                     <li class="row"> 
                         <div class="col-xs-12">
-
                             <label for="address" class="required">Địa chỉ</label>
-                            <input type="text" class="input form-control" name="" id="address">
-
+                            {{ Form::text('address', null, ['class' => 'input form-control','placeholder'=>'Nhập địa chỉ giao hàng của bạn ']) }}
+                            <span style="color:red">{{$errors->first('address')}} </span>
                         </div><!--/ [col] -->
-
                     </li><!-- / .row -->
 
                     <li class="row">
-
-                        <div class="col-sm-6">
-                            
+                        <div class="col-sm-6">                     
                             <label for="city" class="required">Thành Phố</label>
-                            <input class="input form-control" type="text" name="" id="city">
-
+                           {{ Form::text('country', null, ['class' => 'input form-control','placeholder'=>'Nhập thành phố của bạn ']) }}
+                        <span style="color:red">{{$errors->first('country')}} </span>
                         </div><!--/ [col] -->
-
                         <div class="col-sm-6">
                             <label for="city" class="required">Số Điện Thoại</label>
-                            <input class="input form-control" type="text" name="" id="city">
-                        </div><!--/ [col] -->
-                    </li><!--/ .row -->
+                         {{ Form::text('phone', null, ['class' => 'input form-control','placeholder'=>'Nhập số điện thoại của bạn ']) }}
+                                                <span style="color:red">{{$errors->first('phone')}} </span>
 
-                 
+                        </div><!--/ [col] -->
+                    </li><!--/ .row -->               
                     <li>
-                        <button class="button">Tiếp Tục</button>
                     </li>
                 </ul>
             </div>
@@ -171,15 +171,14 @@
                 <ul class="shipping_method">
                     <li>
                         <p class="subcaption bold">Free Shipping</p>
-                        <label for="radio_button_3"><input type="radio" checked name="radio_3" id="radio_button_3">Free $0</label>
+                        <label for="radio_button_3"><input type="radio" checked name="type" id="radio_button_3" value="0">Free $0</label>
                     </li>
 
                     <li>
                         <p class="subcaption bold">Chuyển khoản</p>
-                        <label for="radio_button_4"><input type="radio" name="radio_3" id="radio_button_4"> Standard Shipping $5.00</label>
+                        <label for="radio_button_4"><input type="radio" name="type" id="radio_button_4" value="1"> Standard Shipping $5.00</label>
                     </li>
                 </ul>
-                <button class="button">Tiếp tục</button>
             </div>
             <h3 class="checkout-sep">5. Xác nhận đơn hàng</h3>
             <div class="box-border">
@@ -219,9 +218,9 @@
                             </td>
                             <td class="cart_avail"><span class="label label-success">Còn hàng</span></td>
                             <td class="price"><span>{{number_format($products->price)}} VNĐ</span></td>
+                            <input type="hidden" name="price[{{$products->id}}]" value ="{{$products->count}}"/>
                             <td class="qty">
                                 <input class="form-control input-sm" type="number" name="count[]" value="{{$products->count}}" disabled>
-                                <input type="hidden" name="id[]" value="{{$products->id}}"/>
                             </td>
                             <td class="price">
                                 <span>{{number_format($products->price * $products->count)}} VNĐ</span>
@@ -233,7 +232,6 @@
                         </tr>
                      @endforeach  
                     </tbody>
-                    {{ Form::close()  }}
                     <tfoot>
                         <tr>
                             <td colspan="2" rowspan="2"></td>
@@ -250,15 +248,18 @@
                             <td colspan="2"> 
 
                                 <strong id="total_price">
-                                    @if(isset($data_coupon))
+                                    @if($data_coupon)
                                     @foreach($data_coupon as $k_coupon => $v_coupon)
                                     <?php 
                                     $count -= ($count*$v_coupon)/100;
                                     echo number_format($count);
-                                    ?> VNĐ     
+
+                                    ?> VNĐ
+                                    <input type="hidden" name="total" value="{{$count}}">     
                                     @endforeach
                                     @else
                                     {{number_format($count)}} VNĐ
+                                    <input type="hidden" name="total" value="{{$count}}">
                                     @endif
                                 </strong>
                             </td>
@@ -279,9 +280,21 @@
                         </tr>
                     </tfoot>    
                 </table>    	
-                <button class="button pull-right">Đồng ý</button>
+                <button  class="button pull-right">Đồng ý</button>
+                                    {{ Form::close()  }}
+
             </div>
+        </div>
         </div>
     </div>
 </div>
+@else
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <p>Bạn chưa mua sản phẩm nào !</p>
+        </div>
+    </div>
+</div>
+@endif
 @stop

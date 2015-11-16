@@ -257,5 +257,56 @@ class HomeController extends BaseController {
             'data_coupon'=>$data_coupon
             ]);
     }
+    public function postOrderAdd(){
+    $validator = Validator::make(Input::all(), User::$order);
+    $niceNames = array(
+    'email' => 'Địa chỉ email',
+    'address'=>'Địa chỉ',
+    'country'=>'Thành Phố',
+    'phone'=>'Số Điện Thoại'
+    );
+    $validator->setAttributeNames($niceNames); 
+    if ($validator->passes()) {
+            $data = new User;
+            $data->firstname = Input::get('firstname');
+            $data->lastname  = Input::get('lastname');
+            $data->email  = Input::get('email');
+            $data->address  = Input::get('address');
+            $data->country  = Input::get('country');
+            $data->phone  = Input::get('phone');
+            $data->roles  = 0;
+            $data->save();
+            if($data->save()){
+                $order = new Order;
+                $order->user_id =  DB::table('users')->max('id');
+                $order->total = Input::get('total');
+                $order->type = Input::get('type');
+                $order->valid = 0;
+                $order->name = 0;
+                $order->save();
+                if($order->save()){
+                    foreach(Input::get('price') as $k => $v){
+                        $order_detail = new Detail;
+                        $order_detail->qty = $v ;
+                        $order_detail->product_id =$k;
+                        $order_detail->order_id =  DB::table('orders')->max('id');
+                        $order_detail->save();
+                    }                    
+                     
+                }
+
+            }
+            if(Session::has('coupon') != null){
+                $coupon = Coupon::find(Session::get('coupon')[0]->id);
+                $coupon->delete();
+                Session::forget('coupon');
+            }
+            Session::forget('product');
+            return Redirect::to('/')->with('order', 'Gửi đơn hàng thành công!');
+        }else{
+            return Redirect::to('/order')->withErrors($validator)->withInput();
+        }
+
+    }
 
 }
