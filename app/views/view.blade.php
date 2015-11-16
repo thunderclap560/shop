@@ -325,8 +325,8 @@
                                         <input type="hidden" id="id_cart" value="{{$thum_off[0]->id}}">
                                     </div>
                                     <div class="button-group">
-                                        <a class="wishlist" href="#"><i class="fa fa-heart-o"></i>
-                                        <br>Wishlist</a>
+                                        <a class="wishlist like" href="javascript:void(0)"><i class="fa fa-heart-o"></i>
+                                        <br>Yêu thích</a>
                                         <a class="compare" href="#"><i class="fa fa-signal"></i>
                                         <br>        
                                         So sánh</a>

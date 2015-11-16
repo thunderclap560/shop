@@ -257,6 +257,20 @@ class HomeController extends BaseController {
             'data_coupon'=>$data_coupon
             ]);
     }
+    public function getWishList(){
+        $ads = Banners::where('parent_id','!=','0')->get();
+        $latest = Product::orderBy('id','desc')->get();
+         return View::make('wish')->with([
+            'config'=> $this->config,
+            'category'=>$this->category,
+            'menu_home'=>$this->menu_home,
+            'menu'=>$this->menu,
+            'slide_footer'=>$this->slide_footer,
+            'title'=>'Sản Phẩm Yêu Thích',
+            'ads'=>$ads,
+            'latest'=>$latest,
+            ]);
+    }
     public function postOrderAdd(){
     $validator = Validator::make(Input::all(), User::$order);
     $niceNames = array(
