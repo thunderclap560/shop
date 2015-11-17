@@ -54,7 +54,42 @@ Route::get('login/fb/callback', function() {
     Auth::login($users);
     return Redirect::to('/')->with('message', 'Đăng nhập Facebook Thành Công');
 });
-//
+//Google
+Route::get('login/google',function(){
+    $code = Input::get( 'code' );
+
+    // get google service
+    $googleService = OAuth::consumer( 'Google' );
+
+    // check if code is valid
+
+    // if code is provided get user data and sign in
+    if ( !empty( $code ) ) {
+
+        // This was a callback request from google, get the token
+        $token = $googleService->requestAccessToken( $code );
+
+        // Send a request with it
+        $result = json_decode( $googleService->request( 'https://www.googleapis.com/oauth2/v1/userinfo' ), true );
+
+        $message = 'Your unique Google user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
+        echo $message. "<br/>";
+
+        //Var_dump
+        //display whole array().
+        dd($result);
+
+    }
+    // if not ask for permission first
+    else {
+        // get googleService authorization
+        $url = $googleService->getAuthorizationUri();
+
+        // return to google login url
+        return Redirect::to( (string)$url );
+    }
+});
+
 Route::group(['prefix'=>'/admin'],function(){
     Route::get('/dashboard','DashboardController@index');
     Route::get('/config/{id}',array('uses'=>'DashboardController@config'));
