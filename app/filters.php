@@ -35,18 +35,23 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest())
-	{
-		if (Request::ajax())
+	if(Auth::user()->roles == 1) {
+		if (Auth::guest())
 		{
-			return Response::make('Unauthorized', 401);
+			if (Request::ajax())
+			{
+				return Response::make('Unauthorized', 401);
+			}
+			else
+			{
+				return Redirect::guest('users/login');
+			}
+			
 		}
-		else
-		{
-			return Redirect::guest('users/login');
-		}
-		
+	}else{
+		return Response::make('Không Tìm Thấy', 401);
 	}
+
 });
 
 

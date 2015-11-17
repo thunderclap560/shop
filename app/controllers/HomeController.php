@@ -312,6 +312,32 @@ class HomeController extends BaseController {
             'data'=>$tmp
             ]);
     }
+    public function postOrderAddSpecial(){
+        $order = new Order;
+        $order->user_id =  Auth::id();
+        $order->total = Input::get('total');
+        $order->type = Input::get('type');
+        $order->valid = 0;
+        $order->name = 0;
+        if($order->save()){
+            foreach(Input::get('price') as $k => $v){
+                $order_detail = new Detail;
+                $order_detail->qty = $v ;
+                $order_detail->product_id =$k;
+                $order_detail->order_id =  DB::table('orders')->max('id');
+                $order_detail->save();
+            }                    
+                     
+        }
+        if(Session::has('coupon') != null){
+                $coupon = Coupon::find(Session::get('coupon')[0]->id);
+                $coupon->delete();
+                Session::forget('coupon');
+            }
+            Session::forget('product');
+            return Redirect::to('/')->with('order', 'Gửi đơn hàng thành công!');
+    }
+    
     public function postOrderAdd(){
     $validator = Validator::make(Input::all(), User::$order);
     $niceNames = array(

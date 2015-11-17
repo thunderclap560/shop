@@ -16,6 +16,45 @@
 
 Route::controller('users', 'UsersController');
 
+//Facebook
+Route::get('login/fb', function() {
+    $facebook = new Facebook(Config::get('facebook'));
+    $params = array(
+        'redirect_uri' => url('/login/fb/callback'),
+        'scope' => 'email',
+    );
+    return Redirect::to($facebook->getLoginUrl($params));
+});
+Route::get('login/fb/callback', function() {
+    $code = Input::get('code');
+    if (strlen($code) == 0) return Redirect::to('/')->with('message', 'There was an error communicating with Facebook');
+
+    $facebook = new Facebook(Config::get('facebook'));
+    $uid = $facebook->getUser();
+
+    if ($uid == 0) return Redirect::to('/')->with('message', 'Lỗi xảy ra');
+
+    $me = $facebook->api('/me?fields=id,name,email');
+
+    $user = User::where('email',$me['email'])->get();
+    if(count($user) == 0){
+        $users = new User;
+        $users->firstname = $me['name'];
+        $users->lastname = $me['name'];
+        $users->email = $me['email'];
+        $users->password = Hash::make(Str::random());
+        $users->phone = Hash::make(Str::random());
+        $users->country = Hash::make(Str::random());
+        $users->address = Hash::make(Str::random());
+        $users->roles = 0;
+        $users->save();
+    }else{
+         $users = User::find($user[0]->id);
+    }
+    Auth::login($users);
+    return Redirect::to('/')->with('message', 'Đăng nhập Facebook Thành Công');
+});
+//
 Route::group(['prefix'=>'/admin'],function(){
     Route::get('/dashboard','DashboardController@index');
     Route::get('/config/{id}',array('uses'=>'DashboardController@config'));

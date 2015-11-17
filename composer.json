@@ -5,7 +5,8 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"davejamesmiller/laravel-breadcrumbs": "2.*"
+		"davejamesmiller/laravel-breadcrumbs": "2.*",
+		"facebook/php-sdk": "^3.2"
 	},
 	"autoload": {
 		"classmap": [

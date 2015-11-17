@@ -82,8 +82,10 @@
         </h2>
         <!-- ../page heading-->
         <div class="page-content checkout-page">
+            
             <div id="zero-step">
-            <h3 class="checkout-sep">1. Phương thức thanh toán</h3>
+            <h3 class="checkout-sep">1. Đăng nhập tài khoản</h3>
+            @if(Auth::id() == null)
             <div class="box-border">
                 <div class="row">
                     <div class="col-sm-6">
@@ -106,14 +108,20 @@
                         <input type="text" class="form-control input">
                         <label>Mật khẩu</label>
                         <input type="password" class="form-control input">
-                        <p><a href="#">Quên mật khẩu?</a></p>
                         <a href="#"><button class="button">Đăng nhập</button></a>
+
+                        <p><a href="#">Quên mật khẩu?</a></p>
+                        <p><button onclick = "loginfb()" class="btn btn-primary btn-lg btn-block"><i class="fa fa-facebook-official"></i>&nbsp; Login as Facebook</button>
+                         <button class="btn btn-danger btn-lg btn-block"><i class="fa fa-google-plus"></i>&nbsp; Login as Google</button></p>
                     </div>
 
                 </div>
             </div>
+            @else  Đã xác thực tài khoản Facebook cá nhân !</div>
+             @endif
             </div>
-
+           
+            @if(Auth::id() == null)
             <div id="detail-order" style="display:none">
                             <br><br><br><br><br>
             <div id="run-detail-order" >
@@ -238,11 +246,6 @@
                             <td colspan="3">Phí (VAT)</td>
                             <td colspan="2">0 VNĐ</td>
                         </tr>
-                        <?php 
-                        // echo '<pre>';
-                        // print_r();
-                        // echo '</pre>';
-                        ?>
                         <tr>
                             <td colspan="3"><strong>Tổng chi phí</strong></td>
                             <td colspan="2"> 
@@ -281,10 +284,125 @@
                     </tfoot>    
                 </table>    	
                 <button  class="button pull-right">Đồng ý</button>
-                                    {{ Form::close()  }}
-
+                    {{ Form::close() }}
             </div>
         </div>
+        @else
+            <div id="detail-order">
+            <br><br><br>
+             {{ Form::open(['url' => ['order-add-special'],'id'=>'order-form'])}}
+            <h3 class="checkout-sep">2. Phương thức thanh toán</h3>
+            <div class="box-border">
+                <ul class="shipping_method">
+                    <li>
+                        <p class="subcaption bold">Free Shipping</p>
+                        <label for="radio_button_3"><input type="radio" checked name="type" id="radio_button_3" value="0">Free $0</label>
+                    </li>
+
+                    <li>
+                        <p class="subcaption bold">Chuyển khoản</p>
+                        <label for="radio_button_4"><input type="radio" name="type" id="radio_button_4" value="1"> Standard Shipping $5.00</label>
+                    </li>
+                </ul>
+            </div>
+            <h3 class="checkout-sep">3. Xác nhận đơn hàng</h3>
+            <div class="box-border">
+                <table class="table table-bordered table-responsive cart_summary">
+                    <thead>
+                        <tr>
+                            <th class="cart_product">Sản Phẩm</th>
+                            <th>Thông tin</th>
+                            <th>Tình trạng.</th>
+                            <th>Giá tiền</th>
+                            <th>Số lượng</th>
+                            <th>Tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php $count = 0; ?>
+                    @foreach($product as $products)
+                        <tr>
+                            <td class="cart_product">
+                                <a href="#"><img src="{{URL::asset('public/upload/image/'.$products->image)}}" alt="Product"></a>
+                            </td>
+                            <td class="cart_description">
+                                <p class="product-name"><a href="#">{{$products->name}} </a></p>
+                                <small class="cart_ref">Mã sản phẩm : {{$products->code}}</small><br>
+                                <small>
+                                    @if(count(Session::get('color')) != 0)
+                                        @foreach(Session::get('color') as $k_check_color => $v_check_color)
+                                            @if($k_check_color == $products->id)
+                                                <a href="#">Màu sắc : {{$v_check_color}}</a>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        <a href="#">Màu sắc : Không có</a>
+                                    @endif
+                                </small>
+                                <br>   
+                            </td>
+                            <td class="cart_avail"><span class="label label-success">Còn hàng</span></td>
+                            <td class="price"><span>{{number_format($products->price)}} VNĐ</span></td>
+                            <input type="hidden" name="price[{{$products->id}}]" value ="{{$products->count}}"/>
+                            <td class="qty">
+                                <input class="form-control input-sm" type="number" name="count[]" value="{{$products->count}}" disabled>
+                            </td>
+                            <td class="price">
+                                <span>{{number_format($products->price * $products->count)}} VNĐ</span>
+                                <?php 
+                                    $count = $count + ($products->price * $products->count);
+                                ?>
+                            </td>
+                            <td class="price" style="display:none"><span>{{$products->price * $products->count}}</span></td>
+                        </tr>
+                     @endforeach  
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2" rowspan="2"></td>
+                            <td colspan="3">Phí (VAT)</td>
+                            <td colspan="2">0 VNĐ</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong>Tổng chi phí</strong></td>
+                            <td colspan="2"> 
+
+                                <strong id="total_price">
+                                    @if($data_coupon)
+                                    @foreach($data_coupon as $k_coupon => $v_coupon)
+                                    <?php 
+                                    $count -= ($count*$v_coupon)/100;
+                                    echo number_format($count);
+                                    ?> VNĐ
+                                    <input type="hidden" name="total" value="{{$count}}">     
+                                    @endforeach
+                                    @else
+                                    {{number_format($count)}} VNĐ
+                                    <input type="hidden" name="total" value="{{$count}}">
+                                    @endif
+                                </strong>
+                            </td>
+                            <td colspan="2" id="total_price_not" style="display:none"><strong>{{$count}}</strong></td>
+                        </tr>
+                        <tr>
+                        <td colspan="10">                        
+                            <div class="cfr-coupon">
+                            @if(isset($data_coupon))                               
+                                @foreach($data_coupon as $k_coupon => $v_coupon)
+                                <i>(Mã giảm giá : {{$k_coupon}})</i> - 
+                                {{$v_coupon}}%
+                                @endforeach
+                            @endif
+                            </div>
+                        </td>
+                        </tr>
+                    </tfoot>    
+                </table>        
+                <button type="submit" class="button pull-right">Đồng ý</button>
+                                    {{ Form::close() }}
+            </div>
+        </div>
+        @endif
         </div>
     </div>
 </div>
@@ -298,3 +416,8 @@
 </div>
 @endif
 @stop
+<script>
+    function loginfb(){
+        window.location.href = "{{URL::to('login/fb')}}";
+    }
+</script>
