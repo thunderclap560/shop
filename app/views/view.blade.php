@@ -12,6 +12,27 @@
     right:30px;
     position:absolute;
 }
+.btn-add-cart{
+    background-color: #958457;
+}
+#product .pb-right-column .form-option #size_chart{
+    color:#958457;
+}
+#product .pb-right-column .product-price-group .price{
+    color:#958457;
+}
+.products-block .product-price{
+    color:#958457;
+}
+.nav-top-menu{
+    background-color: #958457;
+}
+.box-vertical-megamenus .title {
+   background-color: #4c311d;
+}
+.btn-add-cart:focus, .btn-add-cart:hover {
+    color:none;
+}
 </style>
 <div id="nav-top-menu" class="nav-top-menu">
         <div class="container">

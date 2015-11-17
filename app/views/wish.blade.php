@@ -185,7 +185,7 @@
                         </div> -->
                         <div class="button-action">
                             <button class="button button-sm">Mua hàng</button>
-                            <a href="javascript:void(0)"><i class="fa fa-close"></i></a>
+                            <a href="javascript:void(0)" data='{{$datas->id}}'  onclick="delete_favorite(this)"><i class="fa fa-close"></i></a>
                         </div>
                     </li>
                     @endforeach

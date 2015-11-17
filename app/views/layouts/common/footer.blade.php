@@ -315,11 +315,38 @@
 })
 </script>
 <script>
+    function delete_favorite(data){
+        if (confirm("Bạn có muốn xóa không ? ") == true) {
+            var id = $(data).attr('data');
+            $.get('{{URL::to("favorite-delete")}}',{id:id},function(value){
+                $(data).parent().parent().hide(900);
+                var f = parseInt($(".notify-favorite").text());
+                f--;
+                $(".notify-favorite").text(f)  
+            });
+        }else{
+            return false;
+        }
+    }
     function favorite(data){
         var id = $(data).attr('data');
-        $.get('{{URL::to("favorite-add")}}',{id:id},function(value){
-            
+        if($(data).attr('flag') != 'TRUE'){
+            $(data).attr('flag','TRUE');
+            $.get('{{URL::to("favorite-add")}}',{id:id},function(value){
+            $(data).css('background-color','pink'); 
+            var f = parseInt($(".notify-favorite").text());
+            f++;
+            $(".notify-favorite").text(f)     
         });
+        }else{
+            $(data).attr('flag',' ');
+            $.get('{{URL::to("favorite-delete")}}',{id:id},function(value){
+            $(data).css('background-color','');
+            var f = parseInt($(".notify-favorite").text());
+            f--;
+            $(".notify-favorite").text(f)        
+        });            
+        }              
     }
     function delete_coupon(data){
         if (confirm("Xác nhận không dùng mã giảm giá ?") == true) {

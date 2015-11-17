@@ -37,7 +37,7 @@
 <meta property="og:url" content="http://saokpop.com/">
 </head>
 <?php $action = Route::currentRouteAction();?>
-<body class="<?php if($action == 'HomeController@getIndex') {echo 'home option2';}else{echo 'product-page right-sidebar';}?>">
+<body class="<?php if($action == 'HomeController@getIndex') {echo 'home option2';}else{echo 'option2 product-page right-sidebar';}?>">
 <!-- HEADER -->
 <div id="header" class="header">
     <div class="top-header">

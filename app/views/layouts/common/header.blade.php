@@ -25,7 +25,7 @@
                     $favo = Session::get('favorite');
                     
                     ?>
-                    <span class="notify notify-right"> 
+                    <span class="notify notify-right notify-favorite"> 
                     @if (Session::has('favorite'))
                     {{count($favo)}}
                     @else

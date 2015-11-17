@@ -13,7 +13,7 @@
                     <div class="vertical-menu-content is-home">
                         <ul class="vertical-menu-list">
                         	<style>
-								.icon-menu-next>i{
+								.icon-menu-next .fa{
 									padding-top:10px;
 									width: 30px;
 								}
@@ -85,7 +85,30 @@
                             <div class="left-block">
                                 <a href="{{URL::to('view/'.$late->id)}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$late->image)}}" /></a>
                                 <div class="quick-view">
-                                        <a title="Add to my wishlist" data = '{{$late->id}}' class="heart" href="javascript:void(0)" onclick="favorite(this)"></a>
+                                    <a title="Thêm vào mục yêu thích" data = '{{$late->id}}' class="heart" href="javascript:void(0)" onclick="favorite(this)" 
+                                        style=
+                                        "<?php if(Session::get('favorite') != null){
+                                                    foreach(Session::get('favorite') as $k => $v){
+                                                        if($v == $late->id ){
+                                                            echo 'background-color:pink';
+                                                            break;
+                                                        }
+                                                    }
+                                            }
+                                        ?>" 
+                                        flag=
+                                        "<?php if(Session::get('favorite') != null){
+                                                    foreach(Session::get('favorite') as $k => $v){
+                                                        if($v == $late->id ){
+                                                            echo 'TRUE';
+                                                            break;
+                                                        }
+                                                }
+                                                }else{
+                                                    echo ' ';
+                                        }?>"
+                                    >
+                                    </a>
                                         <a title="Add to compare" class="compare" href="#"></a>
                                         <a title="Quick view" class="search" href="#"></a>
                                 </div>

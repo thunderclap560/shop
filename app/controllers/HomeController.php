@@ -150,9 +150,34 @@ class HomeController extends BaseController {
         // Session::forget('color');
     }
     public function getFavoriteAdd(){
-        $favo = Session::get('favorite');
-        $favo[] = $_GET['id'];
+        $favo = Session::get('favorite');   
+        $tmp = FALSE;     
+        if($favo != null){
+            foreach($favo as $k => $v){
+                     if($v == $_GET['id']){
+                        $tmp = TRUE;
+                        break;
+                     }
+            }
+            if($tmp == FALSE){
+                $favo[] = $_GET['id'];   
+            }
+        }else{
+         $favo[] = $_GET['id'];         
+        }  
         Session::put('favorite',$favo);
+    }
+    public function getFavoriteDelete(){
+        $favo = Session::get('favorite');
+        foreach($favo as $k => $favos){
+            if($favos == $_GET['id']){
+            unset($favo[$k]);
+        }}
+        if(count($favo) == 0){
+        Session::forget('favorite');
+        }else{
+        Session::put('favorite',$favo);  
+        }       
     }
     public function getCouponDelete(){
         
@@ -263,13 +288,17 @@ class HomeController extends BaseController {
             ]);
     }
     public function getWishList(){
+       //Session::forget('favorite');
         $ads = Banners::where('parent_id','!=','0')->get();
         $latest = Product::orderBy('id','desc')->get();
         $product = Session::get('favorite');
         $tmp = array();
-        for($i=0;$i<count($product);$i++){
-            $data = Product::find($product[$i]);
+        if($product){
+        foreach($product as $id){
+            $data = Product::find($id);
             $tmp[]=$data;
+        }}else{
+            $product= array();
         }
          return View::make('wish')->with([
             'config'=> $this->config,
