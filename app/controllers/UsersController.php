@@ -19,24 +19,55 @@ class UsersController extends BaseController {
 	}
 
 	public function getLogout() {
-    Auth::logout();
-    return Redirect::to('users/login')->with('message', 'Bạn đã đăng xuất !');
+    if(Auth::user()->roles == 1){
+		Auth::logout();
+    	return Redirect::to('users/login')->with('message', 'Bạn đã đăng xuất !');
+    }else{
+    	Auth::logout();
+    	return Redirect::to('/')->with('order', 'Bạn đã đăng xuất !');
+    }
+    
 }
 
 	public function postSignin() {
-        if (Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password')))) {
-			    return Redirect::to('admin/dashboard')->with('message', 'Đăng nhập thành công !');
-			} else {
-			    return Redirect::to('users/login')
-			        ->with('message', 'Lỗi đăng nhập !')
-			        ->withInput();
-			}     
+		if(Input::get('type') == 1){
+
+			if (Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password')))) {
+				    return Redirect::to('order')->with('login', 'Đăng nhập thành công !');
+				} else {
+				    return Redirect::to('order')
+				        ->with('login', 'Lỗi đăng nhập !')
+				        ->withInput();
+				}  
+	          
+	}elseif(Input::get('type') == 2){
+
+			if (Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password')))) {
+				    return Redirect::to('/')->with('order', 'Đăng nhập thành công !');
+				} else {
+				    return Redirect::to('/login')
+				        ->with('auth', 'Lỗi đăng nhập !')
+				        ->withInput();
+				}  
+
+	}else{
+			if (Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password')))) {
+				    return Redirect::to('admin/dashboard')->with('message', 'Đăng nhập thành công !');
+				} else {
+				    return Redirect::to('users/login')
+				        ->with('message', 'Lỗi đăng nhập !')
+				        ->withInput();
+				}   
 	}
+}
 
 	// public function getDashboard() {
  //    $this->layout->content = View::make('users.dashboard');
 	// }
 
+	public function postChange(){
+		
+	}
 	public function postCreate() {
       $validator = Validator::make(Input::all(), User::$rules);
  
@@ -47,9 +78,9 @@ class UsersController extends BaseController {
 	    $user->email = Input::get('email');
 	    $user->password = Hash::make(Input::get('password'));
 	    $user->save();
-	    return Redirect::to('users/login')->with('message', 'Cập nhật thành công!');
+	    return Redirect::to('login')->with('auth', 'Tạo tài khoản thành công ! hãy đăng nhập');
     } else {
-        return Redirect::to('users/register')->with('message', 'Lỗi cập nhật')->withErrors($validator)->withInput();
+        return Redirect::to('register')->with('register', 'Lỗi xảy ra')->withErrors($validator)->withInput();
  
     }
 	}    	

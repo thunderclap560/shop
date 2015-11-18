@@ -93,7 +93,7 @@
                         <p>Đăng kí với chúng tôi để có thể thanh toán an toàn hơn</p>
                         <ul>
                             <li><label><input type="radio" name="radio1" class="have-account">Khách hàng mới</label></li>
-                            <li><label><input type="radio" name="radio1" >Đã có tài khoản</label></li>
+                            <li><label><input type="radio" name="radio1" class="none-account" >Đã có tài khoản</label></li>
                         </ul>
                         <br>
                         <h4>Tại sao bạn cần có tài khoản ?</h4>
@@ -101,23 +101,29 @@
                         <p><i class="fa fa-check-circle text-primary"></i> Dễ dàng kiểm tra hóa đơn và xác thực tình trạng mua hàng</p>
                          <a href="javascript:void(0)" id="step-1"><button class="button">Tiếp tục</button></a>
                     </div>
+                    {{ Form::open(array('url'=>'users/signin'))}}
                     <div class="col-sm-6 login-register" style="display:none">
                         <h4>Đăng nhập</h4>
                         <p>Bạn đã có tài khoản, hãy điền đầy đủ thông tin :</p>
+                         @if(Session::has('login'))
+                        <p style="color:red">{{ Session::get('login') }}</p>
+                        @endif
                         <label>Địa chỉ Email</label>
-                        <input type="text" class="form-control input">
+                        <input type="hidden" name="type" value='1'/>
+                        {{ Form::text('email',null,array('class'=>'form-control input','placeholder'=>'Nhập địa chỉ Email của bạn'))}}
                         <label>Mật khẩu</label>
-                        <input type="password" class="form-control input">
-                        <a href="#"><button class="button">Đăng nhập</button></a>
-
+                        {{ Form::password('password',array('class'=>'form-control input','placeholder'=>'Nhập mật khẩu của bạn'))}}
+                        <a href="#">
+                            {{ Form::submit('Đăng nhập', array('class'=>'button'))}}{{ Form::close() }}
+                        </a>                       
                         <p><a href="#">Quên mật khẩu?</a></p>
-                        <p><button onclick = "loginfb()" class="btn btn-primary btn-lg btn-block"><i class="fa fa-facebook-official"></i>&nbsp; Login as Facebook</button>
-                         <button class="btn btn-danger btn-lg btn-block"><i class="fa fa-google-plus"></i>&nbsp; Login as Google</button></p>
+                        <p><button type="button" onclick = "loginfb(1)" class="btn btn-primary btn-lg btn-block"><i class="fa fa-facebook-official"></i>&nbsp; Login as Facebook</button>
+                         <button type="button" onclick = "loginfb(2)" class="btn btn-danger btn-lg btn-block"><i class="fa fa-google-plus"></i>&nbsp; Login as Google</button></p>
                     </div>
-
+                    
                 </div>
             </div>
-            @else  Đã xác thực tài khoản Facebook cá nhân !</div>
+            @else  <p style="color:green"><i class="fa fa-check-circle" style="padding-top:3px"></i> Đã xác thực tài khoản cá nhân !</p></div>
              @endif
             </div>
            
@@ -179,7 +185,7 @@
                 <ul class="shipping_method">
                     <li>
                         <p class="subcaption bold">Free Shipping</p>
-                        <label for="radio_button_3"><input type="radio" checked name="type" id="radio_button_3" value="0">Free $0</label>
+                        <label for="radio_button_3"><input type="radio" checked name="type" id="radio_button_3" value="0"> &nbsp;Free $0</label>
                     </li>
 
                     <li>
@@ -417,7 +423,11 @@
 @endif
 @stop
 <script>
-    function loginfb(){
-        window.location.href = "{{URL::to('login/fb')}}";
+    function loginfb(data){
+        if(data == 1){
+            window.location.href = "{{URL::to('login/fb')}}";
+        }else{
+            window.location.href = "{{URL::to('login/google')}}";
+        }       
     }
 </script>

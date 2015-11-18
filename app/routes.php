@@ -16,6 +16,8 @@
 
 Route::controller('users', 'UsersController');
 
+Route::get('/account',['before'=>'filter.auth','uses'=>'HomeController@account']);
+
 //Facebook
 Route::get('login/fb', function() {
     $facebook = new Facebook(Config::get('facebook'));
@@ -52,7 +54,7 @@ Route::get('login/fb/callback', function() {
          $users = User::find($user[0]->id);
     }
     Auth::login($users);
-    return Redirect::to('/')->with('message', 'Đăng nhập Facebook Thành Công');
+    return Redirect::to('/')->with('order', 'Đăng nhập Facebook Thành Công');
 });
 //Google
 Route::get('login/google',function(){
@@ -70,14 +72,25 @@ Route::get('login/google',function(){
         $token = $googleService->requestAccessToken( $code );
 
         // Send a request with it
-        $result = json_decode( $googleService->request( 'https://www.googleapis.com/oauth2/v1/userinfo' ), true );
+        $me = json_decode( $googleService->request( 'https://www.googleapis.com/oauth2/v1/userinfo' ), true );
 
-        $message = 'Your unique Google user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
-        echo $message. "<br/>";
-
-        //Var_dump
-        //display whole array().
-        dd($result);
+        $user = User::where('email',$me['email'])->get();
+    if(count($user) == 0){
+        $users = new User;
+        $users->firstname = $me['name'];
+        $users->lastname = $me['name'];
+        $users->email = $me['email'];
+        $users->password = Hash::make(Str::random());
+        $users->phone = Hash::make(Str::random());
+        $users->country = Hash::make(Str::random());
+        $users->address = Hash::make(Str::random());
+        $users->roles = 0;
+        $users->save();
+    }else{
+         $users = User::find($user[0]->id);
+    }
+    Auth::login($users);
+    return Redirect::to('/')->with('order', 'Đăng nhập Google Thành Công');
 
     }
     // if not ask for permission first

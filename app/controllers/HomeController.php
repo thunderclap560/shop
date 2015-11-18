@@ -20,6 +20,21 @@ class HomeController extends BaseController {
 		$this->news = News::all();
 	}
 
+    public function account(){
+        $ads = Banners::where('parent_id','!=','0')->get();
+        $latest = Product::orderBy('id','desc')->get();
+         return View::make('account')->with([
+            'config'=> $this->config,
+            'category'=>$this->category,
+            'menu_home'=>$this->menu_home,
+            'menu'=>$this->menu,
+            'slide_footer'=>$this->slide_footer,
+            'title'=>'Thông tin tài khoản',
+            'ads'=>$ads,
+            'latest'=>$latest,
+            ]);
+    }
+
 	private function getAllCategories($categories) {
         $allCategories = array();
 
@@ -310,6 +325,26 @@ class HomeController extends BaseController {
             'ads'=>$ads,
             'latest'=>$latest,
             'data'=>$tmp
+            ]);
+    }
+    public function getLogin(){
+        return View::make('login')->with([
+            'config'=> $this->config,
+            'category'=>$this->category,
+            'menu_home'=>$this->menu_home,
+            'menu'=>$this->menu,
+            'slide_footer'=>$this->slide_footer,
+            'title'=>'Đăng nhập tài khoản',
+            ]);
+    }
+    public function getRegister(){
+         return View::make('register')->with([
+            'config'=> $this->config,
+            'category'=>$this->category,
+            'menu_home'=>$this->menu_home,
+            'menu'=>$this->menu,
+            'slide_footer'=>$this->slide_footer,
+            'title'=>'Đăng kí tài khoản',
             ]);
     }
     public function postOrderAddSpecial(){

@@ -1,0 +1,209 @@
+@extends('layouts.front')
+@section('content')
+<div id="nav-top-menu" class="nav-top-menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3" id="box-vertical-megamenus">
+                    <div class="box-vertical-megamenus">
+                    <h4 class="title">
+                        <span class="title-menu">Lĩnh vực</span>
+                        <span class="btn-open-mobile pull-right home-page"><i class="fa fa-bars"></i></span>
+                    </h4>
+                    <div class="vertical-menu-content is-home">
+                        <ul class="vertical-menu-list">
+                        	<style>
+								.icon-menu-next>i{
+									padding-top:10px;
+									width: 30px;
+								}
+                        	</style>
+                        	<?php foreach($menu_home as $v_menu_cate){ ?>
+                        	<li><a href="#" <?php if(isset($v_menu_cate['sub'])){echo 'class="parent"';} ?>><span class="icon-menu-next"><?php echo $v_menu_cate['icon'];?></span> <?php echo $v_menu_cate['name'];?></a>
+								<?php if(isset($v_menu_cate['sub'])){ ?>	
+									<div class="vertical-dropdown-menu">
+		                                    <div class="vertical-groups col-sm-12">
+		                                        <?php foreach($v_menu_cate['sub'] as $k_sub => $v_sub){ ?>
+		                                        <div class="mega-group col-sm-4">
+		                                            <h4 class="mega-group-header"><span>{{$v_sub['name']}}</span></h4>
+		                                            <?php if(isset($v_sub['product'])){?>
+		                                            <ul class="group-link-default">
+														<?php foreach($v_sub['product'] as $k_product_menu){?>
+		                                                <li><a href="#"><?php echo $k_product_menu->name;?></a></li>
+		                                              	<?php } ?>
+		                                            </ul>
+		                                            <?php } ?>
+		                                        </div>
+		                                        <?php }?>
+		                                    </div>
+		                            </div>		
+								<?php } ?>
+                        	<?php } ?>
+                        	</li>
+<!--                             <li><a href="#"><img class="icon-menu" alt="Funky roots" src="public/front/assets/data/12.png">Electronics</a></li>
+ -->		                   
+                        </ul>
+                        <div class="all-category"><span class="open-cate">All Categories</span></div>
+                    </div>
+                </div>
+                </div>
+                    @include('layouts.common.menu')
+
+            </div>
+            <!-- userinfo on top-->
+            <div id="form-search-opntop">
+            </div>
+            <!-- userinfo on top-->
+            <div id="user-info-opntop">
+            </div>
+            <!-- CART ICON ON MMENU -->
+            <div id="shopping-cart-box-ontop">
+                <i class="fa fa-shopping-cart"></i>
+                <div class="shopping-cart-box-ontop-content"></div>
+            </div>
+        </div>
+    </div>
+
+@stop
+@section('main')
+
+<div class="columns-container">
+    <div class="container" id="columns">
+        <!-- breadcrumb -->
+        <div class="breadcrumb clearfix">
+            <a class="home" href="/" title="Return to Home">Trang chủ</a>
+            <span class="navigation-pipe">&nbsp;</span>
+            <a href="#" title="Return to Home">Tài khoản của bạn</a>
+        </div>
+        <!-- ./breadcrumb -->
+        <!-- row -->
+        <div class="row">
+            <!-- Left colunm -->
+            <div class="column col-xs-12 col-sm-3" id="left_column">
+                <!-- block best sellers -->
+                <div class="block left-module">
+                    <p class="title_block">Sản Phẩm Mới</p>
+                    <div class="block_content">
+                       <ul class="products-block best-sell">
+                                <?php foreach($latest as $late){?>
+                                <li>
+                                    <div class="products-block-left">
+                                        <a href="#">
+                                            <img src="{{URL::asset('public/upload/image/'.$late->image)}}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="products-block-right">
+                                        <p class="product-name">
+                                            <a href="#">{{$late->name}}</a>
+                                        </p>
+                                        <p class="product-price">{{number_format($late->price)}} VNĐ</p>
+                                        <!-- <p class="product-star">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-half-o"></i>
+                                        </p> -->
+                                    </div>
+                                </li>
+                               <?php } ?>
+                            </ul>
+                    </div>
+                </div>
+                <!-- ./block best sellers  -->
+                
+                <!-- left silide -->
+                <div class="col-left-slide left-module">
+                    <ul class="owl-carousel owl-style2" data-loop="true" data-nav = "false" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1" data-autoplay="true">
+                        <?php foreach($ads as $kads){?>
+                        <li><a href="{{$kads->link}}"><img src="{{URL::asset('public/upload/image/'.$kads->name)}}" alt="slide-left"></a></li>
+                        <?php }?>
+                    </ul>
+                </div>
+                <!--./left silde-->
+               
+                <!-- ./block best sellers  -->
+                <div class="block left-module">
+                    <p class="title_block">Đề xuất cho bạn</p>
+                    <div class="block_content">
+                        <ul class="products-block">
+                            <li>
+                                <div class="products-block-left">
+                                    <a href="#">
+                                        <img src="assets/data/product-100x122.jpg" alt="SPECIAL PRODUCTS">
+                                    </a>
+                                </div>
+                                <div class="products-block-right">
+                                    <p class="product-name">
+                                        <a href="#">Woman Within Plus Size Flared</a>
+                                    </p>
+                                    <p class="product-price">$38,95</p>
+                                    <p class="product-star">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half-o"></i>
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="products-block">
+                            <div class="products-block-bottom">
+                                <a class="link-all" href="#">All Products</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ./left colunm -->
+            <!-- Center colunm-->
+            <div class="center_column col-xs-12 col-sm-9" id="center_column">
+               <!-- page heading-->
+                <h2 class="page-heading">
+                    <span class="page-heading-title2">Thông tin tài khoản</span>
+                </h2>
+                {{ Form::open(array('url'=>'users/change'))}}
+                <div class="box-border box-wishlist">
+                    <h2>Đổi mật khẩu</h2>
+                    <label for="wishlist-name">Mật khẩu cũ</label>
+                    {{ Form::password('new_password', array('class'=>'form-control input', 'placeholder'=>'Nhập Password cũ')) }}
+                    <label for="wishlist-name">Mật khẩu mới</label>
+                    {{ Form::password('password', array('class'=>'form-control input', 'placeholder'=>'Nhập Password mới')) }}
+                    <label for="wishlist-name">Nhập lại mật khẩu mới</label>
+                    {{ Form::password('password_confirmation', array('class'=>'form-control input', 'placeholder'=>'Nhập lại Password')) }}
+                    <button class="button">Xác nhận</button>
+                </div>
+                {{ Form::close() }}
+                <div class="box-border box-wishlist">
+                <h2>Lịch sử mua hàng</h2>
+                <table class="table table-bordered table-wishlist">
+                    <thead>
+                        <tr>
+                            <th>Mã đơn hàng</th>
+                            <th>Thanh toán</th>
+                            <th>Hình thức</th>
+                            <th>Tổng số tiền</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>My wishlist</td>
+                            <td>7</td>
+                            <td>0</td>
+                            <td>2015-06-18</td>
+                            <td class="text-center"><a href="#">Chi tiết</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                <ul class="row list-wishlist">
+                   
+                </ul>
+            </div>
+            <!-- ./ Center colunm -->
+        </div>
+        <!-- ./row-->
+    </div>
+</div>
+@stop

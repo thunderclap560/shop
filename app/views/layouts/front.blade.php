@@ -54,23 +54,34 @@
                         <li><a href="#">Euro</a></li>
                       </ul>
                 </div>
+            </div> 
+            @if(Auth::id() != null)
+            <div class="support-link">
+                <a href="{{URL::to('users/logout')}}">Thoát</a>
             </div>
-            
-            
+             @endif             
+            <div class="support-link"> 
+            @if(Auth::id() != null)        
+                <a href="#">Chào {{Auth::user()->lastname}}</a>
+            @else
+                <a href="{{URL::to('login')}}">Đăng nhập</a>      
+            @endif        
+            </div>
             <div class="support-link">
                 <a href="#">Hỗ trợ</a>
             </div>
-
+            
+            @if(Auth::id() != null)  
             <div id="user-info-top" class="user-info pull-right">
                 <div class="dropdown">
                     <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>Tài khoản</span></a>
                     <ul class="dropdown-menu mega_dropdown" role="menu">
-                        <li><a href="login.html">Đăng nhập</a></li>
-                        <li><a href="#">Compare</a></li>
-                        <li><a href="#">Wishlists</a></li>
+                        <li><a href="{{URL::to('account')}}">Thông tin tài khoản</a></li>
+                        <li><a href="#">Lịch sử mua hàng</a></li>
                     </ul>
                 </div>
             </div>
+             @endif 
         </div>
     </div>
     <!--/.top-header -->

@@ -37,6 +37,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     'country'=>'required',
     'phone'=>'required',
     );
+    
+    // public static $change = array(
+    // 'new_password'=>'required',
+    // 'password'=>'required|alpha_num|between:6,12|confirmed',
+    // 'password_confirmation'=>'required|alpha_num|between:6,12'
+    // );
 
     public function orders()
     {

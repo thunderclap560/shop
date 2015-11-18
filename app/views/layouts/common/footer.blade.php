@@ -259,9 +259,14 @@
         @if (Request::segment(1) == 'order')
             @if(count($errors->all()) != 0)
             $("#detail-order").fadeIn(900);
+            $('.have-account').prop('checked',true);
                 $('html, body').animate({
                         scrollTop: $("#detail-order").offset().top
                     }, 900);
+            @endif
+            @if(Session::has('login'))
+                $('.none-account').prop('checked',true);
+                $(".login-register").fadeIn(900);
             @endif
         @endif
         $("#step-1").click(function(){
@@ -271,7 +276,7 @@
                         scrollTop: $("#detail-order").offset().top
                     }, 900);
             }else{
-                $(".login-register").fadeIn(900);
+                    $(".login-register").fadeIn(900);
             }
         });
         $(".reply-each").on('click',function(){
