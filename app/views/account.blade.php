@@ -79,6 +79,49 @@
         <div class="row">
             <!-- Left colunm -->
             <div class="column col-xs-12 col-sm-3" id="left_column">
+
+                <!-- ./block best sellers  -->
+                <div class="block left-module">
+                    <p class="title_block">Thông tin liên hệ</p>
+                    <div class="block_content">
+                        <ul class="products-block">
+                            <li>
+                                <div class="products-block-right" style="margin-left:0px">
+                                    <p class="product-name">
+                                        <i class="fa fa-phone" style="padding-top:3px"></i> 
+                                        @if(Auth::user()->phone == null)
+                                        <a href="#">
+                                            Chưa có
+                                        </a>
+                                        @else
+                                            <a href="#">{{Auth::user()->phone}}</a>
+                                        @endif
+                                    </p>
+                                    <p class="product-name">
+                                       <i class="fa fa-envelope" style="padding-top:3px"></i>
+                                        <a href="#">{{Auth::user()->email}}</a>
+                                    </p>
+                                    <p class="product-name">
+                                        <i class="fa fa-map-marker" style="padding-top:3px"></i>
+                                        @if(Auth::user()->address == null)
+                                        <a href="#">
+                                            Chưa có
+                                        </a>
+                                        @else
+                                            <a href="#">{{Auth::user()->address}}</a>
+                                        @endif
+                                    </p>
+
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="products-block">
+                            <div class="products-block-bottom">
+                                <a class="link-all" href="#">Sửa thông tin</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- block best sellers -->
                 <div class="block left-module">
                     <p class="title_block">Sản Phẩm Mới</p>
@@ -121,39 +164,6 @@
                 </div>
                 <!--./left silde-->
                
-                <!-- ./block best sellers  -->
-                <div class="block left-module">
-                    <p class="title_block">Đề xuất cho bạn</p>
-                    <div class="block_content">
-                        <ul class="products-block">
-                            <li>
-                                <div class="products-block-left">
-                                    <a href="#">
-                                        <img src="assets/data/product-100x122.jpg" alt="SPECIAL PRODUCTS">
-                                    </a>
-                                </div>
-                                <div class="products-block-right">
-                                    <p class="product-name">
-                                        <a href="#">Woman Within Plus Size Flared</a>
-                                    </p>
-                                    <p class="product-price">$38,95</p>
-                                    <p class="product-star">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                    </p>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="products-block">
-                            <div class="products-block-bottom">
-                                <a class="link-all" href="#">All Products</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <!-- ./left colunm -->
             <!-- Center colunm-->
@@ -162,18 +172,31 @@
                 <h2 class="page-heading">
                     <span class="page-heading-title2">Thông tin tài khoản</span>
                 </h2>
+                @if(Session::has('global'))
+                        <p style="color:red">{{ Session::get('global') }}</p>
+                @endif
                 {{ Form::open(array('url'=>'users/change'))}}
+                @if(Auth::user()->type != 0)
                 <div class="box-border box-wishlist">
                     <h2>Đổi mật khẩu</h2>
                     <label for="wishlist-name">Mật khẩu cũ</label>
-                    {{ Form::password('new_password', array('class'=>'form-control input', 'placeholder'=>'Nhập Password cũ')) }}
+                    {{ Form::password('old_password', array('class'=>'form-control input', 'placeholder'=>'Nhập Password cũ')) }}
+                    <span style="color:red;display:block;padding-bottom:5px">{{$errors->first('old_password')}} </span>
+                     @if(Session::has('old'))
+                    <span style="color:red;display:block;padding-bottom:5px">{{ Session::get('old') }} </span>
+                    @endif
                     <label for="wishlist-name">Mật khẩu mới</label>
                     {{ Form::password('password', array('class'=>'form-control input', 'placeholder'=>'Nhập Password mới')) }}
+                    <span style="color:red;display:block;padding-bottom:5px">{{$errors->first('password')}} </span>
+
                     <label for="wishlist-name">Nhập lại mật khẩu mới</label>
                     {{ Form::password('password_confirmation', array('class'=>'form-control input', 'placeholder'=>'Nhập lại Password')) }}
+                    <span style="color:red;display:block;padding-bottom:5px">{{$errors->first('password_confirmation')}} </span>
+
                     <button class="button">Xác nhận</button>
                 </div>
                 {{ Form::close() }}
+                @endif
                 <div class="box-border box-wishlist">
                 <h2>Lịch sử mua hàng</h2>
                 <table class="table table-bordered table-wishlist">
@@ -183,17 +206,32 @@
                             <th>Thanh toán</th>
                             <th>Hình thức</th>
                             <th>Tổng số tiền</th>
+                            <th>Ngày mua</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($data as $datas)
                         <tr>
-                            <td>My wishlist</td>
-                            <td>7</td>
-                            <td>0</td>
-                            <td>2015-06-18</td>
+                            <td># {{$datas->id}}</td>
+                            <td>@if($datas->valid == 1)
+                                    <span class="label label-success" >Đã thanh toán</span>
+                                @else
+                                    <span class="label label-success" style="background-color:#E25353">Chưa thanh toán</span>
+                                @endif</td>
+                            <td>
+                                @if($datas->type == 0)
+                                    Ship hàng
+                                @else
+                                    Chuyển khoản
+                                @endif
+                            </td>
+                            <td> {{number_format($datas->total)}} VNĐ</td>
+                            
+                            <td>{{explode(' ',$datas->created_at)[0]}}</td>
                             <td class="text-center"><a href="#">Chi tiết</a></td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

@@ -72,7 +72,10 @@
             </div>
             
             @if(Auth::id() != null)  
-            <div id="user-info-top" class="user-info pull-right">
+            <div class="support-link">
+                <a href="{{URL::to('account')}}">Thông tin tài khoản</a>
+            </div>
+            <!-- <div id="user-info-top" class="user-info pull-right">
                 <div class="dropdown">
                     <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>Tài khoản</span></a>
                     <ul class="dropdown-menu mega_dropdown" role="menu">
@@ -80,7 +83,7 @@
                         <li><a href="#">Lịch sử mua hàng</a></li>
                     </ul>
                 </div>
-            </div>
+            </div> -->
              @endif 
         </div>
     </div>

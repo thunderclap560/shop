@@ -23,6 +23,8 @@ class HomeController extends BaseController {
     public function account(){
         $ads = Banners::where('parent_id','!=','0')->get();
         $latest = Product::orderBy('id','desc')->get();
+        $data = Order::where('user_id',Auth::id())->get();
+        //print_r($data);
          return View::make('account')->with([
             'config'=> $this->config,
             'category'=>$this->category,
@@ -32,6 +34,7 @@ class HomeController extends BaseController {
             'title'=>'Thông tin tài khoản',
             'ads'=>$ads,
             'latest'=>$latest,
+            'data'=>$data
             ]);
     }
 

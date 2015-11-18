@@ -66,8 +66,30 @@ class UsersController extends BaseController {
 	// }
 
 	public function postChange(){
-		
+		$validator = Validator::make(Input::all(),
+							array(
+								'password' 		=> 'required|min:6',
+								'old_password'	=> 'required|min:6',
+								'password_confirmation'=> 'required|same:password|min:6'
+							)
+		);
+		if($validator->fails()) {
+			return Redirect::to('account')->withErrors($validator)->withInput();
+		}else{
+			$user = User::find(Auth::user()->id);
+			$old_password = Input::get('old_password');
+			$password 	= Input::get('password');
+			if(Hash::check($old_password, $user->getAuthPassword())){
+				$user->password = Hash::make($password);
+				$user->save();
+				return Redirect::to('account')->with('global', 'Mật khẩu đã được thay đổi');
+			}else{
+				return Redirect::to('account')->with('old', 'Mật khẩu cũ không chính xác');
+			}
+		}
+	
 	}
+
 	public function postCreate() {
       $validator = Validator::make(Input::all(), User::$rules);
  

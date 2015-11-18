@@ -1,0 +1,2 @@
+add type in table user
+set all field => null
