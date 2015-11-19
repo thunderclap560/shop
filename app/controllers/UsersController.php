@@ -19,7 +19,7 @@ class UsersController extends BaseController {
 	}
 
 	public function getLogout() {
-    if(Auth::user()->roles == 1){
+    if(isset(Auth::user()->roles) == 1 && !empty(Auth::user()->roles)){
 		Auth::logout();
     	return Redirect::to('users/login')->with('message', 'Bạn đã đăng xuất !');
     }else{

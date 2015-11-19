@@ -49,7 +49,7 @@ Route::filter('filter.auth',function(){
 
 Route::filter('auth', function()
 {
-	if(Auth::user()->roles == 1) {
+	if(!empty(Auth::user()->roles) && isset(Auth::user()->roles) == 1) {
 		if (Auth::guest())
 		{
 			if (Request::ajax())

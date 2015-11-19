@@ -13,6 +13,13 @@ class OrdersController extends BaseController {
 	$this->layout->content = View::make('admin.order.index',['title'=>'Danh sách đơn hàng'])->with('data',$data);
 	}
 
+	public function getValid(){
+		$data = Order::find($_GET['data']);
+		$data->valid = $_GET['value'];
+		$data->save();
+		$this->layout->content = false;
+	}
+
 	public function getDetail($id=null){
 	$data = Detail::with(['orders','products'])->whereOrder_id($id)->get();
 	$this->layout->content = View::make('admin.order.detail',['title'=>'Chi tiết đơn hàng'])->with('data',$data);

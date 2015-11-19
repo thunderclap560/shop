@@ -411,6 +411,18 @@
         $('#show_cate'+data).click();
         
        }
+    $(".check-paypal").on('change',function(){
+      if (confirm("Bạn có muốn thay đổi không ? ") == true) {
+      if($(this).val() == 0){
+        $.get('{{URL::to("admin/order/valid")}}',{value: $(this).val(),data:$(this).attr('data')},function(data){
+
+        });
+      }else{
+        $.get('{{URL::to("admin/order/valid")}}',{value: $(this).val(),data:$(this).attr('data')},function(data){
+      });
+      }
+    }
+    });
     $(document).ready(function() {
 
 

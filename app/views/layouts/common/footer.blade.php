@@ -253,6 +253,13 @@
         }
     }   
     $(document).ready(function(){
+        @if(Session::has('edit-profile-error'))
+            $("#get-info").click();
+            alert("{{Session::get('edit-profile-error')}}");
+        @endif
+        @if(Session::has('edit-profile'))
+            alert("{{Session::get('edit-profile')}}");
+        @endif
         @if(Session::has('order'))
         alert("{{Session::get('order')}}");
         @endif

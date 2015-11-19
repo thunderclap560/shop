@@ -50,6 +50,7 @@
                       <tr>
                         <th>STT</th>
                         <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
                         <th>Mã sản phẩm</th>
                         <th>Giá</th>
                         <th>Hình ảnh</th>
@@ -60,6 +61,7 @@
                       <tr>
                         <td><?php echo $k +=1 ;?></td>
                         <td><?php echo $v->products->name ;?></td>
+                        <td><?php echo $v->qty ;?></td>
                         <td><?php echo $v->products->code ;?></td>
                         <td><?php echo number_format($v->products->price) ;?> VNĐ</td>
                         <td><img src="{{ URL::asset('public/upload/image/'.$v->products->image)}}" style="width:100px" alt=""></td>

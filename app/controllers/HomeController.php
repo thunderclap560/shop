@@ -20,10 +20,35 @@ class HomeController extends BaseController {
 		$this->news = News::all();
 	}
 
+    public function postAccountEdit($id = null){
+        $validator = Validator::make(Input::all(),
+                            array(
+                                'firstname'=>'required|min:2',
+                                'lastname'=>'required|min:2',
+                                'phone'=>'required|numeric|min:5',
+                                'country'=> 'required|min:3',
+                                'address'=> 'required|min:3',
+                            )
+        );
+        if($validator->fails()) {
+            return Redirect::to('account')->withErrors($validator)->withInput()->with('edit-profile-error', 'Lỗi xảy ra');;
+        }else{
+        $data = User::find(Auth::id());
+        $data->firstname = Input::get('firstname');
+        $data->lastname = Input::get('lastname');
+        $data->phone = Input::get('phone');
+        $data->country = Input::get('country');
+        $data->address = Input::get('address');
+        $data->save();
+        return Redirect::to('account')->with('edit-profile', 'Thông tin của bạn đã được thay đổi');
+        }
+    }
+
     public function account(){
         $ads = Banners::where('parent_id','!=','0')->get();
         $latest = Product::orderBy('id','desc')->get();
         $data = Order::where('user_id',Auth::id())->get();
+        $profile = User::find(Auth::id());
         //print_r($data);
          return View::make('account')->with([
             'config'=> $this->config,
@@ -34,7 +59,8 @@ class HomeController extends BaseController {
             'title'=>'Thông tin tài khoản',
             'ads'=>$ads,
             'latest'=>$latest,
-            'data'=>$data
+            'data'=>$data,
+            'profile'=> $profile
             ]);
     }
 

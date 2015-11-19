@@ -94,7 +94,7 @@
                                             Chưa có
                                         </a>
                                         @else
-                                            <a href="#">{{Auth::user()->phone}}</a>
+                                            0<a href="#">{{Auth::user()->phone}}</a>
                                         @endif
                                     </p>
                                     <p class="product-name">
@@ -117,7 +117,50 @@
                         </ul>
                         <div class="products-block">
                             <div class="products-block-bottom">
-                                <a class="link-all" href="#">Sửa thông tin</a>
+                                <a class="link-all" id="get-info"  data-toggle="modal" data-target="#editProfile">Sửa thông tin</a>
+                            <!-- Edit Profile -->
+                                        <div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                          <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Sửa thông tin liên hệ</h4>
+                                              </div>
+                                              <div class="modal-body">
+                                                {{ Form::model($profile,['url' => ['account-edit',$profile->id]])}}
+                                                <div class="form-group">
+                                                    <label class="control-label">Họ của bạn : </label>
+                                                    {{ Form::text('firstname',null ,array('class'=>'form-control input', 'placeholder'=>'Nhập họ của bạn')) }}
+                                                    <span style="color:red;display:block;padding-bottom:5px">{{$errors->first('firstname')}} </span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Tên của bạn : </label>
+                                                    {{ Form::text('lastname',null,array('class'=>'form-control input', 'placeholder'=>'Nhập tên của bạn')) }}
+                                                    <span style="color:red;display:block;padding-bottom:5px">{{$errors->first('lastname')}} </span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Số điện thoại của bạn : </label>
+                                                    {{ Form::text('phone',null ,array('class'=>'form-control input', 'placeholder'=>'Nhập số điện thoại của bạn')) }}
+                                                    <span style="color:red;display:block;padding-bottom:5px">{{$errors->first('phone')}} </span>
+                                                </div>
+                                                <div class="form-group">Địa chỉ : </label>
+                                                    {{ Form::text('address',null ,array('class'=>'form-control input', 'placeholder'=>'Nhập địa chỉ của bạn')) }}
+                                                    <span style="color:red;display:block;padding-bottom:5px">{{$errors->first('address')}} </span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Thành phố : </label>
+                                                    {{ Form::text('country',null ,array('class'=>'form-control input', 'placeholder'=>'Nhập thành phố của bạn')) }}
+                                                    <span style="color:red;display:block;padding-bottom:5px">{{$errors->first('country')}} </span>
+                                                </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Lưu</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                              </div>
+                                              {{ Form::close() }}
+                                            </div>
+                                          </div>
+                                        </div>
                             </div>
                         </div>
                     </div>

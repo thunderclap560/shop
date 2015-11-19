@@ -82,10 +82,11 @@ Route::get('login/google',function(){
         $users->lastname = $me['name'];
         $users->email = $me['email'];
         $users->password = Hash::make(Str::random());
-        $users->phone = Hash::make(Str::random());
-        $users->country = Hash::make(Str::random());
-        $users->address = Hash::make(Str::random());
+        $users->phone = null;
+        $users->country = null;
+        $users->address = null;
         $users->roles = 0;
+        $users->type = 0;
         $users->save();
     }else{
          $users = User::find($user[0]->id);

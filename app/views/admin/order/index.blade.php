@@ -50,8 +50,25 @@
                         <td><?php echo $k +=1 ;?></td>
                         <td><?php echo $v->name ;?></td>
                         <td><?php echo $v->users->firstname.' '.$v->users->lastname ;?></td>
-                        <td><?php if($v->valid == 0){echo 'Chưa thanh toán';}else{echo 'Đã thanh toán';}?></td>
-                        <td><?php echo $v->type ;?></td>
+                        <td>
+                          <?php $arr = ['0'=>'Chưa thanh toán','1'=>'Đã thanh toán']; ?>
+                          <select  data = '{{$v->id}}' name="check-paypal" class="form-control check-paypal">
+                            @foreach($arr as $key => $item)
+                            <option value="{{$key}}"
+                            <?php if($v->valid == $key){echo 'selected="selected"';}?>
+                            >
+                              {{$item}}
+                            </option>
+                            @endforeach
+                          </select>
+                        </td>
+                        <td>
+                        @if($v->type == 0)
+                          Ship hàng
+                          @else
+                          Chuyển khoản
+                          @endif
+                        </td>
                         <td><?php echo number_format($v->total) ;?> VNĐ</td>
                         <td>
                           <a class="btn btn-app" href="{{ URL::to('admin/order/detail', $v->id) }}" >
