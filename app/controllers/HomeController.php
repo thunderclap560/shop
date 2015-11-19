@@ -13,12 +13,68 @@ class HomeController extends BaseController {
     	$this->config = Configs::find(1);
     	$this->slide = Block::where('position',1)->get();
     	$this->slide_footer = Block::where('position',0)->get();
-    	$this->category = DB::table('categories')->where('parent_id','!=',0)->lists('name','id');
+    	$this->category = [''=>'Tất cả'] + DB::table('categories')->where('parent_id','!=',0)->lists('name','id');
     	$mainCategories = Category::where('parent_id', 0)->get();
 		$this->menu_home = $this->getAllCategories($mainCategories);
 		$this->menu = Category::where('parent_id','!=', 0)->get();
 		$this->news = News::all();
 	}
+
+
+    public function getTimKiem(){
+        // echo '<pre>';
+        // print_r(Input::all());
+        // echo '</pre>';
+        $latest = Product::orderBy('id','desc')->get();
+        $ads = Banners::where('parent_id','!=','0')->get(); 
+
+        if(isset($_GET['category_id']) && $_GET['category_id'] != 0) {
+            $category_id = $_GET['category_id'];
+            if(isset($_GET['keyword'])){
+                $key = $_GET['keyword']; 
+                $data = Product::where('category_id',$category_id)->where('name', 'LIKE', '%'. $key.'%')->paginate(2);
+            }else{
+                $data = Product::where('category_id',$category_id)->paginate(2);
+            }
+        $category  = Category::find($category_id);
+        return View::make('search')->with([
+            'config'=> $this->config,
+            'slide'=>$this->slide,
+            'category'=>$this->category,
+            'menu_home'=>$this->menu_home,
+            'menu'=>$this->menu,
+            'latest'=>$latest,
+            'slide_footer'=>$this->slide_footer,
+            'title'=>$category->name,
+            'desc'=>$category->name,
+            'ads'=>$ads,
+            'data'=>$data->appends(Input::except('page')),
+            ]);                    
+        }else{
+            if(isset($_GET['keyword'])){
+                $key = $_GET['keyword']; 
+                $search = 'Tìm kiếm với từ khóa ' .$key;
+                $data = Product::where('name', 'LIKE', '%'. $key.'%')->paginate(2);
+            }else{
+                 $search = 'Không có dữ liệu';
+                $data = Product::paginate(2);
+            }
+         return View::make('search')->with([
+            'config'=> $this->config,
+            'slide'=>$this->slide,
+            'category'=>$this->category,
+            'menu_home'=>$this->menu_home,
+            'menu'=>$this->menu,
+            'latest'=>$latest,
+            'slide_footer'=>$this->slide_footer,
+            'title'=>$search,
+            'desc'=>'Tim kiem',
+            'ads'=>$ads,
+            'data'=>$data->appends(Input::except('page')),
+            ]);  
+        }
+        
+    }
 
     public function postAccountEdit($id = null){
         $validator = Validator::make(Input::all(),

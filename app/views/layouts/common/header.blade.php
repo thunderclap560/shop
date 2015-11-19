@@ -4,18 +4,19 @@
                 <a href="{{URL::to('/')}}"><img alt="Kute Shop" src="{{ URL::asset('public/upload/image/'.$config->logo)}}" /></a>
             </div>
             <div class="col-xs-7 col-sm-7 header-search-box">
-                <form class="form-inline">
+                {{ Form::open(array('url'=>'tim-kiem','class'=>'form-inline','method'=>'get'))}}
                       <div class="form-group form-category">
                         <!-- <select class="select-category">
                             <option value="0">Tất cả</option> -->
-                             {{ Form::select('category_id', $category, null,array('class' => 'select-category')) }}
+                            <?php if(isset($_GET['category_id']) != null ){$cateID= $_GET['category_id'];}else{$cateID = 0;}?>
+                             {{ Form::select('category_id', $category, array($cateID),array('class' => 'select-category')) }}
 <!--                         </select>
  -->                      </div>
                       <div class="form-group input-serach">
-                        <input type="text"  placeholder="Nhập từ khóa tìm kiếm...">
+                        <input type="text" name ="keyword" placeholder="Nhập từ khóa tìm kiếm..." value="@if(isset($_GET['keyword'])){{$_GET['keyword']}}@endif">
                       </div>
                       <button type="submit" class="pull-right btn-search"></button>
-                </form>
+               {{ Form::close() }}
             </div>
             <div class="col-xs-5 col-sm-2 group-button-header">
 <!--                 <a title="Compare" href="#" class="btn-compare">compare</a>
