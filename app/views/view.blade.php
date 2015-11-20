@@ -110,29 +110,12 @@
     		});
     		Breadcrumbs::register('parent_category', function($breadcrumbs,$thum_off) {
             $breadcrumbs->parent('home');
-            $breadcrumbs->push($thum_off[1]->name, URL::to('/category/'.$thum_off[1]->id));
-            $breadcrumbs->push($thum_off[0]->products->name, URL::to('/category/'.$thum_off[0]->id));
+            $breadcrumbs->push($thum_off[1]->name, URL::to('/chuyen-muc/'.$thum_off[1]->id));
+            $breadcrumbs->push($thum_off[0]->products->name);
             $breadcrumbs->push($thum_off[0]->name);
         	});
-        	// Breadcrumbs::register('category', function($breadcrumbs,$thum_off) {
-         //    $breadcrumbs->parent('parent_category');
-         //    $breadcrumbs->push($thum_off[0]->products->name, URL::to('/admin/'.Request::segment(2)));
-        	// });
-        	// Breadcrumbs::register('product', function($breadcrumbs,$thum_off) {
-         //    $breadcrumbs->parent('category');
-         //    $breadcrumbs->push('Danh sách đơn hàng', URL::to('/admin/'.Request::segment(2)));
-        	// });
     		echo Breadcrumbs::render('parent_category',$thum_off);
     	?>
-            <!-- <a class="home" href="#" title="Return to Home">Home</a>
-            <span class="navigation-pipe">&nbsp;</span>
-            <a href="#" title="Return to Home">Fashion</a>
-            <span class="navigation-pipe">&nbsp;</span>
-            <a href="#" title="Return to Home">Women</a>
-            <span class="navigation-pipe">&nbsp;</span>
-            <a href="#" title="Return to Home">Dresses</a>
-            <span class="navigation-pipe">&nbsp;</span>
-            <span class="navigation_page">Maecenas consequat mauris</span> -->
         </div>
         <!-- ./breadcrumb -->
         <!-- row -->
@@ -147,13 +130,13 @@
                                 <?php foreach($latest as $late){?>
                                 <li>
                                     <div class="products-block-left">
-                                        <a href="#">
+                                        <a href="{{URL::to('view/'.$late->id)}}">
                                             <img src="{{URL::asset('public/upload/image/'.$late->image)}}" alt="">
                                         </a>
                                     </div>
                                     <div class="products-block-right">
                                         <p class="product-name">
-                                            <a href="#">{{$late->name}}</a>
+                                            <a href="{{URL::to('view/'.$late->id)}}">{{$late->name}}</a>
                                         </p>
                                         <p class="product-price">{{number_format($late->price)}} VNĐ</p>
                                         <!-- <p class="product-star">
@@ -186,7 +169,7 @@
                                          <?php if(isset($v_menu_cate['sub'])) {?>
                                         <ul>
                                             <?php foreach($v_menu_cate['sub'] as $k_product_menu){?>
-                                            <li><span></span><a href="#"><?php echo $k_product_menu['name'];?></a></li>
+                                            <li><span></span><a href="{{URL::to('chuyen-muc/'.$k_product_menu['id'])}}"><?php echo $k_product_menu['name'];?></a></li>
                                             <?php } ?>
                                         </ul>
                                         <?php }?>
@@ -213,9 +196,30 @@
                 
                 <!-- left silide -->
                 <div class="col-left-slide left-module">
-                    <div class="banner-opacity">
-                        <a href="#"><img src="{{URL::asset('public/front/assets/data/ads-banner.jpg')}}" alt="ads-banner"></a>
+                    <div class="block left-module">
+                    <p class="title_block">Tin tức</p>
+                    <div class="block_content">
+                        <ul class="products-block">
+                            <li>
+                                <div class="products-block-left">
+                                    <a href="{{URL::to('tin-tuc/'.$new[0]->id)}}">
+                                        <img src="{{URL::to('public/upload/image/'.$new[0]->image)}}" alt="SPECIAL PRODUCTS">
+                                    </a>
+                                </div>
+                                <div class="products-block-right">
+                                    <p class="product-name">
+                                        <a href="{{URL::to('tin-tuc/'.$new[0]->id)}}">{{$new[0]->title}}</a>
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="products-block">
+                            <div class="products-block-bottom">
+                                <a class="link-all" href="{{URL::to('tin-tuc')}}">Tất cả</a>
+                            </div>
+                        </div>
                     </div>
+                </div>
                 </div>
                 <!--./left silde-->
             </div>
@@ -346,7 +350,10 @@
                                         <input type="hidden" id="id_cart" value="{{$thum_off[0]->id}}">
                                     </div>
                                     <div class="button-group">
-                                        <a class="wishlist like" href="javascript:void(0)"><i class="fa fa-heart-o"></i>
+                                        <a 
+                                        class="wishlist like" 
+                                        href="javascript:void(0)">
+                                        <i class="fa fa-heart-o"></i>
                                         <br>Yêu thích</a>
                                         <a class="compare" href="#"><i class="fa fa-signal"></i>
                                         <br>        
@@ -460,27 +467,16 @@
                                 <li>
                                     <div class="product-container">
                                         <div class="left-block">
-                                            <a href="#">
+                                            <a href="{{URL::to('view/'.$k_product_menu->id)}}">
                                                 <img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" />
                                             </a>
-                                            <div class="quick-view">
-                                                    <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                    <a title="Add to compare" class="compare" href="#"></a>
-                                                    <a title="Quick view" class="search" href="#"></a>
-                                            </div>
                                             <div class="add-to-cart">
-                                                <a title="Add to Cart" href="#add">Thêm vào giỏ </a>
+                                                <a title="Add to Cart" href="{{URL::to('view/'.$k_product_menu->id)}}">Thêm vào giỏ </a>
                                             </div>
                                         </div>
                                         <div class="right-block">
                                             <h5 class="product-name"><a href="#"><?php echo $k_product_menu->name;?></a></h5>
-                                            <div class="product-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
+                                            
                                             <div class="content_price">
                                                 <span class="price product-price"><?php echo number_format($k_product_menu->pricember);?> VNĐ</span>
                                                 <span class="price old-price">$52,00</span>
@@ -503,27 +499,16 @@
                                 <li>
                                     <div class="product-container">
                                         <div class="left-block">
-                                            <a href="#">
+                                            <a href="{{URL::to('view/'.$v_rand->id)}}">
                                                 <img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$v_rand->image)}}" />
                                             </a>
-                                            <div class="quick-view">
-                                                    <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                    <a title="Add to compare" class="compare" href="#"></a>
-                                                    <a title="Quick view" class="search" href="#"></a>
-                                            </div>
                                             <div class="add-to-cart">
-                                                <a title="Add to Cart" href="#add">Thêm vào giỏ</a>
+                                                <a title="Add to Cart" href="{{URL::to('view/'.$v_rand->id)}}">Thêm vào giỏ</a>
                                             </div>
                                         </div>
                                         <div class="right-block">
                                             <h5 class="product-name"><a href="#">{{$v_rand->name}}<a></h5>
-                                            <div class="product-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
+                                            
                                             <div class="content_price">
                                                 <span class="price product-price">{{number_format($v_rand->price)}}</span>
                                                 <span class="price old-price">$52,00</span>

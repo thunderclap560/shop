@@ -20,11 +20,90 @@ class HomeController extends BaseController {
 		$this->news = News::all();
 	}
 
+    public function getBlog(){
+        $data = News::paginate(1);
+        return View::make('blog')->with([
+            'config'=> $this->config,
+            'slide'=>$this->slide,
+            'category'=>$this->category,
+            'menu_home'=>$this->menu_home,
+            'menu'=>$this->menu,
+            'slide_footer'=>$this->slide_footer,
+            'data'=>$data,
+            'title'=>'Danh sách tin tức',
+            'desc'=>'Danh sách tin tức',
+            ]); 
+    }
+
+    public function getTinTuc($id = null){
+
+        $data = News::find($id);
+
+        return View::make('new')->with([
+            'config'=> $this->config,
+            'slide'=>$this->slide,
+            'category'=>$this->category,
+            'menu_home'=>$this->menu_home,
+            'menu'=>$this->menu,
+            'slide_footer'=>$this->slide_footer,
+            'data'=>$data,
+            'title'=>$data->title,
+            'desc'=>$data->name,
+            ]);    
+    }
+
+    public function getChuyenMuc($id = null){
+        $latest = Product::orderBy('id','desc')->get();
+        $ads = Banners::where('parent_id','!=','0')->get(); 
+        $categoryName = Category::find($id);
+        $tmp = array();
+        $temp = array();
+        if($categoryName->parent_id == 0){       
+         foreach($this->menu_home as $k => $v){
+            if($v['id'] == $id){
+                if(isset($v['sub'])){                      
+                        foreach($v['sub'] as $i => $j){                          
+                            if(isset($j['product'])){
+                                $tmp = $j['product'];
+                            }
+                    }
+                }
+            }
+        }
+        $m = 0;
+        foreach($tmp as $item){
+            if($m < count($tmp)){            
+            $temp[$m]['name'] = $item->name;
+            $temp[$m]['price'] = $item->price;
+            $temp[$m]['code'] = $item->code;
+            $temp[$m]['price_sales'] = $item->price_sales;
+            $temp[$m]['short_detail'] = $item->short_detail;
+            $temp[$m]['image'] = $item->image;
+            }
+        $m++;
+        }      
+        $data = Paginator::make($temp, count($temp), 2);      
+        }else{
+        $data = Product::where('category_id',$id)->paginate(2);
+        }
+        return View::make('category')->with([
+            'config'=> $this->config,
+            'slide'=>$this->slide,
+            'category'=>$this->category,
+            'menu_home'=>$this->menu_home,
+            'menu'=>$this->menu,
+            'latest'=>$latest,
+            'slide_footer'=>$this->slide_footer,
+            'data'=>$data,
+            'title'=>$categoryName->name,
+            'desc'=>$categoryName->name,
+            'ads'=>$ads,
+            'cate'=>$categoryName,
+            ]);                    
+    }
+
 
     public function getTimKiem(){
-        // echo '<pre>';
-        // print_r(Input::all());
-        // echo '</pre>';
         $latest = Product::orderBy('id','desc')->get();
         $ads = Banners::where('parent_id','!=','0')->get(); 
 
@@ -173,10 +252,15 @@ class HomeController extends BaseController {
         $rand = Product::orderByRaw("RAND()")->get();
         $ads = Banners::where('parent_id','!=','0')->get();
         $comment = Product::with(['comment','comment.users','comment.allReplies'])->where('id',$id)->get();
+        $thumb->view ++;
+        $view = Product::find($thumb->id);
+        $view->view = $thumb->view;
+        $view->save();
         // echo '<pre>';
         // print_r($comment);
         // echo '</pre>';
         // exit;
+        $new = News::take(1)->get();
         return View::make('view')->with([
             'config'=> $this->config,
             'slide'=>$this->slide,
@@ -190,7 +274,8 @@ class HomeController extends BaseController {
             'title'=>$thum_off[0]->name,
             'desc'=>$thum_off[0]->short_detail,
             'ads'=>$ads,
-            'comment'=>$comment
+            'comment'=>$comment,
+            'new'=>$new
             ]);
     }
     public function getCart(){
@@ -392,6 +477,7 @@ class HomeController extends BaseController {
         $ads = Banners::where('parent_id','!=','0')->get();
         $latest = Product::orderBy('id','desc')->get();
         $product = Session::get('favorite');
+        $new = News::take(1)->get();
         $tmp = array();
         if($product){
         foreach($product as $id){
@@ -409,7 +495,8 @@ class HomeController extends BaseController {
             'title'=>'Sản Phẩm Yêu Thích',
             'ads'=>$ads,
             'latest'=>$latest,
-            'data'=>$tmp
+            'data'=>$tmp,
+            'new'=>$new
             ]);
     }
     public function getLogin(){

@@ -10,8 +10,9 @@
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav">
                                    <?php foreach($menu as $val_menu){?>
-                                    <li><a href="#"><?php echo $val_menu->name;?></a></li>
+                                    <li><a href="{{URL::to('chuyen-muc/'.$val_menu->id)}}"><?php echo $val_menu->name;?></a></li>
                                     <?php } ?>
+                                    <li><a href="{{URL::to('blog')}}">Tin tức</a></li>
                                 </ul>
                             </div><!--/.nav-collapse -->
                         </div>

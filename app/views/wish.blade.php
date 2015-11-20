@@ -125,33 +125,25 @@
                
                 <!-- ./block best sellers  -->
                 <div class="block left-module">
-                    <p class="title_block">Đề xuất cho bạn</p>
+                    <p class="title_block">Tin tức</p>
                     <div class="block_content">
                         <ul class="products-block">
                             <li>
                                 <div class="products-block-left">
-                                    <a href="#">
-                                        <img src="assets/data/product-100x122.jpg" alt="SPECIAL PRODUCTS">
+                                    <a href="{{URL::to('tin-tuc/'.$new[0]->id)}}">
+                                        <img src="{{URL::to('public/upload/image/'.$new[0]->image)}}" alt="SPECIAL PRODUCTS">
                                     </a>
                                 </div>
                                 <div class="products-block-right">
                                     <p class="product-name">
-                                        <a href="#">Woman Within Plus Size Flared</a>
-                                    </p>
-                                    <p class="product-price">$38,95</p>
-                                    <p class="product-star">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
+                                        <a href="{{URL::to('tin-tuc/'.$new[0]->id)}}">{{$new[0]->title}}</a>
                                     </p>
                                 </div>
                             </li>
                         </ul>
                         <div class="products-block">
                             <div class="products-block-bottom">
-                                <a class="link-all" href="#">All Products</a>
+                                <a class="link-all" href="{{URL::to('tin-tuc')}}">Tất cả</a>
                             </div>
                         </div>
                     </div>

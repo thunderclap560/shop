@@ -72,9 +72,17 @@
     <div class="container" id="columns">
         <!-- breadcrumb -->
         <div class="breadcrumb clearfix">
-            <a class="home" href="{{URL::to('/')}}" title="Return to Home">Trang chủ</a>
-            <span class="navigation-pipe">&nbsp;</span>
-            <span class="navigation_page">Tìm kiếm</span>
+            <?php 
+            Breadcrumbs::register('home', function($breadcrumbs) {
+                $breadcrumbs->push('Trang chủ', URL::to('/'));
+
+            });
+            Breadcrumbs::register('parent_category', function($breadcrumbs,$cate) {
+            $breadcrumbs->parent('home');
+            $breadcrumbs->push($cate->name, URL::to('/chuyen-muc/'.$cate->id));
+            });
+            echo Breadcrumbs::render('parent_category',$cate);
+        ?>       
         </div>
         <!-- ./breadcrumb -->
         <!-- row -->
@@ -187,7 +195,7 @@
                 <!-- view-product-list-->
                 <div id="view-product-list" class="view-product-list">
                     <h2 class="page-heading">
-                        <span class="page-heading-title">Tìm kiếm với từ khóa @if(isset($_GET['keyword'])) {{$_GET['keyword']}} @endif</span>
+                        <span class="page-heading-title">Chuyên mục : {{$cate->name}}</span>
                     </h2>
                     <ul class="display-product-option">
                         <li class="view-as-grid selected">
@@ -213,28 +221,28 @@
                                     </div>
                                 </div>
                                 <div class="right-block">
-                                    <h5 class="product-name"><a href="#">{{ $value->name }}</a></h5>
+                                    <h5 class="product-name"><a href="#">{{ $value['name'] }}</a></h5>
                                     <div class="content_price">
                                         <span class="price product-price">
-                                         @if($value->price_sales != null)
-                                        {{number_format($value->price_sales)}}
+                                         @if($value['price_sales'] != null)
+                                        {{number_format($value['price_sales'])}}
                                         @else
-                                        {{number_format($value->price)}}
+                                        {{number_format($value['price'])}}
                                         @endif
                                          VNĐ   
                                         </span>
-                                        @if($value->price_sales != null)
+                                        @if($value['price_sales'] != null)
                                         <span class="price old-price">
-                                            {{number_format($value->price)}}
+                                            {{number_format($value['price'])}}
                                             VNĐ
                                         </span>
                                         @endif
                                     </div>
                                     <div class="info-orther">
-                                        <p>Item Code: {{$value->code}}</p>
+                                        <p>Item Code: {{$value['code']}}</p>
                                         <p class="availability">Availability: <span>In stock</span></p>
                                         <div class="product-desc">
-                                            {{$value->short_detail}}
+                                            {{$value['short_detail']}}
                                         </div>
                                     </div>
                                     <div class="add-to-cart">

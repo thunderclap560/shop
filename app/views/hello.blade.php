@@ -19,7 +19,7 @@
 								}
                         	</style>
                         	<?php foreach($menu_home as $v_menu_cate){ ?>
-                        	<li><a href="#" <?php if(isset($v_menu_cate['sub'])){echo 'class="parent"';} ?>><span class="icon-menu-next"><?php echo $v_menu_cate['icon'];?></span> <?php echo $v_menu_cate['name'];?></a>
+                        	<li><a href="{{URL::to('chuyen-muc/'.$v_menu_cate['id'])}}" <?php if(isset($v_menu_cate['sub'])){echo 'class="parent"';} ?>><span class="icon-menu-next"><?php echo $v_menu_cate['icon'];?></span> <?php echo $v_menu_cate['name'];?></a>
 								<?php if(isset($v_menu_cate['sub'])){ ?>	
 									<div class="vertical-dropdown-menu">
 		                                    <div class="vertical-groups col-sm-12">
@@ -29,7 +29,7 @@
 		                                            <?php if(isset($v_sub['product'])){?>
 		                                            <ul class="group-link-default">
 														<?php foreach($v_sub['product'] as $k_product_menu){?>
-		                                                <li><a href="#"><?php echo $k_product_menu->name;?></a></li>
+		                                                <li><a href="{{URL::to('view/'.$k_product_menu->id)}}"><?php echo $k_product_menu->name;?></a></li>
 		                                              	<?php } ?>
 		                                            </ul>
 		                                            <?php } ?>
@@ -43,8 +43,8 @@
 <!--                             <li><a href="#"><img class="icon-menu" alt="Funky roots" src="public/front/assets/data/12.png">Electronics</a></li>
  -->		                   
                         </ul>
-                        <div class="all-category"><span class="open-cate">All Categories</span></div>
-                    </div>
+<!--                         <div class="all-category"><span class="open-cate">All Categories</span></div>
+ -->                    </div>
                 </div>
                 </div>
                     @include('layouts.common.menu')
@@ -113,7 +113,7 @@
                                         <a title="Quick view" class="search" href="#"></a>
                                 </div>
                                 <div class="add-to-cart">
-                                    <a title="Add to Cart" href="#">Thêm vào giỏ hàng</a>
+                                    <a title="Add to Cart" href="{{URL::to('view/'.$late->id)}}">Thêm vào giỏ hàng</a>
                                 </div>
                                <!--  <div class="price-percent-reduction2">
                                     -30% OFF
@@ -164,7 +164,7 @@
             <nav class="navbar nav-menu show-brand">
               <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
-                  <div class="navbar-brand" style="background-color:{{$v_menu_cate['color']}}"><a href="#"><img alt="fashion" src="public/front/assets/data/icon-fashion.png" />{{$v_menu_cate['name']}}</a></div>
+                  <div class="navbar-brand" style="background-color:{{$v_menu_cate['color']}}"><a href="{{URL::to('chuyen-muc/'.$v_menu_cate['id'])}}"><img alt="fashion" src="public/front/assets/data/icon-fashion.png" />{{$v_menu_cate['name']}}</a></div>
                   <span class="toggle-menu"></span>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" style="border-bottom-color:{{$v_menu_cate['color']}}">           
@@ -192,7 +192,7 @@
                             <?php 
                             if(isset($v_menu_cate['sub'])) {
                             foreach($v_menu_cate['sub'] as $k_sub => $v_sub){ ?>
-                            <li><a href="#">{{$v_sub['name']}}</a></li>
+                            <li><a href="{{URL::to('chuyen-muc/'.$v_sub['id'])}}">{{$v_sub['name']}}</a></li>
                             <?php }}?>
                         </ul>
                     </div>
