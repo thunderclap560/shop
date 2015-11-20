@@ -351,9 +351,33 @@
                                     </div>
                                     <div class="button-group">
                                         <a 
-                                        class="wishlist like" 
+                                        data = '{{$thum_off[0]->id}}'
+                                        class="wishlist like heart"
+                                        onclick="favorites(this)" 
                                         href="javascript:void(0)">
-                                        <i class="fa fa-heart-o"></i>
+                                        <i class="fa fa-heart-o" 
+                                        style=
+                                        "<?php if(Session::get('favorite') != null){
+                                                    foreach(Session::get('favorite') as $k => $v){
+                                                        if($v == $thum_off[0]->id ){
+                                                            echo 'background-color:pink';
+                                                            break;
+                                                        }
+                                                    }
+                                            }
+                                        ?>" 
+                                        flag=
+                                        "<?php if(Session::get('favorite') != null){
+                                                    foreach(Session::get('favorite') as $k => $v){
+                                                        if($v == $thum_off[0]->id ){
+                                                            echo 'TRUE';
+                                                            break;
+                                                        }
+                                                }
+                                                }else{
+                                                    echo ' ';
+                                        }?>">
+                                        </i>
                                         <br>Yêu thích</a>
                                         <a class="compare" href="#"><i class="fa fa-signal"></i>
                                         <br>        

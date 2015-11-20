@@ -340,6 +340,26 @@
             return false;
         }
     }
+    function favorites(data){
+        var id = $(data).attr('data');
+        if($(data).find(':first-child').attr('flag') != 'TRUE'){
+            $(data).find(':first-child').attr('flag','TRUE');
+            $.get('{{URL::to("favorite-add")}}',{id:id},function(value){
+            $(data).find(':first-child').css('background-color','pink'); 
+            var f = parseInt($(".notify-favorite").text());
+            f++;
+            $(".notify-favorite").text(f)     
+        });
+        }else{
+            $(data).find(':first-child').attr('flag',' ');
+            $.get('{{URL::to("favorite-delete")}}',{id:id},function(value){
+            $(data).find(':first-child').css('background-color','');
+            var f = parseInt($(".notify-favorite").text());
+            f--;
+            $(".notify-favorite").text(f)        
+        });            
+        }              
+    }
     function favorite(data){
         var id = $(data).attr('data');
         if($(data).attr('flag') != 'TRUE'){
