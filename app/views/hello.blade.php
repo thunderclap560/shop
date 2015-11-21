@@ -1,6 +1,15 @@
 @extends('layouts.front')
  
 @section('content')
+ <style>
+.option2 .category-featured.fashion .nav-menu .nav>li:hover a, .option2 .category-featured.fashion .nav-menu .nav>li.active a,.option2 .category-featured.fashion .nav-menu .nav>li:hover a:after, .option2 .category-featured.fashion .nav-menu .nav>li.active a:after {
+    color:#f96d10 !important;
+}
+.option2 .category-featured.fashion .nav-menu .nav>li>a:before {
+    background : #f96d10 !important;
+}
+
+              </style>
 <div id="nav-top-menu" class="nav-top-menu">
         <div class="container">
             <div class="row">
@@ -14,8 +23,8 @@
                         <ul class="vertical-menu-list">
                         	<style>
 								.icon-menu-next .fa{
-									padding-top:10px;
-									width: 30px;
+/*									//padding-top:10px;
+*/									width: 30px;
 								}
                         	</style>
                         	<?php foreach($menu_home as $v_menu_cate){ ?>
@@ -156,7 +165,9 @@
 <!---->
 <div class="content-page">
     <div class="container">
-        
+        <?php $count_move = 0;
+        $b = -1;
+        ?>
         <!-- featured category fashion -->
         <?php foreach($menu_home as $v_menu_cate){ ?>
 
@@ -176,13 +187,14 @@
                   </ul>
                 </div><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->
-              <div id="elevator-{{$v_menu_cate['id']}}" class="floor-elevator">
-              <?php 
-              $down=$v_menu_cate['id']-1;
-              $up = $v_menu_cate['id']+1;
-              ?>
-                    <a href="#elevator-{{$down}}" class="btn-elevator up fa fa-angle-up"></a>
-                    <a href="#elevator-{{$up}}" class="btn-elevator down fa fa-angle-down"></a>
+               
+              <div id="elevator-{{$count_move}}" class="floor-elevator">
+                <?php 
+                    $a = ++$count_move;
+                ?>
+                    <a href="#elevator-<?php echo $b;?>" class="btn-elevator up fa fa-angle-up"></a>
+                    <a href="#elevator-{{$a}}" class="btn-elevator down fa fa-angle-down"></a>
+                    <?php $b++;?>
               </div>
             </nav>
            <div class="product-featured clearfix">
@@ -201,6 +213,74 @@
                             <div class="tab-container">
                                 <!-- Best-view -->
                                 <div class="tab-panel" id="best-view-{{$v_menu_cate['id']}}">
+                                   <div class="box-left">
+                                        <?php foreach($data_adver as $v_adver){
+                                            if($v_adver->type == null){
+                                                foreach($v_adver->category as $v_category_ad){
+                                                    if($v_category_ad->id == $v_menu_cate['id'] ){  
+                                        ?>
+                                        <div class="banner-img">
+                                            <a href="#"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
+                                        </div>
+                                        <?php  } }
+                                             }elseif($v_adver->type == 1 && $v_adver->parent_id == 1 ){ 
+                                                 foreach($v_adver->category as $v_category_ad){
+                                                    if($v_category_ad->id == $v_menu_cate['id'] ){  
+                                        ?>
+                                         <!-- <div class="banner-img">
+                                            <a href="#"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
+                                        </div> -->
+                                        <div class="deal-product">
+                                            <div class="deal-product-head">
+                                                <h3><span>Tin khuyến mãi</span></h3>
+                                            </div>
+                                            <ul class="owl-carousel" data-items="1" data-nav="true" data-dots="false">
+                                                <?php 
+                                                // echo '<pre>';
+                                                // print_r($v_adver->category);
+                                                // echo '</pre>';
+                                                foreach($data_adver as $child){
+                                                    if($child->type == 1 && $child->parent_id == null){
+                                                       //
+                                                ?>
+                                                <li class="deal-product-content">
+                                                    <div class="col-sm-5 deal-product-image">
+                                                        <a href="#"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Prodcut"></a>
+                                                    </div>
+                                                    <div class="col-sm-7 deal-product-info">
+                                                        <p><a href="#">Top Selling Product 1</a></p>
+                                                        <div class="price">
+                                                            <span class="product-price">$38.95</span>
+                                                            <span class="old-price">$52.00</span>
+                                                            <span  class="sale-price">-15%</span>
+                                                        </div>
+                                                       <!--  <div class="product-star">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-half-o"></i>
+                                                        </div> -->
+                                                        <div class="product-desc">
+                                                            Sound performance tuning includes the smallest details like...
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <?php  }}?>
+                                            </ul>
+                                        </div>
+                                        <?php  
+                                        foreach($data_adver as $child){
+                                            if($child->type == 1 && $child->parent_id == 1){
+                                        ?>
+                                        <ul class="" data-loop="true" data-items="1" data-dots="false" data-nav="true">
+                                        <?php  //if($child->type == 1 && $child->parent_id == 1){?> 
+                                            <li><a href="#"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Image"></a></li>
+                                        <?php }}?>
+                                        </ul>
+                                                
+                                        <?php  } } }} ?>
+                                   </div>
                                    
                                    <div class="box-right">
                                        <ul class="product-list row">
@@ -219,11 +299,11 @@
                                                     </div>
                                                     <div class="left-block">
                                                         <a href="{{URL::to('view/'.$k_product_menu->id)}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
-                                                        <div class="quick-view">
+                                                        <!-- <div class="quick-view">
                                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                                                 <a title="Add to compare" class="compare" href="#"></a>
                                                                 <a title="Quick view" class="search" href="#"></a>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="add-to-cart">
                                                             <a title="Add to Cart" href="{{URL::to('view/'.$k_product_menu->id)}}">Chi tiết sản phẩm</a>
                                                         </div>
@@ -236,6 +316,74 @@
                                 <!-- Best-view-->
                                 <!-- Sales-->
                                 <div class="tab-panel" id="sales-{{$v_menu_cate['id']}}">
+                                   <div class="box-left">
+                                        <?php foreach($data_adver as $v_adver){
+                                            if($v_adver->type == null){
+                                                foreach($v_adver->category as $v_category_ad){
+                                                    if($v_category_ad->id == $v_menu_cate['id'] ){  
+                                        ?>
+                                        <div class="banner-img">
+                                            <a href="#"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
+                                        </div>
+                                        <?php  } }
+                                             }elseif($v_adver->type == 1 && $v_adver->parent_id == 1 ){ 
+                                                 foreach($v_adver->category as $v_category_ad){
+                                                    if($v_category_ad->id == $v_menu_cate['id'] ){  
+                                        ?>
+                                         <!-- <div class="banner-img">
+                                            <a href="#"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
+                                        </div> -->
+                                        <div class="deal-product">
+                                            <div class="deal-product-head">
+                                                <h3><span>Tin khuyến mãi</span></h3>
+                                            </div>
+                                            <ul class="owl-carousel" data-items="1" data-nav="true" data-dots="false">
+                                                <?php 
+                                                // echo '<pre>';
+                                                // print_r($v_adver->category);
+                                                // echo '</pre>';
+                                                foreach($data_adver as $child){
+                                                    if($child->type == 1 && $child->parent_id == null){
+                                                       //
+                                                ?>
+                                                <li class="deal-product-content">
+                                                    <div class="col-sm-5 deal-product-image">
+                                                        <a href="#"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Prodcut"></a>
+                                                    </div>
+                                                    <div class="col-sm-7 deal-product-info">
+                                                        <p><a href="#">Top Selling Product 1</a></p>
+                                                        <div class="price">
+                                                            <span class="product-price">$38.95</span>
+                                                            <span class="old-price">$52.00</span>
+                                                            <span  class="sale-price">-15%</span>
+                                                        </div>
+                                                       <!--  <div class="product-star">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-half-o"></i>
+                                                        </div> -->
+                                                        <div class="product-desc">
+                                                            Sound performance tuning includes the smallest details like...
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <?php  }}?>
+                                            </ul>
+                                        </div>
+                                        <?php  
+                                        foreach($data_adver as $child){
+                                            if($child->type == 1 && $child->parent_id == 1){
+                                        ?>
+                                        <ul class="" data-loop="true" data-items="1" data-dots="false" data-nav="true">
+                                        <?php  //if($child->type == 1 && $child->parent_id == 1){?> 
+                                            <li><a href="#"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Image"></a></li>
+                                        <?php }}?>
+                                        </ul>
+                                                
+                                        <?php  } } }} ?>
+                                   </div>
                                    
                                    <div class="box-right">
                                        <ul class="product-list row">
@@ -255,11 +403,11 @@
                                                     </div>
                                                     <div class="left-block">
                                                         <a href="{{URL::to('view/'.$k_product_menu->id)}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
-                                                        <div class="quick-view">
+                                                        <!-- <div class="quick-view">
                                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                                                 <a title="Add to compare" class="compare" href="#"></a>
                                                                 <a title="Quick view" class="search" href="#"></a>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="add-to-cart">
                                                             <a title="Add to Cart" href="{{URL::to('view/'.$k_product_menu->id)}}">Chi tiết sản phẩm</a>
                                                         </div>
@@ -273,6 +421,74 @@
                                  <!-- News-->
                                 <div class="tab-panel" id="news-product-{{$v_menu_cate['id']}}">
                                    
+                                   <div class="box-left">
+                                        <?php foreach($data_adver as $v_adver){
+                                            if($v_adver->type == null){
+                                                foreach($v_adver->category as $v_category_ad){
+                                                    if($v_category_ad->id == $v_menu_cate['id'] ){  
+                                        ?>
+                                        <div class="banner-img">
+                                            <a href="#"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
+                                        </div>
+                                        <?php  } }
+                                             }elseif($v_adver->type == 1 && $v_adver->parent_id == 1 ){ 
+                                                 foreach($v_adver->category as $v_category_ad){
+                                                    if($v_category_ad->id == $v_menu_cate['id'] ){  
+                                        ?>
+                                         <!-- <div class="banner-img">
+                                            <a href="#"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
+                                        </div> -->
+                                        <div class="deal-product">
+                                            <div class="deal-product-head">
+                                                <h3><span>Tin khuyến mãi</span></h3>
+                                            </div>
+                                            <ul class="owl-carousel" data-items="1" data-nav="true" data-dots="false">
+                                                <?php 
+                                                // echo '<pre>';
+                                                // print_r($v_adver->category);
+                                                // echo '</pre>';
+                                                foreach($data_adver as $child){
+                                                    if($child->type == 1 && $child->parent_id == null){
+                                                       //
+                                                ?>
+                                                <li class="deal-product-content">
+                                                    <div class="col-sm-5 deal-product-image">
+                                                        <a href="#"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Prodcut"></a>
+                                                    </div>
+                                                    <div class="col-sm-7 deal-product-info">
+                                                        <p><a href="#">Top Selling Product 1</a></p>
+                                                        <div class="price">
+                                                            <span class="product-price">$38.95</span>
+                                                            <span class="old-price">$52.00</span>
+                                                            <span  class="sale-price">-15%</span>
+                                                        </div>
+                                                       <!--  <div class="product-star">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-half-o"></i>
+                                                        </div> -->
+                                                        <div class="product-desc">
+                                                            Sound performance tuning includes the smallest details like...
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <?php  }}?>
+                                            </ul>
+                                        </div>
+                                        <?php  
+                                        foreach($data_adver as $child){
+                                            if($child->type == 1 && $child->parent_id == 1){
+                                        ?>
+                                        <ul class="" data-loop="true" data-items="1" data-dots="false" data-nav="true">
+                                        <?php  //if($child->type == 1 && $child->parent_id == 1){?> 
+                                            <li><a href="#"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Image"></a></li>
+                                        <?php }}?>
+                                        </ul>
+                                                
+                                        <?php  } } }} ?>
+                                   </div>
                                    <div class="box-right">
                                        <ul class="product-list row">
                                         <?php 
@@ -292,11 +508,11 @@
                                                     </div>
                                                     <div class="left-block">
                                                         <a href="{{URL::to('view/'.$k_product_menu->id)}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
-                                                        <div class="quick-view">
+                                                        <!-- <div class="quick-view">
                                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                                                 <a title="Add to compare" class="compare" href="#"></a>
                                                                 <a title="Quick view" class="search" href="#"></a>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="add-to-cart">
                                                             <a title="Add to Cart" href="{{URL::to('view/'.$k_product_menu->id)}}">Chi tiết sản phẩm</a>
                                                         </div>
@@ -400,11 +616,11 @@
                                                     </div>
                                                     <div class="left-block">
                                                         <a href="{{URL::to('view/'.$k_product_menu->id)}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
-                                                        <div class="quick-view">
+                                                        <!-- <div class="quick-view">
                                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                                                 <a title="Add to compare" class="compare" href="#"></a>
                                                                 <a title="Quick view" class="search" href="#"></a>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="add-to-cart">
                                                             <a title="Add to Cart" href="{{URL::to('view/'.$k_product_menu->id)}}">Chi tiết sản phẩm</a>
                                                         </div>

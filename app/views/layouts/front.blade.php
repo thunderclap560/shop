@@ -18,7 +18,6 @@
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/css/style.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/css/responsive.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/css/option2.css') }}" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
    
 <title>
     @if (isset($title))
@@ -111,7 +110,7 @@
             <div class="col-sm-6 <?php if($i == 0){ echo 'item-left';}?>">
                 <div class="banner-boder-zoom">
                     <?php if(count($slide_footer[$i]) != 0){?>
-                    <a href="#"><img alt="ads" class="img-responsive" src="{{ URL::asset('public/upload/image/'.$slide_footer[$i]->name)}}" /></a>
+                    <a href="{{$slide_footer[$i]->link}}"><img alt="ads" class="img-responsive" src="{{ URL::asset('public/upload/image/'.$slide_footer[$i]->name)}}" /></a>
                     <?php }?>
                 </div>
             </div>
@@ -130,16 +129,16 @@
                 <?php foreach($new as $news){?>    
                     <li>
                         <div class="post-thumb image-hover2">
-                            <a href="#"><img src="public/front/assets/data/blog1.jpg" alt="Blog"></a>
+                            <a href="{{URL::to('/tin-tuc/'.$news->id)}}"><img src="public/front/assets/data/blog1.jpg" alt="Blog"></a>
                         </div>
                         <div class="post-desc">
                             <h5 class="post-title">{{$news->title}}</a>
                             </h5>
                             <div class="post-meta">
-                                <span class="date">February 27, 2015</span>
+                                <span class="date">{{$news->created_at}}</span>
                             </div>
                             <div class="readmore">
-                                <a href="#">Chi tiết</a>
+                                <a href="{{URL::to('/tin-tuc/'.$news->id)}}">Chi tiết</a>
                             </div>
                         </div>
                     </li>
@@ -159,10 +158,10 @@
                                 <div class="icon">
                                     <img src="{{URL::asset('public/front/assets/data/icon-s1.png')}}" alt="service">
                                 </div>
-                                <h3 class="title"><a href="#">Great Value</a></h3>
+                                <h3 class="title"><a href="#">Chi phí rẻ nhất</a></h3>
                             </div>
                             <div class="col-sm-6 text">
-                                We offer competitive prices on our 100 million plus product range.
+                                Chúng tôi cung cấp giá cả cạnh tranh trên 100 triệu sản phẩm cộng với phạm vi của chúng tôi.
                             </div>
                         </div>
                     </div>

@@ -97,13 +97,13 @@
                                 <?php foreach($latest as $late){?>
                                 <li>
                                     <div class="products-block-left">
-                                        <a href="#">
+                                        <a href="{{URL::to('view/'.$late->id)}}">
                                             <img src="{{URL::asset('public/upload/image/'.$late->image)}}" alt="">
                                         </a>
                                     </div>
                                     <div class="products-block-right">
                                         <p class="product-name">
-                                            <a href="#">{{$late->name}}</a>
+                                            <a href="{{URL::to('view/'.$late->id)}}">{{$late->name}}</a>
                                         </p>
                                         <p class="product-price">{{number_format($late->price)}} VNĐ</p>
                                     </div>
@@ -128,7 +128,7 @@
                                          <?php if(isset($v_menu_cate['sub'])) {?>
                                         <ul>
                                             <?php foreach($v_menu_cate['sub'] as $k_product_menu){?>
-                                            <li><span></span><a href="#"><?php echo $k_product_menu['name'];?></a></li>
+                                            <li><span></span><a href="{{URL::to('chuyen-muc/'.$k_product_menu['id'])}}"><?php echo $k_product_menu['name'];?></a></li>
                                             <?php } ?>
                                         </ul>
                                         <?php }?>
@@ -150,9 +150,30 @@
                 <!--./left silde-->
                 <!-- SPECIAL -->
                 <div class="col-left-slide left-module">
-                    <div class="banner-opacity">
-                        <a href="#"><img src="{{URL::asset('public/front/assets/data/ads-banner.jpg')}}" alt="ads-banner"></a>
+                    <div class="block left-module">
+                    <p class="title_block">Tin tức</p>
+                    <div class="block_content">
+                        <ul class="products-block">
+                            <li>
+                                <div class="products-block-left">
+                                    <a href="{{URL::to('tin-tuc/'.$new[0]->id)}}">
+                                        <img src="{{URL::to('public/upload/image/'.$new[0]->image)}}" alt="SPECIAL PRODUCTS">
+                                    </a>
+                                </div>
+                                <div class="products-block-right">
+                                    <p class="product-name">
+                                        <a href="{{URL::to('tin-tuc/'.$new[0]->id)}}">{{$new[0]->title}}</a>
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="products-block">
+                            <div class="products-block-bottom">
+                                <a class="link-all" href="{{URL::to('blog')}}">Tất cả</a>
+                            </div>
+                        </div>
                     </div>
+                </div>
                 </div>
             </div>
             <!-- ./left colunm -->
@@ -211,17 +232,40 @@
                         <li class="col-sx-12 col-sm-4">
                             <div class="product-container">
                                 <div class="left-block">
-                                    <a href="#">
-                                        <img class="img-responsive" alt="product" src="{{URL::asset('public/front/assets/data/p40.jpg')}}" />
+                                    <a href="{{URL::to('view/'.$value['id'])}}">
+                                        <img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$value['image'])}}" />
                                     </a>
                                     <div class="quick-view">
-                                        <a title="Add to my wishlist" class="heart" href="#"></a>
+                                        <a title="Thêm vào mục yêu thích" data = '{{$value->id}}' class="heart" href="javascript:void(0)" onclick="favorite(this)" 
+                                        style=
+                                        "<?php if(Session::get('favorite') != null){
+                                                    foreach(Session::get('favorite') as $k => $v){
+                                                        if($v == $value['id'] ){
+                                                            echo 'background-color:pink';
+                                                            break;
+                                                        }
+                                                    }
+                                            }
+                                        ?>" 
+                                        flag=
+                                        "<?php if(Session::get('favorite') != null){
+                                                    foreach(Session::get('favorite') as $k => $v){
+                                                        if($v == $value['id'] ){
+                                                            echo 'TRUE';
+                                                            break;
+                                                        }
+                                                }
+                                                }else{
+                                                    echo ' ';
+                                        }?>"
+                                    >
+                                    </a>
                                         <a title="Add to compare" class="compare" href="#"></a>
-                                        <a title="Quick view" class="search" href="#"></a>
+                                        <a title="Quick view" class="search" href="{{URL::to('view/'.$value['id'])}}"></a>
                                     </div>
                                 </div>
                                 <div class="right-block">
-                                    <h5 class="product-name"><a href="#">{{ $value['name'] }}</a></h5>
+                                    <h5 class="product-name"><a href="{{URL::to('view/'.$value['id'])}}">{{ $value['name'] }}</a></h5>
                                     <div class="content_price">
                                         <span class="price product-price">
                                          @if($value['price_sales'] != null)
@@ -240,14 +284,21 @@
                                     </div>
                                     <div class="info-orther">
                                         <p>Item Code: {{$value['code']}}</p>
-                                        <p class="availability">Availability: <span>In stock</span></p>
+                                        <p class="availability">
+                                        Tình trạng: 
+                                        <span>
+                                        @if($value['code'] == 1)
+                                        Còn hàng
+                                        @else
+                                        Hết hàng
+                                        @endif
+                                        </span>
+                                        </p>
                                         <div class="product-desc">
                                             {{$value['short_detail']}}
                                         </div>
                                     </div>
-                                    <div class="add-to-cart">
-                                        <a title="Add to Cart" href="#add"><span></span>Thêm vào giỏ hàng</a>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </li>

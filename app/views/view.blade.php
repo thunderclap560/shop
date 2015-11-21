@@ -215,7 +215,7 @@
                         </ul>
                         <div class="products-block">
                             <div class="products-block-bottom">
-                                <a class="link-all" href="{{URL::to('tin-tuc')}}">Tất cả</a>
+                                <a class="link-all" href="{{URL::to('blog')}}">Tất cả</a>
                             </div>
                         </div>
                     </div>

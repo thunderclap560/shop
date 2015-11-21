@@ -194,13 +194,9 @@
                                             <span class="author">
                                             <i class="fa fa-user"></i> 
                                             by: <a href="#">Admin</a></span>
-                                            <span class="cat">
-                                                <i class="fa fa-folder-o"></i>
-                                                <a href="#">News, </a>
-                                                <a href="#">Promotions</a>
-                                            </span>
+                                           
                                             <span class="comment-count">
-                                                <i class="fa fa-comment-o"></i> 3
+                                                <i class="fa fa-comment-eye"></i> 3
                                             </span>
                                             <span class="date"><i class="fa fa-calendar"></i> 2014-08-05 07:01:49</span>
                                         </div>

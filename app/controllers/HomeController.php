@@ -38,6 +38,10 @@ class HomeController extends BaseController {
     public function getTinTuc($id = null){
 
         $data = News::find($id);
+        $data->view++;
+        $data->save();
+        $popular = News::take(5)->orderBy('view', 'desc')->get();
+        $featured = News::where('id','!=',$id)->take(6)->get();
 
         return View::make('new')->with([
             'config'=> $this->config,
@@ -49,10 +53,13 @@ class HomeController extends BaseController {
             'data'=>$data,
             'title'=>$data->title,
             'desc'=>$data->name,
+            'popular'=>$popular,
+            'featured'=>$featured
             ]);    
     }
 
     public function getChuyenMuc($id = null){
+        $new = News::take(1)->get();
         $latest = Product::orderBy('id','desc')->get();
         $ads = Banners::where('parent_id','!=','0')->get(); 
         $categoryName = Category::find($id);
@@ -99,6 +106,7 @@ class HomeController extends BaseController {
             'desc'=>$categoryName->name,
             'ads'=>$ads,
             'cate'=>$categoryName,
+            'new'=>$new
             ]);                    
     }
 
@@ -106,7 +114,7 @@ class HomeController extends BaseController {
     public function getTimKiem(){
         $latest = Product::orderBy('id','desc')->get();
         $ads = Banners::where('parent_id','!=','0')->get(); 
-
+        $new = News::take(1)->get();
         if(isset($_GET['category_id']) && $_GET['category_id'] != 0) {
             $category_id = $_GET['category_id'];
             if(isset($_GET['keyword'])){
@@ -128,6 +136,7 @@ class HomeController extends BaseController {
             'desc'=>$category->name,
             'ads'=>$ads,
             'data'=>$data->appends(Input::except('page')),
+            'new'=>$new
             ]);                    
         }else{
             if(isset($_GET['keyword'])){
@@ -150,6 +159,7 @@ class HomeController extends BaseController {
             'desc'=>'Tim kiem',
             'ads'=>$ads,
             'data'=>$data->appends(Input::except('page')),
+            'new'=>$new
             ]);  
         }
         
