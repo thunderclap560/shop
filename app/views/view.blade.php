@@ -130,13 +130,13 @@
                                 <?php foreach($latest as $late){?>
                                 <li>
                                     <div class="products-block-left">
-                                        <a href="{{URL::to('view/'.$late->id)}}">
+                                        <a href="{{URL::route('product-front', [$late->alias,$late->id])}}">
                                             <img src="{{URL::asset('public/upload/image/'.$late->image)}}" alt="">
                                         </a>
                                     </div>
                                     <div class="products-block-right">
                                         <p class="product-name">
-                                            <a href="{{URL::to('view/'.$late->id)}}">{{$late->name}}</a>
+                                            <a href="{{URL::route('product-front', [$late->alias,$late->id])}}">{{$late->name}}</a>
                                         </p>
                                         <p class="product-price">{{number_format($late->price)}} VNĐ</p>
                                         <!-- <p class="product-star">
@@ -436,7 +436,10 @@
                                             </div>
                                             <div class="col-sm-9 commnet-dettail">
                                               {{$v_comment->content}}
+                                            
+                                            @if(isset(Auth::user()->roles) == 1)
                                             <button class="btn btn-primary btn-xs reply-each" data="{{$v_comment->id}}" product="{{$thum_off[0]->id}}">Trả lời</button>
+                                            @endif
                                             </div>
                                         </div>
 
@@ -491,15 +494,15 @@
                                 <li>
                                     <div class="product-container">
                                         <div class="left-block">
-                                            <a href="{{URL::to('view/'.$k_product_menu->id)}}">
+                                            <a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">
                                                 <img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" />
                                             </a>
                                             <div class="add-to-cart">
-                                                <a title="Add to Cart" href="{{URL::to('view/'.$k_product_menu->id)}}">Thêm vào giỏ </a>
+                                                <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Thêm vào giỏ </a>
                                             </div>
                                         </div>
                                         <div class="right-block">
-                                            <h5 class="product-name"><a href="#"><?php echo $k_product_menu->name;?></a></h5>
+                                            <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
                                             
                                             <div class="content_price">
                                                 <span class="price product-price"><?php echo number_format($k_product_menu->pricember);?> VNĐ</span>
@@ -523,15 +526,15 @@
                                 <li>
                                     <div class="product-container">
                                         <div class="left-block">
-                                            <a href="{{URL::to('view/'.$v_rand->id)}}">
+                                            <a href="{{URL::route('product-front', [$v_rand->alias,$v_rand->id])}}">
                                                 <img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$v_rand->image)}}" />
                                             </a>
                                             <div class="add-to-cart">
-                                                <a title="Add to Cart" href="{{URL::to('view/'.$v_rand->id)}}">Thêm vào giỏ</a>
+                                                <a title="Add to Cart" href="{{URL::route('product-front', [$v_rand->alias,$v_rand->id])}}">Thêm vào giỏ</a>
                                             </div>
                                         </div>
                                         <div class="right-block">
-                                            <h5 class="product-name"><a href="#">{{$v_rand->name}}<a></h5>
+                                            <h5 class="product-name"><a href="{{URL::route('product-front', [$v_rand->alias,$v_rand->id])}}">{{$v_rand->name}}<a></h5>
                                             
                                             <div class="content_price">
                                                 <span class="price product-price">{{number_format($v_rand->price)}}</span>

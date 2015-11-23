@@ -6,6 +6,12 @@ class DashboardController extends BaseController {
 
 	public function __construct(){
     	$this->beforeFilter('auth');
+    	if(isset(Auth::user()->status) != 1){
+    	if ( Request::segment(3) != null ){   		
+    		echo 'Bạn không có quyền truy cập !';
+    		exit;
+    	}
+    	}
 	}
 	
 	public function index(){

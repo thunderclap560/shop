@@ -30,7 +30,7 @@
                                                     <?php if(isset($v_sub['product'])){?>
                                                     <ul class="group-link-default">
                                                         <?php foreach($v_sub['product'] as $k_product_menu){?>
-                                                        <li><a href="#"><?php echo $k_product_menu->name;?></a></li>
+                                                        <li><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></li>
                                                         <?php } ?>
                                                     </ul>
                                                     <?php } ?>
@@ -89,13 +89,13 @@
                                 <?php foreach($latest as $late){?>
                                 <li>
                                     <div class="products-block-left">
-                                        <a href="{{URL::to('chuyen-muc/'.$late->id)}}">
+                                        <a href="{{URL::route('product-front', [$late->alias,$late->id])}}">
                                             <img src="{{URL::asset('public/upload/image/'.$late->image)}}" alt="">
                                         </a>
                                     </div>
                                     <div class="products-block-right">
                                         <p class="product-name">
-                                            <a href="{{URL::to('chuyen-muc/'.$late->id)}}">{{$late->name}}</a>
+                                            <a href="{{URL::route('product-front', [$late->alias,$late->id])}}">{{$late->name}}</a>
                                         </p>
                                         <p class="product-price">{{number_format($late->price)}} VNĐ</p>
                                     </div>
@@ -226,7 +226,7 @@
                         <li class="col-sx-12 col-sm-4">
                             <div class="product-container">
                                 <div class="left-block">
-                                    <a href="{{URL::to('view/'.$value->id)}}">
+                                    <a href="{{URL::route('product-front', [$value->alias,$value->id])}}">
                                         <img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$value->image)}}" />
                                     </a>
                                     <div class="quick-view">
@@ -255,11 +255,11 @@
                                     >
                                     </a>
                                         <a title="Add to compare" class="compare" href="#"></a>
-                                        <a title="Quick view" class="search" href="{{URL::to('view/'.$value->id)}}"></a>
+                                        <a title="Quick view" class="search" href="{{URL::route('product-front', [$value->alias,$value->id])}}"></a>
                                     </div>
                                 </div>
                                 <div class="right-block">
-                                    <h5 class="product-name"><a href="{{URL::to('view/'.$value->id)}}">{{ $value->name }}</a></h5>
+                                    <h5 class="product-name"><a href="{{URL::route('product-front', [$value->alias,$value->id])}}">{{ $value->name }}</a></h5>
                                     <div class="content_price">
                                         <span class="price product-price">
                                          @if($value->price_sales != null)

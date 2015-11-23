@@ -258,7 +258,7 @@ class HomeController extends BaseController {
 			]);
 	}
 
-    public function getView($id=null){
+    public function view($alias=null,$id=null){
         $thumb = Product::remember(360)->with('products','color','image_detail')->find($id);
         $latest = Product::remember(360)->orderBy('id','desc')->take(5)->get();
         $parent_cate = Category::remember(360)->find($thumb->products->parent_id);

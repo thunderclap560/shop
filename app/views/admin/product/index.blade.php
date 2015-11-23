@@ -56,7 +56,7 @@
                         <td style="width:100px"><div><?php echo $v->short_detail ;?></div></td>
                         <td><img src="{{ URL::asset('public/upload/image/'.$v->image)}}" style="width:100px" alt=""></td>
                         <td>
-                          <a class="btn btn-app" href="{{ URL::route('admin.banner.view', $v->id) }}" >
+                          <a class="btn btn-app" target="_blank" href="{{URL::route('product-front', [$v->alias,$v->id])}}" >
                             <i class="fa fa-eye"></i> View
                           </a>
                           <a class="btn btn-app" href="{{ URL::to('admin/product/edit', $v->id) }}">
@@ -80,7 +80,11 @@
 <script>
   function redirect(data){
     if (confirm("Bạn có muốn xóa không ?") == true) {
-       window.location.href = data;
+         <?php if (Auth::user()->status != 1){?>
+          alert('Bạn không có quyền xóa');
+          <?php }else{ ?>
+            window.location.href = data;
+         <?php  } ?>
     } else {
        return false;
     }

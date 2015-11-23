@@ -18,6 +18,8 @@ Route::controller('users', 'UsersController');
 
 Route::get('/account',['before'=>'filter.auth','uses'=>'HomeController@account']);
 
+Route::get('/san-pham/{alias}/{id}',['as'=>'product-front','uses'=>'HomeController@view']);
+
 //Facebook
 Route::get('login/fb', function() {
     $facebook = new Facebook(Config::get('facebook'));

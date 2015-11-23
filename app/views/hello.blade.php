@@ -38,7 +38,7 @@
 		                                            <?php if(isset($v_sub['product'])){?>
 		                                            <ul class="group-link-default">
 														<?php foreach($v_sub['product'] as $k_product_menu){?>
-		                                                <li><a href="{{URL::to('view/'.$k_product_menu->id)}}"><?php echo $k_product_menu->name;?></a></li>
+		                                                <li><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></li>
 		                                              	<?php } ?>
 		                                            </ul>
 		                                            <?php } ?>
@@ -92,7 +92,8 @@
                        <?php foreach($latest as $late){?>
                         <li>
                             <div class="left-block">
-                                <a href="{{URL::to('view/'.$late->id)}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$late->image)}}" /></a>
+                                <?php echo $late->alias;?>
+                                <a href="{{URL::route('product-front', [$late->alias,$late->id])}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$late->image)}}" /></a>
                                 <div class="quick-view">
                                     <a title="Thêm vào mục yêu thích" data = '{{$late->id}}' class="heart" href="javascript:void(0)" onclick="favorite(this)" 
                                         style=
@@ -292,20 +293,20 @@
                                                 ?>
                                                 <li class="col-sm-4">
                                                     <div class="right-block">
-                                                        <h5 class="product-name"><a href="{{URL::to('view/'.$k_product_menu->id)}}"><?php echo $k_product_menu->name;?></a></h5>
+                                                        <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
                                                         <div class="content_price">
                                                             <span class="price product-price"><?php echo number_format($k_product_menu->price);?> VNĐ</span>
                                                         </div>
                                                     </div>
                                                     <div class="left-block">
-                                                        <a href="{{URL::to('view/'.$k_product_menu->id)}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
+                                                        <a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
                                                         <!-- <div class="quick-view">
                                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                                                 <a title="Add to compare" class="compare" href="#"></a>
                                                                 <a title="Quick view" class="search" href="#"></a>
                                                         </div> -->
                                                         <div class="add-to-cart">
-                                                            <a title="Add to Cart" href="{{URL::to('view/'.$k_product_menu->id)}}">Chi tiết sản phẩm</a>
+                                                            <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Chi tiết sản phẩm</a>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -396,20 +397,20 @@
                                                 ?>
                                                 <li class="col-sm-4">
                                                     <div class="right-block">
-                                                        <h5 class="product-name"><a href="{{URL::to('view/'.$k_product_menu->id)}}"><?php echo $k_product_menu->name;?></a></h5>
+                                                        <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
                                                         <div class="content_price">
                                                             <span class="price product-price"><?php echo number_format($k_product_menu->price);?> VNĐ</span>
                                                         </div>
                                                     </div>
                                                     <div class="left-block">
-                                                        <a href="{{URL::to('view/'.$k_product_menu->id)}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
+                                                        <a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
                                                         <!-- <div class="quick-view">
                                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                                                 <a title="Add to compare" class="compare" href="#"></a>
                                                                 <a title="Quick view" class="search" href="#"></a>
                                                         </div> -->
                                                         <div class="add-to-cart">
-                                                            <a title="Add to Cart" href="{{URL::to('view/'.$k_product_menu->id)}}">Chi tiết sản phẩm</a>
+                                                            <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Chi tiết sản phẩm</a>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -501,20 +502,20 @@
                                                 ?>
                                                 <li class="col-sm-4">
                                                     <div class="right-block">
-                                                        <h5 class="product-name"><a href="{{URL::to('view/'.$k_product_menu->id)}}"><?php echo $k_product_menu->name;?></a></h5>
+                                                        <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
                                                         <div class="content_price">
                                                             <span class="price product-price"><?php echo number_format($k_product_menu->price);?> VNĐ</span>
                                                         </div>
                                                     </div>
                                                     <div class="left-block">
-                                                        <a href="{{URL::to('view/'.$k_product_menu->id)}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
+                                                        <a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
                                                         <!-- <div class="quick-view">
                                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                                                 <a title="Add to compare" class="compare" href="#"></a>
                                                                 <a title="Quick view" class="search" href="#"></a>
                                                         </div> -->
                                                         <div class="add-to-cart">
-                                                            <a title="Add to Cart" href="{{URL::to('view/'.$k_product_menu->id)}}">Chi tiết sản phẩm</a>
+                                                            <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Chi tiết sản phẩm</a>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -609,20 +610,20 @@
                                                 ?>
                                                 <li class="col-sm-4">
                                                     <div class="right-block">
-                                                        <h5 class="product-name"><a href="{{URL::to('view/'.$k_product_menu->id)}}"><?php echo $k_product_menu->name;?></a></h5>
+                                                        <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
                                                         <div class="content_price">
                                                             <span class="price product-price"><?php echo number_format($k_product_menu->price);?> VNĐ</span>
                                                         </div>
                                                     </div>
                                                     <div class="left-block">
-                                                        <a href="{{URL::to('view/'.$k_product_menu->id)}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
+                                                        <a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
                                                         <!-- <div class="quick-view">
                                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                                                 <a title="Add to compare" class="compare" href="#"></a>
                                                                 <a title="Quick view" class="search" href="#"></a>
                                                         </div> -->
                                                         <div class="add-to-cart">
-                                                            <a title="Add to Cart" href="{{URL::to('view/'.$k_product_menu->id)}}">Chi tiết sản phẩm</a>
+                                                            <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Chi tiết sản phẩm</a>
                                                         </div>
                                                     </div>
                                                 </li>
