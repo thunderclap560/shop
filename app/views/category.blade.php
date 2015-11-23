@@ -236,7 +236,7 @@
                                         <img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$value['image'])}}" />
                                     </a>
                                     <div class="quick-view">
-                                        <a title="Thêm vào mục yêu thích" data = '{{$value->id}}' class="heart" href="javascript:void(0)" onclick="favorite(this)" 
+                                        <a title="Thêm vào mục yêu thích" data = '{{$value["id"]}}' class="heart" href="javascript:void(0)" onclick="favorite(this)" 
                                         style=
                                         "<?php if(Session::get('favorite') != null){
                                                     foreach(Session::get('favorite') as $k => $v){

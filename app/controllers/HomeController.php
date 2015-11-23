@@ -11,13 +11,16 @@ class HomeController extends BaseController {
 	
 	public function __construct(){
     	$this->config = Configs::find(1);
-    	$this->slide = Block::where('position',1)->get();
-    	$this->slide_footer = Block::where('position',0)->get();
+    	$this->slide = Block::remember(360)->where('position',1)->get();
+    	$this->slide_footer = Block::remember(360)->where('position',0)->get();
     	$this->category = [''=>'Tất cả'] + DB::table('categories')->where('parent_id','!=',0)->lists('name','id');
     	$mainCategories = Category::where('parent_id', 0)->get();
 		$this->menu_home = $this->getAllCategories($mainCategories);
-		$this->menu = Category::where('parent_id','!=', 0)->get();
+		$this->menu = Category::remember(360)->where('parent_id','!=', 0)->get();
 		$this->news = News::all();
+        // Event::listen('illuminate.query', function( $query ) {
+        //     echo '<div class="alert alert-info"><h2>'.$query.'</h2></div>';
+        // });
 	}
 
     public function getBlog(){
@@ -59,10 +62,10 @@ class HomeController extends BaseController {
     }
 
     public function getChuyenMuc($id = null){
-        $new = News::take(1)->get();
-        $latest = Product::orderBy('id','desc')->get();
-        $ads = Banners::where('parent_id','!=','0')->get(); 
-        $categoryName = Category::find($id);
+        $new = News::remember(360)->take(1)->get();
+        $latest = Product::remember(360)->orderBy('id','desc')->get();
+        $ads = Banners::remember(360)->where('parent_id','!=','0')->get(); 
+        $categoryName = Category::remember(360)->find($id);
         $tmp = array();
         $temp = array();
         if($categoryName->parent_id == 0){       
@@ -81,6 +84,7 @@ class HomeController extends BaseController {
         foreach($tmp as $item){
             if($m < count($tmp)){            
             $temp[$m]['name'] = $item->name;
+            $temp[$m]['id'] = $item->id;
             $temp[$m]['price'] = $item->price;
             $temp[$m]['code'] = $item->code;
             $temp[$m]['price_sales'] = $item->price_sales;
@@ -88,10 +92,13 @@ class HomeController extends BaseController {
             $temp[$m]['image'] = $item->image;
             }
         $m++;
-        }      
-        $data = Paginator::make($temp, count($temp), 2);      
+        }
+        $perPage = 2;
+        $currentPage = Input::get('page') - 1;
+        $pagedData = array_slice($temp, $currentPage * $perPage, $perPage);
+        $data = Paginator::make($pagedData, count($temp), $perPage);
         }else{
-        $data = Product::where('category_id',$id)->paginate(2);
+        $data = Product::remember(360)->where('category_id',$id)->paginate(2);
         }
         return View::make('category')->with([
             'config'=> $this->config,
@@ -236,8 +243,8 @@ class HomeController extends BaseController {
 
 	public function getIndex()
 	{
-		$latest = Product::orderBy('id','desc')->get();
-        $data = Advertises::with('category')->get();
+		$latest = Product::remember(360)->orderBy('id','desc')->get();
+        $data = Advertises::remember(360)->with('category')->get();
 		return View::make('hello')->with([
 			'config'=> $this->config,
 			'slide'=>$this->slide,
@@ -252,25 +259,24 @@ class HomeController extends BaseController {
 	}
 
     public function getView($id=null){
-        
-        $thumb = Product::with('products','color','image_detail')->find($id);
-        $latest = Product::orderBy('id','desc')->get();
-        $parent_cate = Category::find($thumb->products->parent_id);
+        $thumb = Product::remember(360)->with('products','color','image_detail')->find($id);
+        $latest = Product::remember(360)->orderBy('id','desc')->take(5)->get();
+        $parent_cate = Category::remember(360)->find($thumb->products->parent_id);
         $thum_off = array();
         $thum_off[]= $thumb;
         $thum_off[]= $parent_cate;
-        $rand = Product::orderByRaw("RAND()")->get();
-        $ads = Banners::where('parent_id','!=','0')->get();
-        $comment = Product::with(['comment','comment.users','comment.allReplies'])->where('id',$id)->get();
+        $rand = Product::remember(360)->orderByRaw("RAND()")->take(5)->get();
+        $ads = Banners::remember(360)->where('parent_id','!=','0')->get();
+        $comment = Product::remember(360)->with(['comment','comment.users','comment.allReplies'])->where('id',$id)->get();
         $thumb->view ++;
-        $view = Product::find($thumb->id);
+        $view = Product::remember(360)->find($thumb->id);
         $view->view = $thumb->view;
         $view->save();
         // echo '<pre>';
         // print_r($comment);
         // echo '</pre>';
         // exit;
-        $new = News::take(1)->get();
+        $new = News::remember(360)->take(1)->get();
         return View::make('view')->with([
             'config'=> $this->config,
             'slide'=>$this->slide,
@@ -283,6 +289,7 @@ class HomeController extends BaseController {
             'rand'=>$rand,
             'title'=>$thum_off[0]->name,
             'desc'=>$thum_off[0]->short_detail,
+            'og_image'=>$thum_off[0]->image,
             'ads'=>$ads,
             'comment'=>$comment,
             'new'=>$new
@@ -421,7 +428,7 @@ class HomeController extends BaseController {
         if (null!=$carts) {
             $key =0;
             foreach ($carts as $productId => $count) {               
-                $product[$key] = Product::with('color')->find($productId);
+                $product[$key] = Product::remember(360)->with('color')->find($productId);
                 $product[$key]->count = $count;
                 $key++;
             }

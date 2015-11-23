@@ -19,21 +19,17 @@
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/css/responsive.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/css/option2.css') }}" />
    
-<title>
-    @if (isset($title))
-           {{ $title }} 
-    @else
-            {{ $config->title  }} 
-    @endif  
-   </title>
+<title>@if (isset($title)){{ $title.' - Giá Cực Rẻ' }} @else{{ $config->title  }} @endif </title>
 <meta name="robots" content="noodp,noydir">
-<meta name="description" content="{{ $config->desc }}">
+<meta name="description" content=" @if(isset($desc)){{$desc}}@else{{ $config->desc }}@endif">
 <link rel="canonical" href="http://saokpop.com/">
 <meta property="og:locale" content="vi_VN">
 <meta property="og:type" content="website">
-<meta property="og:title" content="{{ $config->desc}} ">
-<meta property="og:description" content="{{$config->title}}">
+<meta property="og:title" content="@if(isset($title)){{$title}}@else{{ $config->title }}@endif">
+<meta property="og:description" content="@if(isset($desc)){{$desc}}@else{{ $config->desc }}@endif">
 <meta property="og:url" content="http://saokpop.com/">
+<meta property="og:image" content="@if(isset($og_image)){{ URL::asset('public/upload/image/'.$og_image)}}@else{{ URL::asset('public/upload/image/'.$config->logo) }}@endif"/>
+
 </head>
 <?php $action = Route::currentRouteAction();?>
 <body class="<?php if($action == 'HomeController@getIndex') {echo 'home option2';}else{echo 'option2 product-page right-sidebar';}?>">

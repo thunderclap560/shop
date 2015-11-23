@@ -6,6 +6,10 @@ class ProductController extends BaseController {
 
 	public function __construct(){
     	$this->beforeFilter('auth');
+    	if (Request::segment(2) != 'product'){
+    		echo 'Bạn không có quyền truy cập !';
+    		exit;
+    	}
 	}
 	public function getIndex(){
 		$data = Product::all();
