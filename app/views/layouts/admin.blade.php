@@ -160,6 +160,12 @@
                 <span>Tin tức</span>
               </a>
             </li>
+            <li class="treeview <?php if(Request::segment(2) == 'pages'){echo 'active';}?>">
+              <a href="{{ URL::to('admin/pages')}}">
+                <i class="fa fa-info"></i>
+                <span>Trang</span>
+              </a>
+            </li>
             <li class="treeview <?php if(Request::segment(2) == 'adver'){echo 'active';}?>">
               <a href="{{ URL::to('admin/adver')}}">
                 <i class="fa fa-bookmark"></i>

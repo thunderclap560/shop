@@ -21,11 +21,9 @@
                         <div class="col-sm-4">
                             <div class="introduce-title">Về chúng tôi</div>
                             <ul id="introduce-company"  class="introduce-list">
-                                <li><a href="#">Thông tin</a></li>
-                                <li><a href="#">Giấy chứng nhận</a></li>
-                                <li><a href="#">Chương trình liên kết</a></li>
-                                <li><a href="#">Điều khoản thanh toán</a></li>
-                                <li><a href="#">Liên hệ</a></li>
+                                @foreach($page as $k_page => $v_page)
+                                <li><a href="{{URL::route('about',[$v_page->alias,$v_page->id])}}">{{$v_page->name}}</a></li>
+                               @endforeach
                             </ul>
                         </div>
                         <div class="col-sm-4">

@@ -11,7 +11,7 @@
         </div>
         <div class="info-author">
             <span><strong>{{$data['uid']}}</strong></span>
-            <em>04/08/2015</em>
+            <em>Vừa xong</em>
         </div>
     </div>
     <div class="col-sm-9 commnet-dettail">

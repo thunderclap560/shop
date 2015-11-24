@@ -19,7 +19,7 @@ Route::controller('users', 'UsersController');
 Route::get('/account',['before'=>'filter.auth','uses'=>'HomeController@account']);
 
 Route::get('/san-pham/{alias}/{id}',['as'=>'product-front','uses'=>'HomeController@view']);
-
+Route::get('/ve-chung-toi/{alias}/{id}',['as'=>'about','uses'=>'HomeController@about']);
 //Facebook
 Route::get('login/fb', function() {
     $facebook = new Facebook(Config::get('facebook'));
@@ -129,6 +129,7 @@ Route::group(['prefix'=>'/admin'],function(){
 	Route::controller('/order','OrdersController');
     Route::controller('/comment','CommentController');
     Route::controller('/news','NewsController');
+    Route::controller('/pages','PagesController');
     Route::controller('/coupon','CouponController');
     Route::controller('/adver','AdvertiseController');
 });

@@ -431,7 +431,10 @@
                                                 </div>
                                                 <div class="info-author">
                                                     <span><strong>{{$v_comment->users->lastname}}</strong></span>
-                                                    <em>04/08/2015</em>
+                                                    <em>
+                                                        <?php $arr_tmp_create = explode(' ',$v_comment->users->created_at);?>
+                                                        {{$arr_tmp_create[0]}}
+                                                    </em>
                                                 </div>
                                             </div>
                                             <div class="col-sm-9 commnet-dettail">

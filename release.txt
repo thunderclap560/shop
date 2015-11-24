@@ -1,4 +1,2 @@
-add type in table user
-set all field => null
-
-timsteap order
+create --  pages table alias
+create timestap table comment

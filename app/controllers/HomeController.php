@@ -8,6 +8,7 @@ class HomeController extends BaseController {
 	public $menu;
 	public $slide_footer;
 	public $news;
+    public $page;
 	
 	public function __construct(){
     	$this->config = Configs::find(1);
@@ -18,6 +19,7 @@ class HomeController extends BaseController {
 		$this->menu_home = $this->getAllCategories($mainCategories);
 		$this->menu = Category::remember(360)->where('parent_id','!=', 0)->get();
 		$this->news = News::all();
+        $this->page = Page::all();
         // Event::listen('illuminate.query', function( $query ) {
         //     echo '<div class="alert alert-info"><h2>'.$query.'</h2></div>';
         // });
@@ -35,7 +37,12 @@ class HomeController extends BaseController {
             'data'=>$data,
             'title'=>'Danh sách tin tức',
             'desc'=>'Danh sách tin tức',
+            'page'=>$this->page
             ]); 
+    }
+    public function about($slug=null,$id = null){
+        echo $slug;
+        exit;
     }
 
     public function getTinTuc($id = null){
@@ -57,7 +64,8 @@ class HomeController extends BaseController {
             'title'=>$data->title,
             'desc'=>$data->name,
             'popular'=>$popular,
-            'featured'=>$featured
+            'featured'=>$featured,
+            'page'=>$this->page
             ]);    
     }
 
@@ -113,7 +121,8 @@ class HomeController extends BaseController {
             'desc'=>$categoryName->name,
             'ads'=>$ads,
             'cate'=>$categoryName,
-            'new'=>$new
+            'new'=>$new,
+            'page'=>$this->page
             ]);                    
     }
 
@@ -143,7 +152,8 @@ class HomeController extends BaseController {
             'desc'=>$category->name,
             'ads'=>$ads,
             'data'=>$data->appends(Input::except('page')),
-            'new'=>$new
+            'new'=>$new,
+            'page'=>$this->page
             ]);                    
         }else{
             if(isset($_GET['keyword'])){
@@ -166,7 +176,8 @@ class HomeController extends BaseController {
             'desc'=>'Tim kiem',
             'ads'=>$ads,
             'data'=>$data->appends(Input::except('page')),
-            'new'=>$new
+            'new'=>$new,
+            'page'=>$this->page
             ]);  
         }
         
@@ -212,7 +223,8 @@ class HomeController extends BaseController {
             'ads'=>$ads,
             'latest'=>$latest,
             'data'=>$data,
-            'profile'=> $profile
+            'profile'=> $profile,
+            'page'=>$this->page
             ]);
     }
 
@@ -254,7 +266,8 @@ class HomeController extends BaseController {
 			'latest'=>$latest,
 			'slide_footer'=>$this->slide_footer,
 			'new'=>$this->news,
-            'data_adver'=>$data
+            'data_adver'=>$data,
+            'page'=>$this->page
 			]);
 	}
 
@@ -292,7 +305,8 @@ class HomeController extends BaseController {
             'og_image'=>$thum_off[0]->image,
             'ads'=>$ads,
             'comment'=>$comment,
-            'new'=>$new
+            'new'=>$new,
+            'page'=>$this->page
             ]);
     }
     public function getCart(){
@@ -453,7 +467,8 @@ class HomeController extends BaseController {
             'count_product'=>$cart->ajaxCount(),
             'product'=>$product,
             'title'=>'Giỏ hàng của bạn',
-            'data_coupon'=>$data_coupon
+            'data_coupon'=>$data_coupon,
+            'page'=>$this->page
             ]);
     }
     public function getOrder(){
@@ -486,7 +501,8 @@ class HomeController extends BaseController {
             'slide_footer'=>$this->slide_footer,
             'title'=>'Thanh toán',
             'product'=>$product,
-            'data_coupon'=>$data_coupon
+            'data_coupon'=>$data_coupon,
+            'page'=>$this->page
             ]);
     }
     public function getWishList(){
@@ -513,7 +529,8 @@ class HomeController extends BaseController {
             'ads'=>$ads,
             'latest'=>$latest,
             'data'=>$tmp,
-            'new'=>$new
+            'new'=>$new,
+            'page'=>$this->page
             ]);
     }
     public function getLogin(){
@@ -524,6 +541,7 @@ class HomeController extends BaseController {
             'menu'=>$this->menu,
             'slide_footer'=>$this->slide_footer,
             'title'=>'Đăng nhập tài khoản',
+            'page'=>$this->page
             ]);
     }
     public function getRegister(){
@@ -534,6 +552,7 @@ class HomeController extends BaseController {
             'menu'=>$this->menu,
             'slide_footer'=>$this->slide_footer,
             'title'=>'Đăng kí tài khoản',
+            'page'=>$this->page
             ]);
     }
     public function postOrderAddSpecial(){
