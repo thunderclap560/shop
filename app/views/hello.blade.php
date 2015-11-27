@@ -92,7 +92,7 @@
                        <?php foreach($latest as $late){?>
                         <li>
                             <div class="left-block">
-                                <?php echo $late->alias;?>
+                                <?php //echo $late->alias;?>
                                 <a href="{{URL::route('product-front', [$late->alias,$late->id])}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$late->image)}}" /></a>
                                 <div class="quick-view">
                                     <a title="Thêm vào mục yêu thích" data = '{{$late->id}}' class="heart" href="javascript:void(0)" onclick="favorite(this)" 

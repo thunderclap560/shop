@@ -41,8 +41,21 @@ class HomeController extends BaseController {
             ]); 
     }
     public function about($slug=null,$id = null){
-        echo $slug;
-        exit;
+        $data = Page::find($id);
+        $all = Page::all();
+        return View::make('page')->with([
+            'config'=> $this->config,
+            'slide'=>$this->slide,
+            'category'=>$this->category,
+            'menu_home'=>$this->menu_home,
+            'menu'=>$this->menu,
+            'slide_footer'=>$this->slide_footer,
+            'data'=>$data,
+            'title'=>$data->name,
+            'desc'=>$data->name,
+            'page'=>$this->page,
+            'all'=>$all
+            ]); 
     }
 
     public function getTinTuc($id = null){
@@ -98,6 +111,7 @@ class HomeController extends BaseController {
             $temp[$m]['price_sales'] = $item->price_sales;
             $temp[$m]['short_detail'] = $item->short_detail;
             $temp[$m]['image'] = $item->image;
+            $temp[$m]['alias'] = $item->alias;
             }
         $m++;
         }

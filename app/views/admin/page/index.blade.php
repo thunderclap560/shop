@@ -66,7 +66,7 @@ function word_limiter($str, $limit = 100, $end_char = '&#8230;')
                         <td><?php echo $v->name ;?></td>
                         <td><?php echo word_limiter($v->content,100) ;?></td>
                         <td>
-                          <a class="btn btn-app" href="" >
+                          <a target="_blank" class="btn btn-app" href="{{URL::route('about',[$v->alias,$v->id])}}" >
                             <i class="fa fa-eye"></i> View
                           </a>
                           <a class="btn btn-app" href="{{ URL::to('admin/pages/edit', $v->id) }}">
