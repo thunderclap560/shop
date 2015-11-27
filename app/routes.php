@@ -20,6 +20,9 @@ Route::get('/account',['before'=>'filter.auth','uses'=>'HomeController@account']
 
 Route::get('/san-pham/{alias}/{id}',['as'=>'product-front','uses'=>'HomeController@view']);
 Route::get('/ve-chung-toi/{alias}/{id}',['as'=>'about','uses'=>'HomeController@about']);
+Route::get('cancel',function(){
+    Session::put('cancel' ,2);
+});
 //Facebook
 Route::get('login/fb', function() {
     $facebook = new Facebook(Config::get('facebook'));

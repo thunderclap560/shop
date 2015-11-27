@@ -249,8 +249,18 @@
             $(data).prev().val('');
             });    
         }
+    }
+    function noshow(data){
+        $.get('{{URL::to("cancel")}}',function(){
+            $(data).click();
+        });
     }   
     $(document).ready(function(){
+        @if($config->popup == 1 && Session::get('cancel') != 2 )
+        setTimeout(function() {
+            $("#front-ad").click();
+        }, 4e3);
+        @endif
         @if(Session::has('edit-profile-error'))
             $("#get-info").click();
             alert("{{Session::get('edit-profile-error')}}");

@@ -123,8 +123,11 @@
                                         <a title="Quick view" class="search" href="#"></a>
                                 </div>
                                 <div class="add-to-cart">
-                                    <a title="Add to Cart" href="{{URL::to('view/'.$late->id)}}">Thêm vào giỏ hàng</a>
+                                    <a title="Add to Cart" href="{{URL::route('product-front', [$late->alias,$late->id])}}">Thêm vào giỏ hàng</a>
                                 </div>
+                                @if($late->price_sales != null)
+                                <div class="price-percent-reduction2">- {{number_format((($late->price - $late->price_sales)/$late->price)*100)}}% OFF</div>
+                                @endif
                                <!--  <div class="price-percent-reduction2">
                                     -30% OFF
                                 </div> -->
@@ -644,3 +647,22 @@
     </div>
 </div>
 @stop
+<!-- Trigger the modal with a button -->
+<button style="display:none" type="button" id="front-ad" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="noshow(this)" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+       <img src="{{URL::asset('public/upload/image/'.$config->image_popup)}}"/>
+      </div>
+    </div>
+
+  </div>
+</div>

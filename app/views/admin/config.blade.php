@@ -60,13 +60,27 @@
 
                   <div class="box-body" style="float:left;padding-left:100px">                	
                     <div class="form-group">
-                     {{ Form::label('logo', 'Logo');}}
-                      {{  Form::file('logo', $attributes = array())}}
+                        {{ Form::label('logo', 'Logo');}}
+                        {{  Form::file('logo', $attributes = array())}}
                       <p class="help-block">Hình ảnh logo</p>
-                  </div>
-                  <div class="col-md-4">
-                    <img src="{{ URL::asset('public/upload/image/'.$data->logo)}}" alt="" class="img-reponsive">
-                  </div>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="{{ URL::asset('public/upload/image/'.$data->logo)}}" alt="" class="img-reponsive">
+                    </div>
+                    <div style="padding-top:100px">
+                      <div class="form-group">
+                      {{ Form::label('popup', 'Hiển thị popup');}}
+                      {{ Form::select('popup', ['0'=>'Không','1'=>'Có'], null,array('class' => 'form-control')) }}
+                    </div>
+                      <div class="form-group">
+                        {{ Form::label('image_popup', 'Popup');}}
+                        {{  Form::file('image_popup', $attributes = array())}}
+                      <p class="help-block">Hình ảnh quảng cáo</p>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="{{ URL::asset('public/upload/image/'.$data->image_popup)}}" alt="" style="width:350px">
+                    </div>
+                    </div>
                   </div>
 					<div class="clearfix"></div>
                   <div class="form-group" style="margin-left:10px;padding-bottom:20px;">

@@ -1,2 +1,1 @@
-create --  pages table alias
-create timestap table comment
+create popup column image_popup

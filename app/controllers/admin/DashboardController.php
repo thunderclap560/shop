@@ -19,16 +19,23 @@ class DashboardController extends BaseController {
 	}
 	public function update(){
 		$data  =  Configs::find(1);
+		$destinationPath = public_path().'/upload/image/';
+		//popup
+		if(Input::hasFile('image_popup')){
+        	$popup = Input::file('image_popup');
+       		$popup_name = $popup->getClientOriginalName();
+       		$imageTypes = explode('.',$popup_name);
+			$imageTypes = $imageTypes[count($imageTypes)-1];
+			$imageNames = md5(uniqid()).'.'.$imageTypes;
+        	$uploadSuccesss   = $popup->move($destinationPath, $imageNames);	
+        	$data->image_popup=$imageNames;
+		}
+        //popup
 		$image_old = $data->first(['logo']);
 		if(Input::hasFile('logo')){
 			$validator = Validator::make(Input::all(), Configs::$rules);
 			$file = Input::file('logo');
-			$destinationPath = public_path().'/upload/image/';
        		$filename        = $file->getClientOriginalName();
-       		// echo '<pre>';
-       		// print_r($image_old->logo);
-       		// echo '</pre>';
-       		// exit;
 			$path = realpath($destinationPath . $image_old->logo);
 			if(file_exists($path) && !empty($image_old->logo)) unlink($path);
        		$imageType = explode('.',$filename);
@@ -44,6 +51,7 @@ class DashboardController extends BaseController {
 				    $data->address = Input::get('address');
 				    $data->policy = Input::get('policy');
 				    $data->tutorial = Input::get('tutorial');
+				    $data->popup = Input::get('popup');
 				   	$data->save();
 				   	return Redirect::to('admin/config/1')->with('message', 'Cập nhật thành công!');
         			}else{
@@ -60,6 +68,7 @@ class DashboardController extends BaseController {
 				    $data->policy = Input::get('policy');
 				    $data->tutorial = Input::get('tutorial');
 				    $data->logo = $image_old->logo;
+				    $data->popup = Input::get('popup');
 				   	$data->save();
 				   	return Redirect::to('admin/config/1')->with('message', 'Cập nhật thành công!');
         			}else{
