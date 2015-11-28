@@ -219,6 +219,20 @@
                                 <div class="tab-panel" id="best-view-{{$v_menu_cate['id']}}">
                                    <div class="box-left">
                                         <?php foreach($data_adver as $v_adver){
+                                            if($v_adver->type == 2){
+                                                foreach($v_adver->category as $v_category_ad){
+                                                    if($v_category_ad->id == $v_menu_cate['id'] ){ 
+                                                    ?>                                                   
+                                                    <ul class="owl-intab owl-carousel" data-loop="true" data-items="1" data-autoplay="true" data-dots="false" data-nav="true">
+                                                        @foreach($data_adver as $child_2_adver)
+                                                        @if($child_2_adver->type == 2 && $child_2_adver->parent_id == null)
+                                                        <li><a href="#"><img src="{{URL::to('public/upload/image/'. $child_2_adver->image)}}" alt="Image"></a></li>
+                                                        @endif
+                                                        @endforeach
+                                                    </ul>                                                   
+                                                    <?php }
+                                                }
+                                            }    
                                             if($v_adver->type == null){
                                                 foreach($v_adver->category as $v_category_ad){
                                                     if($v_category_ad->id == $v_menu_cate['id'] ){  
@@ -258,13 +272,6 @@
                                                             <span class="old-price">$52.00</span>
                                                             <span  class="sale-price">-15%</span>
                                                         </div>
-                                                       <!--  <div class="product-star">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                        </div> -->
                                                         <div class="product-desc">
                                                             Sound performance tuning includes the smallest details like...
                                                         </div>
@@ -322,6 +329,20 @@
                                 <div class="tab-panel" id="sales-{{$v_menu_cate['id']}}">
                                    <div class="box-left">
                                         <?php foreach($data_adver as $v_adver){
+                                            if($v_adver->type == 2){
+                                                foreach($v_adver->category as $v_category_ad){
+                                                    if($v_category_ad->id == $v_menu_cate['id'] ){ 
+                                                    ?>                                                   
+                                                    <ul class="owl-intab owl-carousel" data-loop="true" data-items="1" data-autoplay="true" data-dots="false" data-nav="true">
+                                                        @foreach($data_adver as $child_2_adver)
+                                                        @if($child_2_adver->type == 2 && $child_2_adver->parent_id == null)
+                                                        <li><a href="#"><img src="{{URL::to('public/upload/image/'. $child_2_adver->image)}}" alt="Image"></a></li>
+                                                        @endif
+                                                        @endforeach
+                                                    </ul>                                                   
+                                                    <?php }
+                                                }
+                                            } 
                                             if($v_adver->type == null){
                                                 foreach($v_adver->category as $v_category_ad){
                                                     if($v_category_ad->id == $v_menu_cate['id'] ){  
@@ -427,6 +448,20 @@
                                    
                                    <div class="box-left">
                                         <?php foreach($data_adver as $v_adver){
+                                            if($v_adver->type == 2){
+                                                foreach($v_adver->category as $v_category_ad){
+                                                    if($v_category_ad->id == $v_menu_cate['id'] ){ 
+                                                    ?>                                                   
+                                                    <ul class="owl-intab owl-carousel" data-loop="true" data-items="1" data-autoplay="true" data-dots="false" data-nav="true">
+                                                        @foreach($data_adver as $child_2_adver)
+                                                        @if($child_2_adver->type == 2 && $child_2_adver->parent_id == null)
+                                                        <li><a href="#"><img src="{{URL::to('public/upload/image/'. $child_2_adver->image)}}" alt="Image"></a></li>
+                                                        @endif
+                                                        @endforeach
+                                                    </ul>                                                   
+                                                    <?php }
+                                                }
+                                            } 
                                             if($v_adver->type == null){
                                                 foreach($v_adver->category as $v_category_ad){
                                                     if($v_category_ad->id == $v_menu_cate['id'] ){  
@@ -536,6 +571,20 @@
                                 <div class="tab-panel active" id="featured-{{$v_menu_cate['id']}}">
                                    <div class="box-left">
                                         <?php foreach($data_adver as $v_adver){
+                                            if($v_adver->type == 2){
+                                                foreach($v_adver->category as $v_category_ad){
+                                                    if($v_category_ad->id == $v_menu_cate['id'] ){ 
+                                                    ?>                                                   
+                                                    <ul class="owl-intab owl-carousel" data-loop="true" data-items="1" data-autoplay="true" data-dots="false" data-nav="true">
+                                                        @foreach($data_adver as $child_2_adver)
+                                                        @if($child_2_adver->type == 2 && $child_2_adver->parent_id == null)
+                                                        <li><a href="#"><img src="{{URL::to('public/upload/image/'. $child_2_adver->image)}}" alt="Image"></a></li>
+                                                        @endif
+                                                        @endforeach
+                                                    </ul>                                                   
+                                                    <?php }
+                                                }
+                                            } 
                                             if($v_adver->type == null){
                                                 foreach($v_adver->category as $v_category_ad){
                                                     if($v_category_ad->id == $v_menu_cate['id'] ){  

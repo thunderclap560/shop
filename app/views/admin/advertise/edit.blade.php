@@ -30,6 +30,7 @@
                     {{ Form::label('link', 'URL');}}
                       <label for="exampleInputEmail1"></label>
                       {{ Form::text('link', null, ['class' => 'form-control','placeholder'=>'Nhập URL ']) }}
+                      {{ Form::hidden('type', null, ['class' => 'form-control','placeholder'=>'Nhập URL ']) }}
                     </div>
                     
                     <div class="form-group">

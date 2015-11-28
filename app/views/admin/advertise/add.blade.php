@@ -47,6 +47,12 @@
                       {{ Form::label('link', 'Đường dẫn');}}
                       {{ Form::text('link', null, ['class' => 'form-control','placeholder'=>'Nhập địa chỉ']) }}
                     </div>
+                    <div class="form-group">
+                      <select name="type" class="form-control">
+                        <option value="1">Loại 2</option>
+                        <option value="2">Loại 3</option>
+                      </select>
+                    </div>
                      <div class="form-group">
                     <button type="submit" class="btn btn-primary">OK</button>
                   </div>

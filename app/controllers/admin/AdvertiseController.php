@@ -22,7 +22,7 @@ class AdvertiseController extends BaseController {
 	->with('data',$data);
 	}
 	public function getAdd(){
-		$categories = DB::table('categories')->where('parent_id',0)->lists('name','id');
+		$categories = DB::table('advertise')->where('parent_id',1)->get();
 		$this->layout->content = View::make('admin.advertise.add',['title'=>'Khuyến Mãi'])->with('categories',$categories);
 	}
 	public function getDelete($id = null){
@@ -71,6 +71,9 @@ class AdvertiseController extends BaseController {
 		{
 			$data->type = null ;
 			$data->parent_id = 1 ;
+		}elseif($data->type == 2){
+			$data->type = 2 ;
+			$data->parent_id = 1 ;
 		}else{
 			$data->type = 1 ;
 		}	
@@ -93,7 +96,7 @@ class AdvertiseController extends BaseController {
     		$data = new Advertises;
     		$data->image = $imageName;
 		    $data->link  = Input::get('link');
-		    $data->type = 1;
+		    $data->type = Input::get('type');
 		    $data->save();
 
 		    return Redirect::to('admin/adver')->with('message', 'Thêm hình khuyến mãi thành công!');	

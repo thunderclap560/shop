@@ -37,6 +37,7 @@
                       <tr>
                         <th>STT</th>
                         <th>Hình Ảnh</th>
+                        <th>Loại quảng cáo</th>
                         <th>Nằm tại</th>
                         <th>URL</th>
                         <th></th>
@@ -49,12 +50,28 @@
                         <td>
                         <img src="{{ URL::asset('public/upload/image/'.$v->image)}}" alt="" class="img-reponsive" width="200">
                         </td>
+                        <td>
+                          @if($v->type == null && $v->parent_id == 1)
+                            Loại 1
+                          @elseif($v->type == 1 && $v->parent_id == 1)
+                            Loại 2
+                          @elseif($v->type == 2 && $v->parent_id == 1)
+                            Loại 3
+                          @elseif($v->type == 1 && $v->parent_id == null)
+                            Nằm trong loại 2
+                          @elseif($v->type == 2 && $v->parent_id == null)
+                            Nằm trong loại 3
+                          @endif
+
+                        </td>
                         <td><?php foreach($v->category as $k_category => $v_category){echo $v_category->name .' ';}?></td>
                         <td><?php echo $v->link ;?></td>
                         <td>
+                        <?php if($v->parent_id == 1){?>
                            <a class="btn btn-app" href="{{URL::to('admin/adver/edit/'.$v->id)}}">
                              <i class="fa fa-edit"></i> Sửa
                           </a>
+                        <?php } ?>
                           <?php if($v->parent_id != 1){?>
                           <a class="btn btn-app" onclick="redirect('{{ URL::to('admin/adver/delete', $v->id) }}')">
                              <i class="fa fa-trash"></i> Xóa
