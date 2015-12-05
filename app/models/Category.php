@@ -15,7 +15,7 @@ class Category extends Eloquent  {
 
 	public function products()
     {
-        return $this->hasMany('Product');
+        return $this->hasMany('Product')->where('pick','=','1');
     }
 
     public function adver()
@@ -25,12 +25,12 @@ class Category extends Eloquent  {
 
     public function products_best_view()
     {
-        return $this->hasMany('Product')->orderBy('view','desc');
+        return $this->hasMany('Product')->where('pick','=','1')->orderBy('view','desc');
     }
 
     public function products_order_news()
     {
-        return $this->hasMany('Product')->orderBy('id','desc');
+        return $this->hasMany('Product')->where('pick','=','1')->orderBy('id','desc');
     }
 
     public function cate(){

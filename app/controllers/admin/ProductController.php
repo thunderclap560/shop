@@ -15,6 +15,20 @@ class ProductController extends BaseController {
     	}
     }
 	}
+
+	public function getTurn(){
+		$this->layout->content = false;
+		$category = Product::find($_GET['id']);
+		if($_GET['pick'] == 0){
+			$category->pick = 1;
+			$category->save();
+		}else{
+			$category->pick = 0;
+			$category->save();
+		}		
+		
+	}
+
 	function alias_change($str){
 			$unicode = array(
 				'a'=>'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ',
@@ -120,6 +134,7 @@ class ProductController extends BaseController {
 		}else{
 			$data->price_sales = null;
 		}
+		$data->pick = 0;
 	    $data->feature  = Input::get('feature');
 	   	$data->save();
 
@@ -163,6 +178,7 @@ class ProductController extends BaseController {
 		    $data->category_id  = Input::get('category_id');
 		    $data->size  = Input::get('size');
 		    $data->sales  = Input::get('sales');
+		    $data->pick = 0;
 		    $data->alias = $this->alias_change(Input::get('name'));
 		    if(Input::get('price_sales')){
 	    	$data->price_sales  = Input::get('price_sales');

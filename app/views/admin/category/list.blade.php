@@ -73,6 +73,15 @@
                           <a class="btn btn-app" onclick="redirect('{{ URL::to('admin/category/delete-parent', $v->id) }}')">
                              <i class="fa fa-trash"></i> Xóa
                           </a>
+                          <?php if($v->pick == 0) {?>
+                          <a class="btn btn-app" data="0" value="{{$v->id}}" onclick="turn(this)">
+                             <i class="fa fa-power-off"></i>ON
+                          </a>
+                          <?php }else{?>
+                            <a class="btn btn-app" data="1" value="{{$v->id}}" onclick="turn(this)">
+                             <i class="fa fa-power-off"></i>OFF
+                          </a>
+                          <?php } ?>
                         </td>
 
                       </tr>

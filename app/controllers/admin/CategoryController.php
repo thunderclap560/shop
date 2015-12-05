@@ -147,5 +147,18 @@ class CategoryController extends BaseController {
 		return Redirect::to('admin/category/list-all')->with('message', 'Xóa thành công!');
 	}
 
+	public function getTurn(){
+		$this->layout->content = false;
+		$category = Category::find($_GET['id']);
+		if($_GET['pick'] == 0){
+			$category->pick = 1;
+			$category->save();
+		}else{
+			$category->pick = 0;
+			$category->save();
+		}		
+		
+	}
+
 
 }

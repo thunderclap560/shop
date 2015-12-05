@@ -463,7 +463,28 @@
     $('#default').raty();
   });
 </script>
+<script type="text/javascript" src="{{ URL::asset('public/js/jquery.tabSlideOut.v1.3.js') }}"></script>
+<script>
+         $(function(){
+             $('.slide-out-div').tabSlideOut({
+                 tabHandle: '.handle',                              //class of the element that will be your tab
+                 pathToTabImage: '{{URL::asset("public/upload/image/contact_tab.gif")}}',          //path to the image for the tab (optionaly can be set using css)
+                 imageHeight: '122px',                               //height of tab image
+                 imageWidth: '40px',                               //width of tab image    
+                 tabLocation: 'left',                               //side of screen where tab lives, top, right, bottom, or left
+                 speed: 300,                                        //speed of animation
+                 action: 'click',                                   //options: 'click' or 'hover', action to trigger animation
+                 topPos: '400px',                                   //position from the top
+                 fixedPosition: true,                               //options: true makes it stick(fixed position) on scroll
+             });
+         });
 
+</script>
+<div class="slide-out-div">
+        <a class="handle" href="http://link-for-non-js-users">Content</a>
+        <h3>Contact Us</h3>
+        <p><div class="fb-page" data-href="https://www.facebook.com/facebook" data-width="180" data-small-header="true" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/facebook"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote></div></div></p>
+    </div>
 </body>
 
 <!-- Mirrored from kutethemes.com/demo/kuteshop/html/index2.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jul 2015 07:19:33 GMT -->

@@ -88,48 +88,22 @@
                         <div class="layered">
                             <div class="layered-content">
                                 <ul class="blog-list-sidebar clearfix">
+                                    @foreach($popular as $populars)
                                     <li>
                                         <div class="post-thumb">
-                                            <a href="#"><img src="assets/data/blog-thumb1.jpg" alt="Blog"></a>
+                                            <a href="{{URL::route('news-front', [$populars->alias,$populars->id])}}"><img src="{{URL::asset('public/upload/image/'.$populars->image)}}" alt="Blog"></a>
                                         </div>
                                         <div class="post-info">
-                                            <h5 class="entry_title"><a href="#">Lorem ipsum dolor sit amet</a></h5>
+                                            <h5 class="entry_title"><a href="{{URL::route('news-front', [$populars->alias,$populars->id])}}">{{$populars->title}}</a></h5>
                                             <div class="post-meta">
-                                                <span class="date"><i class="fa fa-calendar"></i> 2014-08-05</span>
+                                                <span class="date"><i class="fa fa-calendar"></i> {{$populars->created_at}}</span>
                                                 <span class="comment-count">
-                                                    <i class="fa fa-comment-o"></i> 3
+                                                    <i class="fa fa-eye"></i> {{$populars->view}}
                                                 </span>
                                             </div>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="post-thumb">
-                                            <a href="#"><img src="assets/data/blog-thumb2.jpg" alt="Blog"></a>
-                                        </div>
-                                        <div class="post-info">
-                                            <h5 class="entry_title"><a href="#">Lorem ipsum dolor sit amet</a></h5>
-                                            <div class="post-meta">
-                                                <span class="date"><i class="fa fa-calendar"></i> 2014-08-05</span>
-                                                <span class="comment-count">
-                                                    <i class="fa fa-comment-o"></i> 3
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="post-thumb">
-                                            <a href="#"><img src="assets/data/blog-thumb3.jpg" alt="Blog"></a>
-                                        </div>
-                                        <div class="post-info">
-                                            <h5 class="entry_title"><a href="#">Lorem ipsum dolor sit amet</a></h5>
-                                            <div class="post-meta">
-                                                <span class="date"><i class="fa fa-calendar"></i> 2014-08-05</span>
-                                                <span class="comment-count">
-                                                    <i class="fa fa-comment-o"></i> 3
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -144,10 +118,12 @@
                 
                 <!-- ./tags -->
                 <!-- Banner -->
-                <div class="block left-module">
-                    <div class="banner-opacity">
-                        <a href="#"><img src="assets/data/slide-left2.jpg" alt="ads-banner"></a>
-                    </div>
+                <div class="col-left-slide left-module">
+                    <ul class="owl-carousel owl-style2" data-loop="true" data-nav = "false" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1" data-autoplay="true">
+                        <?php foreach($ads as $kads){?>
+                        <li><a href="{{$kads->link}}"><img src="{{URL::asset('public/upload/image/'.$kads->name)}}" alt="slide-left"></a></li>
+                        <?php }?>
+                    </ul>
                 </div>
                 <!-- ./Banner -->
             </div>
@@ -182,28 +158,29 @@
                             <div class="row">
                                 <div class="col-sm-5">
                                     <div class="entry-thumb image-hover2">
-                                        <a href="#">
+                                        <a href="{{URL::route('news-front', [$datas->alias,$datas->id])}}">
                                             <img src="{{URL::asset('public/upload/image/'.$datas->image)}}" alt="Blog">
                                         </a>
                                     </div>
                                 </div>
                                 <div class="col-sm-7">
                                     <div class="entry-ci">
-                                        <h3 class="entry-title"><a href="{{URL::to('tin-tuc/'.$datas->id)}}">{{$datas->title}}</a></h3>
+                                        <h3 class="entry-title"><a href="{{URL::route('news-front', [$datas->alias,$datas->id])}}">{{$datas->title}}</a></h3>
                                         <div class="entry-meta-data">
                                             <span class="author">
                                             <i class="fa fa-user"></i> 
                                             by: <a href="#">Admin</a></span>
                                            
                                             <span class="comment-count">
-                                                <i class="fa fa-comment-eye"></i> 3
+                                                <i class="fa fa-eye"></i> 3
                                             </span>
                                             <span class="date"><i class="fa fa-calendar"></i> 2014-08-05 07:01:49</span>
                                         </div>
                                         <div class="entry-excerpt">
-{{$datas->content}}                                        </div>
+                                                    {{word_limiter($datas->content,50)}}
+                                        </div>
                                         <div class="entry-more">
-                                            <a href="{{URL::to('tin-tuc/'.$datas->id)}}">Chi tiết</a>
+                                            <a href="{{URL::route('news-front', [$datas->alias,$datas->id])}}">Chi tiết</a>
                                         </div>
                                     </div>
                                 </div>
@@ -237,3 +214,21 @@
     </div>
 </div>
 @stop
+<?php 
+function word_limiter($str, $limit = 100, $end_char = '&#8230;')
+{
+    if (trim($str) == '')
+    {
+        return $str;
+    }
+
+    preg_match('/^\s*+(?:\S++\s*+){1,'.(int) $limit.'}/', $str, $matches);
+
+    if (strlen($str) == strlen($matches[0]))
+    {
+        $end_char = '';
+    }
+
+    return rtrim($matches[0]).$end_char;
+}
+?>

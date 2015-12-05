@@ -94,14 +94,14 @@
                                     @foreach($popular as $populars)
                                     <li>
                                         <div class="post-thumb">
-                                            <a href="#"><img src="{{URL::asset('public/upload/image/'.$populars->image)}}" alt="Blog"></a>
+                                            <a href="{{URL::route('news-front', [$populars->alias,$populars->id])}}"><img src="{{URL::asset('public/upload/image/'.$populars->image)}}" alt="Blog"></a>
                                         </div>
                                         <div class="post-info">
-                                            <h5 class="entry_title"><a href="#">{{$populars->title}}</a></h5>
+                                            <h5 class="entry_title"><a href="{{URL::route('news-front', [$populars->alias,$populars->id])}}">{{$populars->title}}</a></h5>
                                             <div class="post-meta">
                                                 <span class="date"><i class="fa fa-calendar"></i> {{$populars->created_at}}</span>
                                                 <span class="comment-count">
-                                                    <i class="fa fa-comment-o"></i> {{$populars->view}}
+                                                    <i class="fa fa-eye"></i> {{$populars->view}}
                                                 </span>
                                             </div>
                                         </div>
@@ -127,12 +127,16 @@
                     <div class="entry-meta-data">
                         <span class="author">
                         <i class="fa fa-user"></i> 
-                        by: <a href="#">Admin</a></span>
+                        bởi: <a href="#">Admin</a></span>
                         <span class="comment-count">
                             <i class="fa fa-eye"></i> {{$data->view}}
                         </span>
                         <span class="date"><i class="fa fa-calendar"></i> {{$data->created_at}}</span>
-                        
+                        <span>
+                            <a class="compare" target="_blank" href="http://www.facebook.com/share.php?u={{ Request::url() }}&title=ok">
+                                <i class="fa fa-share-alt-square"></i> Chia sẻ
+                            </a>
+                        </span>
                     </div>
                     <div class="entry-photo">
                         <img src="{{URL::asset('public/upload/image/'.$data->image)}}" alt="Blog">
@@ -149,22 +153,22 @@
                         <li class="post-item">
                             <article class="entry">
                                 <div class="entry-thumb image-hover2">
-                                    <a href="#">
+                                    <a href="{{URL::route('news-front', [$featureds->alias,$featureds->id])}}">
                                         <img src="{{URL::asset('public/upload/image/'.$featureds->image)}}" alt="Blog">
                                     </a>
                                 </div>
                                 <div class="entry-ci">
-                                    <h3 class="entry-title"><a href="#">{{$featureds->title}}</a></h3>
+                                    <h3 class="entry-title"><a href="{{URL::route('news-front', [$featureds->alias,$featureds->id])}}">{{$featureds->title}}</a></h3>
                                     <div class="entry-meta-data">
                                         <span class="comment-count">
-                                            <i class="fa fa-comment-o"></i> {{$featureds->view}}
+                                            <i class="fa fa-eye"></i> {{$featureds->view}}
                                         </span>
                                         <span class="date">
                                             <i class="fa fa-calendar"></i> {{$featureds->created_at}}
                                         </span>
                                     </div>
                                     <div class="entry-more">
-                                        <a href="#">Chi tiet</a>
+                                        <a href="{{URL::route('news-front', [$featureds->alias,$featureds->id])}}">Chi tiet</a>
                                     </div>
                                 </div>
                             </article>

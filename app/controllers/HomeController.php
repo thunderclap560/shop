@@ -17,7 +17,7 @@ class HomeController extends BaseController {
     	$this->category = [''=>'Tất cả'] + DB::table('categories')->where('parent_id','!=',0)->lists('name','id');
     	$mainCategories = Category::where('parent_id', 0)->get();
 		$this->menu_home = $this->getAllCategories($mainCategories);
-		$this->menu = Category::remember(360)->where('parent_id','!=', 0)->get();
+		$this->menu = Category::remember(360)->where('parent_id','!=', 0)->where('pick',1)->get();
 		$this->news = News::all();
         $this->page = Page::all();
         // Event::listen('illuminate.query', function( $query ) {
@@ -27,6 +27,8 @@ class HomeController extends BaseController {
 
     public function getBlog(){
         $data = News::paginate(1);
+        $popular = News::take(5)->orderBy('view', 'desc')->get();
+        $ads = Banners::where('parent_id','!=','0')->get();
         return View::make('blog')->with([
             'config'=> $this->config,
             'slide'=>$this->slide,
@@ -37,7 +39,9 @@ class HomeController extends BaseController {
             'data'=>$data,
             'title'=>'Danh sách tin tức',
             'desc'=>'Danh sách tin tức',
-            'page'=>$this->page
+            'page'=>$this->page,
+            'ads'=>$ads,
+            'popular'=>$popular,
             ]); 
     }
     public function about($slug=null,$id = null){
@@ -58,14 +62,16 @@ class HomeController extends BaseController {
             ]); 
     }
 
-    public function getTinTuc($id = null){
+    public function news($alias=null,$id=null){
 
         $data = News::find($id);
         $data->view++;
         $data->save();
         $popular = News::take(5)->orderBy('view', 'desc')->get();
         $featured = News::where('id','!=',$id)->take(6)->get();
-
+        $desc = strip_tags($data->content,'p');
+        $desc = strip_tags($data->content,'img');
+        $desc = substr($desc,0,300);
         return View::make('new')->with([
             'config'=> $this->config,
             'slide'=>$this->slide,
@@ -75,7 +81,7 @@ class HomeController extends BaseController {
             'slide_footer'=>$this->slide_footer,
             'data'=>$data,
             'title'=>$data->title,
-            'desc'=>$data->name,
+            'desc'=>$desc,
             'popular'=>$popular,
             'featured'=>$featured,
             'page'=>$this->page
@@ -287,6 +293,9 @@ class HomeController extends BaseController {
 
     public function view($alias=null,$id=null){
         $thumb = Product::remember(360)->with('products','color','image_detail')->find($id);
+        if($thumb->pick == 0){
+            return Response::view('errors.missing', array('page'=>$this->page,'slide_footer'=>$this->slide_footer,'category'=>$this->category,'config'=> $this->config,'menu'=>$this->menu,'menu_home'=>$this->menu_home), 404);
+        }
         $latest = Product::remember(360)->orderBy('id','desc')->take(5)->get();
         $parent_cate = Category::remember(360)->find($thumb->products->parent_id);
         $thum_off = array();

@@ -358,11 +358,42 @@
     <script src="{{ URL::asset('public/css/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
     <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
     <script>
+      function turn(data){
+        var id = $(data).attr('value');
+        var pick = $(data).attr('data');
+          $.get('turn?id='+id+'&pick='+pick,function(value){
+            console.log(value);
+              if(pick == 0){
+                $(data).attr('data','1');
+                $(data).html('<i class="fa fa-power-off"></i>OFF');
+              }else{
+                $(data).attr('data','0'); 
+                $(data).html('<i class="fa fa-power-off"></i>ON');
+              }
+           });
+      }
+      function turn_product(data){
+        var id = $(data).attr('value');
+        var pick = $(data).attr('data');
+          $.get('{{URL::asset("admin/product/turn?id=")}}'+id+'&pick='+pick,function(value){
+            console.log(value);
+              if(pick == 0){
+                $(data).attr('data','1');
+                $(data).html('<i class="fa fa-power-off"></i>OFF');
+              }else{
+                $(data).attr('data','0'); 
+                $(data).html('<i class="fa fa-power-off"></i>ON');
+              }
+           });
+      }
+    </script>
+
+    <script>
 
         function check_color(data){
           if (confirm("Bạn có muốn xóa không ?") == true) {
             $("#trash-"+data).parent().parent().parent().remove();
-             $.get('/lar/admin/product/del?id='+data,function(data){               
+             $.get('{{URL::asset("admin/product/del?id=")}}'+data,function(data){               
              });
           } else {
              return false;

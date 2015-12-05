@@ -18,7 +18,18 @@
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/css/style.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/css/responsive.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/css/option2.css') }}" />
-   
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('public/front/assets/css/example-page.css') }}" />
+
+<style type="text/css" media="screen">  
+    .slide-out-div {
+       padding: 20px;
+        width: 250px;
+        height:150px;
+        background: #f2f2f2;
+        border: #29216d 2px solid;
+        z-index: 999;
+    }
+</style>  
 <title>@if (isset($title)){{ $title.' - Giá Cực Rẻ' }} @else{{ $config->title  }} @endif </title>
 <meta name="robots" content="noodp,noydir">
 <meta name="description" content=" @if(isset($desc)){{$desc}}@else{{ $config->desc }}@endif">
@@ -34,6 +45,16 @@
 <?php $action = Route::currentRouteAction();?>
 <body class="<?php if($action == 'HomeController@getIndex') {echo 'home option2';}else{echo 'option2 product-page right-sidebar';}?>">
 <!-- HEADER -->
+<!-- Facebook -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.5&appId=1261904883825765";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!-- Facebook -->
 <div id="header" class="header">
     <div class="top-header">
         <div class="container">
@@ -60,7 +81,8 @@
                 <a href="#">Chào {{Auth::user()->lastname}}</a>
             @else
                 <a href="{{URL::to('login')}}">Đăng nhập</a>      
-            @endif        
+            @endif
+                <a href="{{URL::to('register')}}">Đăng kí</a>       
             </div>
             <div class="support-link">
                 <a href="#">Hỗ trợ</a>
@@ -125,7 +147,8 @@
                 <?php foreach($new as $news){?>    
                     <li>
                         <div class="post-thumb image-hover2">
-                            <a href="{{URL::to('/tin-tuc/'.$news->id)}}"><img src="public/front/assets/data/blog1.jpg" alt="Blog"></a>
+                        
+                            <a href="{{URL::route('news-front', [$news->alias,$news->id])}}"><img src="{{URL::asset('public/upload/image/'.$news->image)}}" alt="Blog"></a>
                         </div>
                         <div class="post-desc">
                             <h5 class="post-title">{{$news->title}}</a>
@@ -134,7 +157,7 @@
                                 <span class="date">{{$news->created_at}}</span>
                             </div>
                             <div class="readmore">
-                                <a href="{{URL::to('/tin-tuc/'.$news->id)}}">Chi tiết</a>
+                                <a href="{{URL::route('news-front', [$news->alias,$news->id])}}">Chi tiết</a>
                             </div>
                         </div>
                     </li>

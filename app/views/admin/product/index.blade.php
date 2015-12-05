@@ -37,7 +37,6 @@
                       <tr>
                         <th>STT</th>
                         <th>Tên sản phẩm</th>
-                        <th>Mã sản phẩm</th>
                         <th>Giá</th>
                         <th>Tình trạng</th>
                         <th>Chi tiết</th>
@@ -50,20 +49,28 @@
                       <tr>
                         <td><?php echo $k +=1 ;?></td>
                         <td><?php echo $v->name ;?></td>
-                        <td><?php echo $v->code ;?></td>
                         <td><?php echo number_format($v->price) ;?> VNĐ</td>
                         <td><?php if($v->status == 0){echo 'Hết hàng';}else{echo 'Còn hàng';}?></td>
                         <td style="width:100px"><div><?php echo $v->short_detail ;?></div></td>
                         <td><img src="{{ URL::asset('public/upload/image/'.$v->image)}}" style="width:100px" alt=""></td>
                         <td>
                           <a class="btn btn-app" target="_blank" href="{{URL::route('product-front', [$v->alias,$v->id])}}" >
-                            <i class="fa fa-eye"></i> View
+                            <i class="fa fa-eye"></i> Xem
                           </a>
                           <a class="btn btn-app" href="{{ URL::to('admin/product/edit', $v->id) }}">
-                            <i class="fa fa-edit"></i> Edit</a>
+                            <i class="fa fa-edit"></i> Sửa</a>
                           <a class="btn btn-app" onclick="redirect('{{ URL::to('admin/product/delete', $v->id) }}')">
-                             <i class="fa fa-trash"></i> Delete
+                             <i class="fa fa-trash"></i> Xóa
                           </a>
+                           <?php if($v->pick == 0) {?>
+                          <a class="btn btn-app" data="0" value="{{$v->id}}" onclick="turn_product(this)">
+                             <i class="fa fa-power-off"></i>ON
+                          </a>
+                          <?php }else{?>
+                            <a class="btn btn-app" data="1" value="{{$v->id}}" onclick="turn_product(this)">
+                             <i class="fa fa-power-off"></i>OFF
+                          </a>
+                          <?php } ?>
                         </td>
                       </tr>
                     <?php } ?> 
