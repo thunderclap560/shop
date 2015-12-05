@@ -275,7 +275,7 @@ class HomeController extends BaseController {
 
 	public function getIndex()
 	{
-		$latest = Product::remember(360)->orderBy('id','desc')->get();
+		$latest = Product::remember(360)->take(10)->where('pick',1)->orderBy('id','desc')->get();
         $data = Advertises::remember(360)->with('category')->get();
 		return View::make('hello')->with([
 			'config'=> $this->config,

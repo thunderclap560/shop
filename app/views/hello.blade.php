@@ -94,7 +94,7 @@
                             <div class="left-block">
                                 <?php //echo $late->alias;?>
                                 <a href="{{URL::route('product-front', [$late->alias,$late->id])}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$late->image)}}" /></a>
-                                <div class="quick-view">
+                                <div class="quick-view" style="display:none">
                                     <a title="Thêm vào mục yêu thích" data = '{{$late->id}}' class="heart" href="javascript:void(0)" onclick="favorite(this)" 
                                         style=
                                         "<?php if(Session::get('favorite') != null){
@@ -141,7 +141,7 @@
                             </div>
                         </li>
                      <?php } ?>
-                        <li>
+                        <!-- <li>
                             <div class="left-block">
                                 <a href="#"><img class="img-responsive" alt="product" src="public/front/assets/data/p48.jpg" /></a>
                                 <div class="quick-view">
@@ -159,7 +159,7 @@
                                     <span class="price product-price">$38,95</span>
                                 </div>
                             </div>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -318,6 +318,9 @@
                                                         <div class="add-to-cart">
                                                             <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Chi tiết sản phẩm</a>
                                                         </div>
+                                                        @if($k_product_menu->price_sales != null)
+                                                        <div class="price-percent-reduction2">- {{number_format((($k_product_menu->price - $k_product_menu->price_sales)/$k_product_menu->price)*100)}}% OFF</div>
+                                                        @endif
                                                     </div>
                                                 </li>
                                             <?php  }}} }?>        
@@ -436,6 +439,9 @@
                                                         <div class="add-to-cart">
                                                             <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Chi tiết sản phẩm</a>
                                                         </div>
+                                                        @if($k_product_menu->price_sales != null)
+                                                        <div class="price-percent-reduction2">- {{number_format((($k_product_menu->price - $k_product_menu->price_sales)/$k_product_menu->price)*100)}}% OFF</div>
+                                                        @endif
                                                     </div>
                                                 </li>
                                             <?php  }}}} }?>        
@@ -555,6 +561,9 @@
                                                         <div class="add-to-cart">
                                                             <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Chi tiết sản phẩm</a>
                                                         </div>
+                                                        @if($k_product_menu->price_sales != null)
+                                                        <div class="price-percent-reduction2">- {{number_format((($k_product_menu->price - $k_product_menu->price_sales)/$k_product_menu->price)*100)}}% OFF</div>
+                                                        @endif
                                                     </div>
                                                 </li>
                                             <?php  
@@ -677,6 +686,9 @@
                                                         <div class="add-to-cart">
                                                             <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Chi tiết sản phẩm</a>
                                                         </div>
+                                                        @if($k_product_menu->price_sales != null)
+                                                        <div class="price-percent-reduction2">- {{number_format((($k_product_menu->price - $k_product_menu->price_sales)/$k_product_menu->price)*100)}}% OFF</div>
+                                                        @endif
                                                     </div>
                                                 </li>
                                             <?php  }}}} }?>        
