@@ -9,70 +9,8 @@
     background : #f96d10 !important;
 }
 
-              </style>
-<div id="nav-top-menu" class="nav-top-menu">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3" id="box-vertical-megamenus">
-                    <div class="box-vertical-megamenus">
-                    <h4 class="title">
-                        <span class="title-menu">Lĩnh vực</span>
-                        <span class="btn-open-mobile pull-right home-page"><i class="fa fa-bars"></i></span>
-                    </h4>
-                    <div class="vertical-menu-content is-home">
-                        <ul class="vertical-menu-list">
-                        	<style>
-								.icon-menu-next .fa{
-/*									//padding-top:10px;
-*/									width: 30px;
-								}
-                        	</style>
-                        	<?php foreach($menu_home as $v_menu_cate){ ?>
-                        	<li><a href="{{URL::to('chuyen-muc/'.$v_menu_cate['id'])}}" <?php if(isset($v_menu_cate['sub'])){echo 'class="parent"';} ?>><span class="icon-menu-next"><?php echo $v_menu_cate['icon'];?></span> <?php echo $v_menu_cate['name'];?></a>
-								<?php if(isset($v_menu_cate['sub'])){ ?>	
-									<div class="vertical-dropdown-menu">
-		                                    <div class="vertical-groups col-sm-12">
-		                                        <?php foreach($v_menu_cate['sub'] as $k_sub => $v_sub){ ?>
-		                                        <div class="mega-group col-sm-4">
-		                                            <h4 class="mega-group-header"><span>{{$v_sub['name']}}</span></h4>
-		                                            <?php if(isset($v_sub['product'])){?>
-		                                            <ul class="group-link-default">
-														<?php foreach($v_sub['product'] as $k_product_menu){?>
-		                                                <li><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></li>
-		                                              	<?php } ?>
-		                                            </ul>
-		                                            <?php } ?>
-		                                        </div>
-		                                        <?php }?>
-		                                    </div>
-		                            </div>		
-								<?php } ?>
-                        	<?php } ?>
-                        	</li>
-<!--                             <li><a href="#"><img class="icon-menu" alt="Funky roots" src="public/front/assets/data/12.png">Electronics</a></li>
- -->		                   
-                        </ul>
-<!--                         <div class="all-category"><span class="open-cate">All Categories</span></div>
- -->                    </div>
-                </div>
-                </div>
-                    @include('layouts.common.menu')
-
-            </div>
-            <!-- userinfo on top-->
-            <div id="form-search-opntop">
-            </div>
-            <!-- userinfo on top-->
-            <div id="user-info-opntop">
-            </div>
-            <!-- CART ICON ON MMENU -->
-            <div id="shopping-cart-box-ontop">
-                <i class="fa fa-shopping-cart"></i>
-                <div class="shopping-cart-box-ontop-content"></div>
-            </div>
-        </div>
-    </div>
-
+</style>
+@include('layouts.common.nav')
 @stop
 @section('main')
 <div class="page-top">
@@ -128,38 +66,27 @@
                                 @if($late->price_sales != null)
                                 <div class="price-percent-reduction2">- {{number_format((($late->price - $late->price_sales)/$late->price)*100)}}% OFF</div>
                                 @endif
-                               <!--  <div class="price-percent-reduction2">
-                                    -30% OFF
-                                </div> -->
                             </div>
                             <div class="right-block">
                                 <h5 class="product-name"><a href="#">{{$late->name}}</a></h5>
                                 <div class="content_price">
-                                    <span class="price product-price">{{number_format($late->price)}} VNĐ</span>
-                                    <span class="price old-price" style="display:none">$52,00</span>
+                                    <span class="price product-price">
+                                    @if($late->price_sales == null)
+                                        {{number_format($late->price)}}
+                                        @else 
+                                        {{number_format($late->price_sales)}}
+                                    @endif
+                                     VNĐ
+                                    </span>
+                                    <span class="price old-price">
+                                        @if($late->price_sales != null)
+                                            {{number_format($late->price)}}
+                                        @endif
+                                    </span>
                                 </div>
                             </div>
                         </li>
                      <?php } ?>
-                        <!-- <li>
-                            <div class="left-block">
-                                <a href="#"><img class="img-responsive" alt="product" src="public/front/assets/data/p48.jpg" /></a>
-                                <div class="quick-view">
-                                        <a title="Add to my wishlist" class="heart" href="#"></a>
-                                        <a title="Add to compare" class="compare" href="#"></a>
-                                        <a title="Quick view" class="search" href="#"></a>
-                                </div>
-                                <div class="add-to-cart">
-                                    <a title="Add to Cart" href="#">Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="right-block">
-                                <h5 class="product-name"><a href="#">Red Dress</a></h5>
-                                <div class="content_price">
-                                    <span class="price product-price">$38,95</span>
-                                </div>
-                            </div>
-                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -174,12 +101,12 @@
         ?>
         <!-- featured category fashion -->
         <?php foreach($menu_home as $v_menu_cate){ ?>
-
+        <?php if($v_menu_cate['pick'] == 1) { ?>
         <div class="category-featured fashion">
             <nav class="navbar nav-menu show-brand">
               <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
-                  <div class="navbar-brand" style="background-color:{{$v_menu_cate['color']}}"><a href="{{URL::to('chuyen-muc/'.$v_menu_cate['id'])}}"><img alt="fashion" src="public/front/assets/data/icon-fashion.png" />{{$v_menu_cate['name']}}</a></div>
+                  <div class="navbar-brand" style="background-color:{{$v_menu_cate['color']}}"><a href="{{URL::to('chuyen-muc/'.$v_menu_cate['id'])}}"><span class="icon-menu-next"><?php echo $v_menu_cate['icon'];?></span>{{$v_menu_cate['name']}}</a></div>
                   <span class="toggle-menu"></span>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" style="border-bottom-color:{{$v_menu_cate['color']}}">           
@@ -245,21 +172,14 @@
                                                  foreach($v_adver->category as $v_category_ad){
                                                     if($v_category_ad->id == $v_menu_cate['id'] ){  
                                         ?>
-                                         <!-- <div class="banner-img">
-                                            <a href="#"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
-                                        </div> -->
                                         <div class="deal-product">
                                             <div class="deal-product-head">
                                                 <h3><span>Tin khuyến mãi</span></h3>
                                             </div>
                                             <ul class="owl-carousel" data-items="1" data-nav="true" data-dots="false">
                                                 <?php 
-                                                // echo '<pre>';
-                                                // print_r($v_adver->category);
-                                                // echo '</pre>';
                                                 foreach($data_adver as $child){
                                                     if($child->type == 1 && $child->parent_id == null){
-                                                       //
                                                 ?>
                                                 <li class="deal-product-content">
                                                     <div class="col-sm-5 deal-product-image">
@@ -305,16 +225,23 @@
                                                     <div class="right-block">
                                                         <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
                                                         <div class="content_price">
-                                                            <span class="price product-price"><?php echo number_format($k_product_menu->price);?> VNĐ</span>
+                                                                <span class="price product-price">
+                                                                @if($k_product_menu->price_sales == null)
+                                                                    {{number_format($k_product_menu->price)}}
+                                                                    @else 
+                                                                     {{number_format($k_product_menu->price_sales)}}
+                                                                    @endif
+                                                                 VNĐ
+                                                                </span>
+                                                                <span class="price old-price">
+                                                                    @if($k_product_menu->price_sales != null)
+                                                                        {{number_format($k_product_menu->price)}}
+                                                                    @endif
+                                                                </span>
                                                         </div>
                                                     </div>
                                                     <div class="left-block">
                                                         <a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
-                                                        <!-- <div class="quick-view">
-                                                                <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                                <a title="Add to compare" class="compare" href="#"></a>
-                                                                <a title="Quick view" class="search" href="#"></a>
-                                                        </div> -->
                                                         <div class="add-to-cart">
                                                             <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Chi tiết sản phẩm</a>
                                                         </div>
@@ -358,21 +285,14 @@
                                                  foreach($v_adver->category as $v_category_ad){
                                                     if($v_category_ad->id == $v_menu_cate['id'] ){  
                                         ?>
-                                         <!-- <div class="banner-img">
-                                            <a href="#"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
-                                        </div> -->
                                         <div class="deal-product">
                                             <div class="deal-product-head">
                                                 <h3><span>Tin khuyến mãi</span></h3>
                                             </div>
                                             <ul class="owl-carousel" data-items="1" data-nav="true" data-dots="false">
                                                 <?php 
-                                                // echo '<pre>';
-                                                // print_r($v_adver->category);
-                                                // echo '</pre>';
                                                 foreach($data_adver as $child){
                                                     if($child->type == 1 && $child->parent_id == null){
-                                                       //
                                                 ?>
                                                 <li class="deal-product-content">
                                                     <div class="col-sm-5 deal-product-image">
@@ -385,13 +305,6 @@
                                                             <span class="old-price">$52.00</span>
                                                             <span  class="sale-price">-15%</span>
                                                         </div>
-                                                       <!--  <div class="product-star">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                        </div> -->
                                                         <div class="product-desc">
                                                             Sound performance tuning includes the smallest details like...
                                                         </div>
@@ -426,16 +339,23 @@
                                                     <div class="right-block">
                                                         <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
                                                         <div class="content_price">
-                                                            <span class="price product-price"><?php echo number_format($k_product_menu->price);?> VNĐ</span>
+                                                                <span class="price product-price">
+                                                                @if($k_product_menu->price_sales == null)
+                                                                    {{number_format($k_product_menu->price)}}
+                                                                    @else 
+                                                                     {{number_format($k_product_menu->price_sales)}}
+                                                                    @endif
+                                                                 VNĐ
+                                                                </span>
+                                                                <span class="price old-price">
+                                                                    @if($k_product_menu->price_sales != null)
+                                                                        {{number_format($k_product_menu->price)}}
+                                                                    @endif
+                                                                </span>
                                                         </div>
                                                     </div>
                                                     <div class="left-block">
                                                         <a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
-                                                        <!-- <div class="quick-view">
-                                                                <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                                <a title="Add to compare" class="compare" href="#"></a>
-                                                                <a title="Quick view" class="search" href="#"></a>
-                                                        </div> -->
                                                         <div class="add-to-cart">
                                                             <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Chi tiết sản phẩm</a>
                                                         </div>
@@ -480,18 +400,12 @@
                                                  foreach($v_adver->category as $v_category_ad){
                                                     if($v_category_ad->id == $v_menu_cate['id'] ){  
                                         ?>
-                                         <!-- <div class="banner-img">
-                                            <a href="#"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
-                                        </div> -->
                                         <div class="deal-product">
                                             <div class="deal-product-head">
                                                 <h3><span>Tin khuyến mãi</span></h3>
                                             </div>
                                             <ul class="owl-carousel" data-items="1" data-nav="true" data-dots="false">
-                                                <?php 
-                                                // echo '<pre>';
-                                                // print_r($v_adver->category);
-                                                // echo '</pre>';
+                                                <?php
                                                 foreach($data_adver as $child){
                                                     if($child->type == 1 && $child->parent_id == null){
                                                        //
@@ -507,13 +421,6 @@
                                                             <span class="old-price">$52.00</span>
                                                             <span  class="sale-price">-15%</span>
                                                         </div>
-                                                       <!--  <div class="product-star">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                        </div> -->
                                                         <div class="product-desc">
                                                             Sound performance tuning includes the smallest details like...
                                                         </div>
@@ -548,7 +455,19 @@
                                                     <div class="right-block">
                                                         <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
                                                         <div class="content_price">
-                                                            <span class="price product-price"><?php echo number_format($k_product_menu->price);?> VNĐ</span>
+                                                                <span class="price product-price">
+                                                                @if($k_product_menu->price_sales == null)
+                                                                    {{number_format($k_product_menu->price)}}
+                                                                    @else 
+                                                                     {{number_format($k_product_menu->price_sales)}}
+                                                                    @endif
+                                                                 VNĐ
+                                                                </span>
+                                                                <span class="price old-price">
+                                                                    @if($k_product_menu->price_sales != null)
+                                                                        {{number_format($k_product_menu->price)}}
+                                                                    @endif
+                                                                </span>
                                                         </div>
                                                     </div>
                                                     <div class="left-block">
@@ -633,13 +552,6 @@
                                                             <span class="old-price">$52.00</span>
                                                             <span  class="sale-price">-15%</span>
                                                         </div>
-                                                       <!--  <div class="product-star">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                        </div> -->
                                                         <div class="product-desc">
                                                             Sound performance tuning includes the smallest details like...
                                                         </div>
@@ -673,16 +585,24 @@
                                                     <div class="right-block">
                                                         <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
                                                         <div class="content_price">
-                                                            <span class="price product-price"><?php echo number_format($k_product_menu->price);?> VNĐ</span>
+                                                                <span class="price product-price">
+                                                                @if($k_product_menu->price_sales == null)
+                                                                    {{number_format($k_product_menu->price)}}
+                                                                    @else 
+                                                                     {{number_format($k_product_menu->price_sales)}}
+                                                                    @endif
+                                                                 VNĐ
+                                                                </span>
+                                                                <span class="price old-price">
+                                                                    @if($k_product_menu->price_sales != null)
+                                                                        {{number_format($k_product_menu->price)}}
+                                                                    @endif
+                                                                </span>
                                                         </div>
                                                     </div>
                                                     <div class="left-block">
                                                         <a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
-                                                        <!-- <div class="quick-view">
-                                                                <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                                <a title="Add to compare" class="compare" href="#"></a>
-                                                                <a title="Quick view" class="search" href="#"></a>
-                                                        </div> -->
+                                                      
                                                         <div class="add-to-cart">
                                                             <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Chi tiết sản phẩm</a>
                                                         </div>
@@ -704,7 +624,8 @@
            </div>
         </div>
         <!-- end featured category fashion -->
-        <?php } ?>
+        <?php }
+        } ?>
     </div>
 </div>
 @stop

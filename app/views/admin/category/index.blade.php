@@ -70,6 +70,14 @@
                     <li><a href="#">Tổng sản phẩm <span class="pull-right badge bg-blue"><?php if (empty($data['product'][$v->id])) {echo 0;}else{echo $data['product'][$v->id];}?></span></a></li>
                     <li><a href="javascript:void(0)" data-toggle="modal" data-target="#edit_cate{{$v->id}}" >Sửa danh mục  <i class="pull-right fa fa-edit fa-1x"></i></a></li>
                     <li><a href="javascript:void(0)" onclick="redirect('{{ URL::to('admin/category/delete', $v->id) }}')">Xóa danh mục  <i class="pull-right fa fa-trash fa-1x"></i></a></li>
+                    
+                    <li>
+                    <?php if($v->pick == 0) {?>  
+                      <a data="0" href="javascript:void(0)" value="{{$v->id}}" onclick="turn_parent(this)">Hiển thị <span class="pull-right badge bg-blue">ON</span></a>
+                    <?php }else{?>
+                      <a data="1" href="javascript:void(0)" value="{{$v->id}}" onclick="turn_parent(this)">Hiển thị <span class="pull-right badge bg-red">OFF</span></a>
+                    <?php } ?>
+                    </li>
                      <!-- Modal edit -->
                         <div class="modal fade" id="edit_cate{{$v->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                           <div class="modal-dialog" role="document">

@@ -90,7 +90,7 @@ class HomeController extends BaseController {
 
     public function getChuyenMuc($id = null){
         $new = News::remember(360)->take(1)->get();
-        $latest = Product::remember(360)->orderBy('id','desc')->get();
+        $latest = Product::remember(360)->where('pick',1)->take(5)->orderBy('id','desc')->get();
         $ads = Banners::remember(360)->where('parent_id','!=','0')->get(); 
         $categoryName = Category::remember(360)->find($id);
         $tmp = array();
@@ -262,6 +262,7 @@ class HomeController extends BaseController {
             }
             $subArr['icon'] = $category->icon;
             $subArr['color'] = $category->color;
+            $subArr['pick'] = $category->pick;
             $subCategories = Category::with('products','products_best_view','products_order_news')->where('parent_id', '=', $category->id)->get();
             if (!$subCategories->isEmpty()) {
                 $result = $this->getAllCategories($subCategories);
@@ -296,13 +297,13 @@ class HomeController extends BaseController {
         if($thumb->pick == 0){
             return Response::view('errors.missing', array('page'=>$this->page,'slide_footer'=>$this->slide_footer,'category'=>$this->category,'config'=> $this->config,'menu'=>$this->menu,'menu_home'=>$this->menu_home), 404);
         }
-        $latest = Product::remember(360)->orderBy('id','desc')->take(5)->get();
+        $latest = Product::remember(360)->where('pick','1')->orderBy('id','desc')->take(5)->get();
         $parent_cate = Category::remember(360)->find($thumb->products->parent_id);
         $thum_off = array();
         $thum_off[]= $thumb;
         $thum_off[]= $parent_cate;
-        $rand = Product::remember(360)->orderByRaw("RAND()")->take(5)->get();
-        $ads = Banners::remember(360)->where('parent_id','!=','0')->get();
+        $rand = Product::remember(360)->where('pick','1')->orderByRaw("RAND()")->take(5)->get();
+        $ads = Banners::remember(360)->with('cate')->where('parent_id','=','0')->get();
         $comment = Product::remember(360)->with(['comment','comment.users','comment.allReplies'])->where('id',$id)->get();
         $thumb->view ++;
         $view = Product::remember(360)->find($thumb->id);

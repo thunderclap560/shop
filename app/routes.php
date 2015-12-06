@@ -24,6 +24,15 @@ Route::get('/ve-chung-toi/{alias}/{id}',['as'=>'about','uses'=>'HomeController@a
 Route::get('cancel',function(){
     Session::put('cancel' ,2);
 });
+Route::get('/cache',function(){
+    return Cache::flush();
+});
+//fast buy
+Route::post('fast-buy',array('as'=>'fast',function(){
+    $cart = new Cart;
+    $cart->addProduct(Input::get('product_id'),Input::get('qty'));
+    return Redirect::to('check-out')->with('message', 'Mua hàng thành công');
+}));
 //Facebook
 Route::get('login/fb', function() {
     $facebook = new Facebook(Config::get('facebook'));

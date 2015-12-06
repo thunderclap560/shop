@@ -50,7 +50,7 @@
                         <td><?php echo $v->content ;?></td>
                         <td><img src="{{ URL::asset('public/upload/image/'.$v->image)}}" style="width:100px" alt=""></td>
                         <td>
-                          <a class="btn btn-app" href="{{ URL::route('admin.banner.view', $v->id) }}" >
+                          <a target="_blank" class="btn btn-app" href="{{URL::route('news-front', [$v->alias,$v->id])}}" >
                             <i class="fa fa-eye"></i> View
                           </a>
                           <a class="btn btn-app" href="{{ URL::to('admin/news/edit', $v->id) }}">

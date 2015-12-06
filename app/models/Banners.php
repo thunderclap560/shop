@@ -8,6 +8,9 @@ class Banners extends Eloquent  {
 		'name'=>'required',
 		'parent_id'=>'required'
 		);
+	public function cate(){
+    	return $this->hasMany('Banners','parent_id');
+    }
 }
 
 ?>

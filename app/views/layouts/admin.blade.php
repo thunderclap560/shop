@@ -54,13 +54,18 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <!-- Messages: style can be found in dropdown.less-->
+              
+               <li class="dropdown messages-menu active" style="border-right: solid 1px white;">
+                <a href="javascript:void(0)" id="cache">
+                  <i class="fa fa-refresh"></i> Cache
+                </a>             
+              </li>
               <li class="dropdown messages-menu active">
                 <a href="{{ URL::to('/') }}" target="_blank">
-                  <i class="fa fa-home"></i>
+                  <i class="fa fa-home"></i> Trang chủ
                 </a>
                
               </li>
-            
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -358,11 +363,15 @@
     <script src="{{ URL::asset('public/css/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
     <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
     <script>
+    $("#cache").click(function(){
+          $.get("{{ URL::to('/cache') }}",function(data){
+              alert('Đã xóa cache !');
+          });
+    });
       function turn(data){
         var id = $(data).attr('value');
         var pick = $(data).attr('data');
           $.get('turn?id='+id+'&pick='+pick,function(value){
-            console.log(value);
               if(pick == 0){
                 $(data).attr('data','1');
                 $(data).html('<i class="fa fa-power-off"></i>OFF');
@@ -372,11 +381,23 @@
               }
            });
       }
+      function turn_parent(data){
+        var id = $(data).attr('value');
+        var pick = $(data).attr('data');
+          $.get('{{URL::asset("admin/category/turn?id=")}}'+id+'&pick='+pick,function(value){
+              if(pick == 0){
+                $(data).attr('data','1');
+                $(data).html('Hiển thị <span class="pull-right badge bg-red">OFF</span>');
+              }else{
+                $(data).attr('data','0'); 
+                $(data).html('Hiển thị <span class="pull-right badge bg-blue">ON</span>');
+              }
+           });
+      }
       function turn_product(data){
         var id = $(data).attr('value');
         var pick = $(data).attr('data');
           $.get('{{URL::asset("admin/product/turn?id=")}}'+id+'&pick='+pick,function(value){
-            console.log(value);
               if(pick == 0){
                 $(data).attr('data','1');
                 $(data).html('<i class="fa fa-power-off"></i>OFF');

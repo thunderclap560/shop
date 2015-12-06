@@ -1,5 +1,4 @@
 @extends('layouts.front')
- 
 @section('content')
 <style>
 .reply-each{
@@ -34,125 +33,34 @@
     color:none;
 }
 </style>
-<div id="nav-top-menu" class="nav-top-menu">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3" id="box-vertical-megamenus">
-                    <div class="box-vertical-megamenus">
-                    <h4 class="title">
-                        <span class="title-menu">Lĩnh vực</span>
-                        <span class="btn-open-mobile pull-right home-page"><i class="fa fa-bars"></i></span>
-                    </h4>
-                    <div class="vertical-menu-content is-home">
-                        <ul class="vertical-menu-list">
-                        	<style>
-								.icon-menu-next>i{
-									padding-top:10px;
-									width: 30px;
-								}
-                        	</style>
-                        	<?php foreach($menu_home as $v_menu_cate){ ?>
-                        	<li><a href="#" <?php if(isset($v_menu_cate['sub'])){echo 'class="parent"';} ?>><span class="icon-menu-next"><?php echo $v_menu_cate['icon'];?></span> <?php echo $v_menu_cate['name'];?></a>
-								<?php if(isset($v_menu_cate['sub'])){ ?>	
-									<div class="vertical-dropdown-menu">
-		                                    <div class="vertical-groups col-sm-12">
-		                                        <?php foreach($v_menu_cate['sub'] as $k_sub => $v_sub){ ?>
-		                                        <div class="mega-group col-sm-4">
-		                                            <h4 class="mega-group-header"><span>{{$v_sub['name']}}</span></h4>
-		                                            <?php if(isset($v_sub['product'])){?>
-		                                            <ul class="group-link-default">
-														<?php foreach($v_sub['product'] as $k_product_menu){?>
-		                                                <li><a href="#"><?php echo $k_product_menu->name;?></a></li>
-		                                              	<?php } ?>
-		                                            </ul>
-		                                            <?php } ?>
-		                                        </div>
-		                                        <?php }?>
-		                                    </div>
-		                            </div>		
-								<?php } ?>
-                        	<?php } ?>
-                        	</li>
-<!--                             <li><a href="#"><img class="icon-menu" alt="Funky roots" src="public/front/assets/data/12.png">Electronics</a></li>
- -->		                   
-                        </ul>
-                        <div class="all-category"><span class="open-cate">All Categories</span></div>
-                    </div>
-                </div>
-                </div>
-                    @include('layouts.common.menu')
-
-            </div>
-            <!-- userinfo on top-->
-            <div id="form-search-opntop">
-            </div>
-            <!-- userinfo on top-->
-            <div id="user-info-opntop">
-            </div>
-            <!-- CART ICON ON MMENU -->
-            <div id="shopping-cart-box-ontop">
-                <i class="fa fa-shopping-cart"></i>
-                <div class="shopping-cart-box-ontop-content"></div>
-            </div>
-        </div>
-    </div>
-
+@include('layouts.common.nav')
 @stop
 @section('main')
 <div class="columns-container">
     <div class="container" id="columns">
         <!-- breadcrumb -->
-        <div class="breadcrumb clearfix">
-        <?php 
-    		Breadcrumbs::register('home', function($breadcrumbs) {
-        		$breadcrumbs->push('Trang chủ', URL::to('/'));
-
-    		});
-    		Breadcrumbs::register('parent_category', function($breadcrumbs,$thum_off) {
-            $breadcrumbs->parent('home');
-            $breadcrumbs->push($thum_off[1]->name, URL::to('/chuyen-muc/'.$thum_off[1]->id));
-            $breadcrumbs->push($thum_off[0]->products->name);
-            $breadcrumbs->push($thum_off[0]->name);
-        	});
-    		echo Breadcrumbs::render('parent_category',$thum_off);
-    	?>
-        </div>
+            <div class="breadcrumb clearfix">
+            <?php 
+        		Breadcrumbs::register('home', function($breadcrumbs) {
+            		$breadcrumbs->push('Trang chủ', URL::to('/'));
+        		});
+        		Breadcrumbs::register('parent_category', function($breadcrumbs,$thum_off) {
+                $breadcrumbs->parent('home');
+                $breadcrumbs->push($thum_off[1]->name, URL::to('/chuyen-muc/'.$thum_off[1]->id));
+                $breadcrumbs->push($thum_off[0]->products->name);
+                $breadcrumbs->push($thum_off[0]->name);
+            	});
+        		echo Breadcrumbs::render('parent_category',$thum_off);
+        	?>
+            </div>
         <!-- ./breadcrumb -->
         <!-- row -->
         <div class="row">
             <!-- Left colunm -->
             <div class="column col-xs-12 col-sm-3" id="left_column">
                 <!-- block best sellers -->
-                <div class="block left-module">
-                    <p class="title_block">SẢN PHẨM MỚI</p>
-                    <div class="block_content">
-                        <ul class="products-block best-sell">
-                                <?php foreach($latest as $late){?>
-                                <li>
-                                    <div class="products-block-left">
-                                        <a href="{{URL::route('product-front', [$late->alias,$late->id])}}">
-                                            <img src="{{URL::asset('public/upload/image/'.$late->image)}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="products-block-right">
-                                        <p class="product-name">
-                                            <a href="{{URL::route('product-front', [$late->alias,$late->id])}}">{{$late->name}}</a>
-                                        </p>
-                                        <p class="product-price">{{number_format($late->price)}} VNĐ</p>
-                                        <!-- <p class="product-star">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                        </p> -->
-                                    </div>
-                                </li>
-                               <?php } ?>
-                            </ul>
-                    </div>
-                </div>
-                <!-- ./block best sellers  -->
+                @include('layouts.common.lates')
+                <!-- ./block best sellers  -->               
                 <!-- block category -->
                 <div class="block left-module">
                     <p class="title_block">Danh mục khác</p>
@@ -181,24 +89,19 @@
                         <!-- ./layered -->
                     </div>
                 </div>
-                <!-- ./block category  -->
-                
-                
-                <!-- left silide -->
-                <div class="col-left-slide left-module">
-                    <ul class="owl-carousel owl-style2" data-loop="true" data-nav = "false" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1" data-autoplay="true">
-                        <?php foreach($ads as $kads){?>
-                        <li><a href="{{$kads->link}}"><img src="{{URL::asset('public/upload/image/'.$kads->name)}}" alt="slide-left"></a></li>
-                        <?php }?>
-                    </ul>
-                </div>
-                <!--./left silde-->
-                
-                <!-- left silide -->
+                <!-- ./block category  -->               
+                <!-- left slide advertisment -->
+                <?php foreach($ads as $kads){?>
+                @include('layouts.common.advertis')
+                <?php } ?>
+                <!--./left slide advertisment-->               
+                <!-- news -->
+                  @if(isset($new[0]))
                 <div class="col-left-slide left-module">
                     <div class="block left-module">
                     <p class="title_block">Tin tức</p>
                     <div class="block_content">
+                      
                         <ul class="products-block">
                             <li>
                                 <div class="products-block-left">
@@ -221,6 +124,7 @@
                     </div>
                 </div>
                 </div>
+                @endif
                 <!--./left silde-->
             </div>
             <!-- ./left colunm -->
@@ -239,12 +143,9 @@
                                         <ul class="owl-carousel" data-items="3" data-nav="true" data-dots="false" data-margin="20" data-loop="true">
                                             <?php foreach($thum_off[0]->image_detail as $vthum_off_image){?>
                                             <li>
-
-                                               
                                                 <a href="#" data-image="{{URL::asset('public/upload/image/'.$vthum_off_image->name)}}" data-zoom-image="{{URL::asset('public/upload/image/'.$vthum_off_image->name)}}">
                                                     <img id="product-zoom"  src="{{URL::asset('public/upload/image/'.$vthum_off_image->name)}}" /> 
                                                 </a>
-                                              
                                             </li>
                                               <?php }?>
                                         </ul>
@@ -252,23 +153,9 @@
                                 </div>
                                 <!-- product-imge-->
                             </div>
-                            <?php 
-                            // echo '<pre>';
-                            // print_r(Session::get('color'));
-                            // echo '</pre>';
-                            ?>
-
                             <div class="pb-right-column col-xs-12 col-sm-6">
                                 <h1 class="product-name">{{$thum_off[0]->name}}</h1>
                                 <div class="product-comments">
-                                    <!-- <div class="product-star">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                    </div> -->
-                                   
                                 </div>
                                 <div class="product-price-group">
                                     <span class="price">
@@ -321,11 +208,12 @@
                                             </ul>
                                         </div>
                                     </div>
+                        {{ Form::open(array('route' => 'fast', 'id'=>'form-fast')) }}
                                     <div class="attributes">
                                         <div class="attribute-label">Số Lượng:</div>
                                         <div class="attribute-list product-qty">
                                             <div class="">
-                                                <input id="option-product-qty" type="number" value="1">
+                                                <input id="option-product-qty" name="qty" type="number" value="1">
                                             </div>
                                             
                                         </div>
@@ -347,7 +235,9 @@
                                 <div class="form-action">
                                     <div class="button-group">
                                         <a class="btn-add-cart" href="javascript:void(0)" id="add_cart">Thêm vào giỏ hàng</a>
-                                        <input type="hidden" id="id_cart" value="{{$thum_off[0]->id}}">
+                                        <input type="hidden" name="product_id" id="id_cart" value="{{$thum_off[0]->id}}">
+                                            <a class="btn-add-cart" onclick="fastbuy()" style="cursor:pointer">Mua ngay</a>
+                        {{ Form::close() }}
                                     </div>
                                     <div class="button-group">
                                         <a 
@@ -471,14 +361,6 @@
                                 <div id="extra-tabs" class="tab-panel">
                                     <p>{{$config->policy}}</p> 
                                 </div>
-                                <div id="guarantees" class="tab-panel">
-                                    <p>Phasellus accumsan cursus velit. Pellentesque egestas, neque sit amet convallis pulvinar, justo nulla eleifend augue, ac auctor orci leo non est. Sed lectus. Sed a libero. Vestibulum eu odio.</p>
-
-                                    <p>Maecenas vestibulum mollis diam. In consectetuer turpis ut velit. Curabitur at lacus ac velit ornare lobortis. Praesent ac sem eget est egestas volutpat. Nam eget dui.</p>
-
-                                    <p>Maecenas nec odio et ante tincidunt tempus. Vestibulum suscipit nulla quis orci. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc. Aenean ut eros et nisl sagittis vestibulum. Aliquam eu nunc.</p> 
-                                    <p>Maecenas vestibulum mollis diam. In consectetuer turpis ut velit. Curabitur at lacus ac velit ornare lobortis. Praesent ac sem eget est egestas volutpat. Nam eget dui.</p>
-                                </div>
                             </div>
                         </div>
                         <!-- ./tab product -->
@@ -503,14 +385,28 @@
                                             <div class="add-to-cart">
                                                 <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Thêm vào giỏ </a>
                                             </div>
+                                        @if($k_product_menu->price_sales != null)
+                                           <div class="price-percent-reduction2">- {{number_format((($k_product_menu->price - $k_product_menu->price_sales)/$k_product_menu->price)*100)}}% OFF</div>
+                                        @endif
                                         </div>
                                         <div class="right-block">
                                             <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
                                             
                                             <div class="content_price">
-                                                <span class="price product-price"><?php echo number_format($k_product_menu->pricember);?> VNĐ</span>
-                                                <span class="price old-price">$52,00</span>
-                                            </div>
+                                                                <span class="price product-price">
+                                                                @if($k_product_menu->price_sales == null)
+                                                                    {{number_format($k_product_menu->price)}}
+                                                                    @else 
+                                                                     {{number_format($k_product_menu->price_sales)}}
+                                                                    @endif
+                                                                 VNĐ
+                                                                </span>
+                                                                <span class="price old-price">
+                                                                    @if($k_product_menu->price_sales != null)
+                                                                        {{number_format($k_product_menu->price)}}
+                                                                    @endif
+                                                                </span>
+                                                        </div>
                                         </div>
                                     </div>
                                 </li>
@@ -535,13 +431,27 @@
                                             <div class="add-to-cart">
                                                 <a title="Add to Cart" href="{{URL::route('product-front', [$v_rand->alias,$v_rand->id])}}">Thêm vào giỏ</a>
                                             </div>
+                                            @if($v_rand->price_sales != null)
+                                           <div class="price-percent-reduction2">- {{number_format((($v_rand->price - $v_rand->price_sales)/$v_rand->price)*100)}}% OFF</div>
+                                        @endif
                                         </div>
                                         <div class="right-block">
                                             <h5 class="product-name"><a href="{{URL::route('product-front', [$v_rand->alias,$v_rand->id])}}">{{$v_rand->name}}<a></h5>
                                             
                                             <div class="content_price">
-                                                <span class="price product-price">{{number_format($v_rand->price)}}</span>
-                                                <span class="price old-price">$52,00</span>
+                                                <span class="price product-price">
+                                                @if($v_rand->price_sales == null)
+                                                    {{number_format($v_rand->price)}}
+                                                    @else 
+                                                     {{number_format($v_rand->price_sales)}}
+                                                    @endif
+                                                 VNĐ
+                                                </span>
+                                                <span class="price old-price">
+                                                    @if($v_rand->price_sales != null)
+                                                        {{number_format($v_rand->price)}}
+                                                    @endif
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -560,3 +470,8 @@
     </div>
 </div>
 @stop
+<script>
+    function fastbuy(){
+        document.getElementById("form-fast").submit();
+    }
+</script>

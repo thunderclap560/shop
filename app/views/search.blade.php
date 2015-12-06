@@ -13,12 +13,7 @@
                     </h4>
                     <div class="vertical-menu-content is-home">
                         <ul class="vertical-menu-list">
-                            <style>
-                                .icon-menu-next>i{
-                                    padding-top:10px;
-                                    width: 30px;
-                                }
-                            </style>
+                            
                             <?php foreach($menu_home as $v_menu_cate){ ?>
                             <li><a href="#" <?php if(isset($v_menu_cate['sub'])){echo 'class="parent"';} ?>><span class="icon-menu-next"><?php echo $v_menu_cate['icon'];?></span> <?php echo $v_menu_cate['name'];?></a>
                                 <?php if(isset($v_menu_cate['sub'])){ ?>    
@@ -44,7 +39,6 @@
 <!--                             <li><a href="#"><img class="icon-menu" alt="Funky roots" src="public/front/assets/data/12.png">Electronics</a></li>
  -->                           
                         </ul>
-                        <div class="all-category"><span class="open-cate">All Categories</span></div>
                     </div>
                 </div>
                 </div>
@@ -141,6 +135,7 @@
                 </div>
                 <!--./left silde-->
                 <!-- SPECIAL -->
+                @if(isset($new[0]))
                 <div class="col-left-slide left-module">
                     <div class="block left-module">
                     <p class="title_block">Tin tức</p>
@@ -154,7 +149,7 @@
                                 </div>
                                 <div class="products-block-right">
                                     <p class="product-name">
-                                        <a href="{{URL::to('tin-tuc/'.$new[0]->id)}}">{{$new[0]->title}}</a>
+                                        <a href="{{URL::route('news-front', [$new[0]->alias,$new[0]->id])}}">{{$new[0]->title}}</a>
                                     </p>
                                 </div>
                             </li>
@@ -167,6 +162,7 @@
                     </div>
                 </div>
                 </div>
+                @endif
             </div>
             <!-- ./left colunm -->
             <!-- Center colunm-->

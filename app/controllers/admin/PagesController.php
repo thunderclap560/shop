@@ -5,10 +5,10 @@ class PagesController extends BaseController {
 
 	public function __construct(){
     	$this->beforeFilter('auth');
-    	// if(isset(Auth::user()->status) != 1){
-    	// 	echo 'Bạn không có quyền truy cập !';
-    	// 	exit;
-    	// }
+    	if(isset(Auth::user()->status) != 1){
+    		echo 'Bạn không có quyền truy cập !';
+    		exit;
+    	}
 	}
 	public function getIndex(){
 		$data = Page::all();

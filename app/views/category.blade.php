@@ -13,12 +13,7 @@
                     </h4>
                     <div class="vertical-menu-content is-home">
                         <ul class="vertical-menu-list">
-                            <style>
-                                .icon-menu-next>i{
-                                    padding-top:10px;
-                                    width: 30px;
-                                }
-                            </style>
+                            
                             <?php foreach($menu_home as $v_menu_cate){ ?>
                             <li><a href="#" <?php if(isset($v_menu_cate['sub'])){echo 'class="parent"';} ?>><span class="icon-menu-next"><?php echo $v_menu_cate['icon'];?></span> <?php echo $v_menu_cate['name'];?></a>
                                 <?php if(isset($v_menu_cate['sub'])){ ?>    
@@ -149,6 +144,7 @@
                 </div>
                 <!--./left silde-->
                 <!-- SPECIAL -->
+                  @if(isset($new[0]))
                 <div class="col-left-slide left-module">
                     <div class="block left-module">
                     <p class="title_block">Tin tức</p>
@@ -175,6 +171,7 @@
                     </div>
                 </div>
                 </div>
+                @endif
             </div>
             <!-- ./left colunm -->
             <!-- Center colunm-->
@@ -235,34 +232,34 @@
                                     <a href="{{URL::route('product-front', [$value['alias'],$value['id']])}}">
                                         <img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$value['image'])}}" />
                                     </a>
-                                    <div class="quick-view">
+                                    <!-- <div class="quick-view">
                                         <a title="Thêm vào mục yêu thích" data = '{{$value["id"]}}' class="heart" href="javascript:void(0)" onclick="favorite(this)" 
                                         style=
-                                        "<?php if(Session::get('favorite') != null){
-                                                    foreach(Session::get('favorite') as $k => $v){
-                                                        if($v == $value['id'] ){
-                                                            echo 'background-color:pink';
-                                                            break;
-                                                        }
-                                                    }
-                                            }
-                                        ?>" 
-                                        flag=
-                                        "<?php if(Session::get('favorite') != null){
-                                                    foreach(Session::get('favorite') as $k => $v){
-                                                        if($v == $value['id'] ){
-                                                            echo 'TRUE';
-                                                            break;
-                                                        }
-                                                }
-                                                }else{
-                                                    echo ' ';
-                                        }?>"
+                                       // "<?php //if(Session::get('favorite') != null){
+                                                    //foreach(Session::get('favorite') as $k => $v){
+                                                       // if($v == $value['id'] ){
+                                                         //   echo 'background-color:pink';
+                                                          //  break;
+                                                       // }
+                                                   // }
+                                          //  }
+                                       // ?>" 
+                                       // flag=
+                                      //  "<?php //if(Session::get('favorite') != null){
+                                                   // foreach(Session::get('favorite') as $k => $v){
+                                                       // if($v == $value['id'] ){
+                                                            //echo 'TRUE';
+                                                           // break;
+                                                       // }
+                                             //   }
+                                              //  }else{
+                                                    //echo ' ';
+                                       // }?>"
                                     >
                                     </a>
                                         <a title="Add to compare" class="compare" href="#"></a>
                                         <a title="Quick view" class="search" href="{{URL::route('product-front', [$value['alias'],$value['id']])}}"></a>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="right-block">
                                     <h5 class="product-name"><a href="{{URL::route('product-front', [$value['alias'],$value['id']])}}">{{ $value['name'] }}</a></h5>
