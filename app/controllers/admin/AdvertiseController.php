@@ -23,7 +23,8 @@ class AdvertiseController extends BaseController {
 	}
 	public function getAdd(){
 		$categories = DB::table('advertise')->where('parent_id',1)->get();
-		$this->layout->content = View::make('admin.advertise.add',['title'=>'Khuyến Mãi'])->with('categories',$categories);
+		$product = [''=>'-- Chọn sản phẩm khuyến mãi --'] + DB::table('products')->where('sales',1)->lists('name','id');
+		$this->layout->content = View::make('admin.advertise.add',['title'=>'Khuyến Mãi'])->with('categories',$categories)->with('product',$product);
 	}
 	public function getDelete($id = null){
 		$data = Advertises::find($id);
@@ -96,6 +97,15 @@ class AdvertiseController extends BaseController {
     		$data = new Advertises;
     		$data->image = $imageName;
 		    $data->link  = Input::get('link');
+		    if(Input::get('product_id') != null){
+		    	$product = Product::find(Input::get('product_id'));
+		    	$data->price_sales = $product->price_sales;
+		    	$data->price = $product->price;
+		    	$data->name = $product->name;
+		    	$data->short_detail = $product->short_detail;
+		    	$data->alias = $product->alias;
+		    }
+		    $data->product_id  = Input::get('product_id');
 		    $data->type = Input::get('type');
 		    $data->save();
 

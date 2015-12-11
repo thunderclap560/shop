@@ -25,7 +25,7 @@
 		                                            <?php if(isset($v_sub['product'])){?>
 		                                            <ul class="group-link-default">
 														<?php foreach($v_sub['product'] as $k_product_menu){?>
-		                                                <li><a href="#"><?php echo $k_product_menu->name;?></a></li>
+		                                                <li><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></li>
 		                                              	<?php } ?>
 		                                            </ul>
 		                                            <?php } ?>

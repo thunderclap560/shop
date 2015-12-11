@@ -550,7 +550,17 @@
     <script src="{{ URL::asset('public/css/dist/js/pages/dashboard.js') }}"></script>
 
     <script src="{{ URL::asset('public/css/dist/js/demo.js') }}"></script>
-   
+    <script>
+      $("#type-adver").on('change',function(){
+          if($(this).val() == 1){
+            $("#chosen-type-adver-product").css('display','block');
+            $("#chosen-type-adver-url").css('display','none');
+          }else{
+            $("#chosen-type-adver-url").css('display','block');
+            $("#chosen-type-adver-product").css('display','none');
+          }
+      });
+    </script>
 
   </body>
 </html>

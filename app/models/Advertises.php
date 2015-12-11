@@ -5,7 +5,6 @@ class Advertises extends Eloquent  {
 	public $timestamps = false;
 
 	public static $rules = array(
-		'link'=>'required',
 		'image'=>'required'
 		);
 

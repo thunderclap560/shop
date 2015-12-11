@@ -347,14 +347,18 @@ class HomeController extends BaseController {
         $tmp['parent_id']= 0;
         $tmp['comment']= $_GET['comment'];
         $tmp['rate']= $_GET['rate'];
+        if($_GET['comment'] == ""){
+            return false;
+        }else{
         $comment = new Comment;
         $comment->user_id = $_GET['uid'];
         $comment->product_id = $_GET['product'];
         $comment->parent_id = 0;
         $comment->content = $_GET['comment'];
         $comment->rates = $_GET['rate'];
-        if($comment->save()){
-            return View::make('comment')->with(['data'=>$tmp]);
+            if($comment->save()){
+                return View::make('comment')->with(['data'=>$tmp]);
+            }
         }
     }
     public function getReply(){

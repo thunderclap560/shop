@@ -43,16 +43,21 @@
                       <label for="exampleInputEmail1"></label>
                       {{  Form::file('image', $attributes = array('required'))}}
                     </div>
-                   <div class="form-group">
-                      {{ Form::label('link', 'Đường dẫn');}}
-                      {{ Form::text('link', null, ['class' => 'form-control','placeholder'=>'Nhập địa chỉ']) }}
-                    </div>
                     <div class="form-group">
-                      <select name="type" class="form-control">
+                      <select name="type" class="form-control" id="type-adver">
                         <option value="1">Loại 2</option>
                         <option value="2">Loại 3</option>
                       </select>
                     </div>
+                    <div class="form-group" id="chosen-type-adver-url" style="display:none">
+                      {{ Form::label('link', 'Đường dẫn');}}
+                      {{ Form::text('link', null, ['class' => 'form-control','placeholder'=>'Nhập địa chỉ']) }}
+                    </div>
+                    <div class="form-group" id="chosen-type-adver-product">
+                      {{ Form::label('link', 'Sản phẩm khuyến mãi');}}
+                       {{ Form::select('product_id', $product, null,array('class' => 'form-control')) }}
+                    </div>
+                    
                      <div class="form-group">
                     <button type="submit" class="btn btn-primary">OK</button>
                   </div>

@@ -153,7 +153,7 @@
                                                     <ul class="owl-intab owl-carousel" data-loop="true" data-items="1" data-autoplay="true" data-dots="false" data-nav="true">
                                                         @foreach($data_adver as $child_2_adver)
                                                         @if($child_2_adver->type == 2 && $child_2_adver->parent_id == null)
-                                                        <li><a href="#"><img src="{{URL::to('public/upload/image/'. $child_2_adver->image)}}" alt="Image"></a></li>
+                                                        <li><a href="{{$child_2_adver->link}}"><img src="{{URL::to('public/upload/image/'. $child_2_adver->image)}}" alt="Image"></a></li>
                                                         @endif
                                                         @endforeach
                                                     </ul>                                                   
@@ -165,7 +165,7 @@
                                                     if($v_category_ad->id == $v_menu_cate['id'] ){  
                                         ?>
                                         <div class="banner-img">
-                                            <a href="#"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
+                                            <a href="{{$v_adver->link}}"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
                                         </div>
                                         <?php  } }
                                              }elseif($v_adver->type == 1 && $v_adver->parent_id == 1 ){ 
@@ -183,17 +183,30 @@
                                                 ?>
                                                 <li class="deal-product-content">
                                                     <div class="col-sm-5 deal-product-image">
-                                                        <a href="#"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Prodcut"></a>
+                                                        <a href="{{URL::route('product-front', [$child->alias,$child->product_id])}}"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Prodcut"></a>
                                                     </div>
                                                     <div class="col-sm-7 deal-product-info">
-                                                        <p><a href="#">Top Selling Product 1</a></p>
+                                                        <p><a href="{{URL::route('product-front', [$child->alias,$child->product_id])}}">{{$child->name}}</a></p>
                                                         <div class="price">
-                                                            <span class="product-price">$38.95</span>
+                                                             <span class="product-price">
+                                                                @if($child->price_sales == null)
+                                                                    {{number_format($child->price)}}
+                                                                    @else 
+                                                                     {{number_format($child->price_sales)}}
+                                                                    @endif
+                                                                 VNĐ
+                                                                </span>
+                                                                <span class="old-price">
+                                                                    @if($child->price_sales != null)
+                                                                        {{number_format($child->price)}}
+                                                                    @endif
+                                                                </span>
+                                                            <!-- <span class="product-price">$38.95</span>
                                                             <span class="old-price">$52.00</span>
-                                                            <span  class="sale-price">-15%</span>
+                                                            <span  class="sale-price">-15%</span> -->
                                                         </div>
                                                         <div class="product-desc">
-                                                            Sound performance tuning includes the smallest details like...
+                                                            {{word_limiter($child->short_detail,15)}}
                                                         </div>
                                                     </div>
                                                 </li>
@@ -266,7 +279,7 @@
                                                     <ul class="owl-intab owl-carousel" data-loop="true" data-items="1" data-autoplay="true" data-dots="false" data-nav="true">
                                                         @foreach($data_adver as $child_2_adver)
                                                         @if($child_2_adver->type == 2 && $child_2_adver->parent_id == null)
-                                                        <li><a href="#"><img src="{{URL::to('public/upload/image/'. $child_2_adver->image)}}" alt="Image"></a></li>
+                                                        <li><a href="{{$child_2_adver->link}}"><img src="{{URL::to('public/upload/image/'. $child_2_adver->image)}}" alt="Image"></a></li>
                                                         @endif
                                                         @endforeach
                                                     </ul>                                                   
@@ -278,7 +291,7 @@
                                                     if($v_category_ad->id == $v_menu_cate['id'] ){  
                                         ?>
                                         <div class="banner-img">
-                                            <a href="#"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
+                                            <a href="{{$v_adver->link}}"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
                                         </div>
                                         <?php  } }
                                              }elseif($v_adver->type == 1 && $v_adver->parent_id == 1 ){ 
@@ -296,17 +309,30 @@
                                                 ?>
                                                 <li class="deal-product-content">
                                                     <div class="col-sm-5 deal-product-image">
-                                                        <a href="#"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Prodcut"></a>
+                                                        <a href="{{URL::route('product-front', [$child->alias,$child->product_id])}}"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Prodcut"></a>
                                                     </div>
                                                     <div class="col-sm-7 deal-product-info">
-                                                        <p><a href="#">Top Selling Product 1</a></p>
+                                                        <p><a href="{{URL::route('product-front', [$child->alias,$child->product_id])}}">{{$child->name}}</a></p>
                                                         <div class="price">
-                                                            <span class="product-price">$38.95</span>
+                                                             <span class="product-price">
+                                                                @if($child->price_sales == null)
+                                                                    {{number_format($child->price)}}
+                                                                    @else 
+                                                                     {{number_format($child->price_sales)}}
+                                                                    @endif
+                                                                 VNĐ
+                                                                </span>
+                                                                <span class="old-price">
+                                                                    @if($child->price_sales != null)
+                                                                        {{number_format($child->price)}}
+                                                                    @endif
+                                                                </span>
+                                                            <!-- <span class="product-price">$38.95</span>
                                                             <span class="old-price">$52.00</span>
-                                                            <span  class="sale-price">-15%</span>
+                                                            <span  class="sale-price">-15%</span> -->
                                                         </div>
                                                         <div class="product-desc">
-                                                            Sound performance tuning includes the smallest details like...
+                                                            {{word_limiter($child->short_detail,15)}}
                                                         </div>
                                                     </div>
                                                 </li>
@@ -381,7 +407,7 @@
                                                     <ul class="owl-intab owl-carousel" data-loop="true" data-items="1" data-autoplay="true" data-dots="false" data-nav="true">
                                                         @foreach($data_adver as $child_2_adver)
                                                         @if($child_2_adver->type == 2 && $child_2_adver->parent_id == null)
-                                                        <li><a href="#"><img src="{{URL::to('public/upload/image/'. $child_2_adver->image)}}" alt="Image"></a></li>
+                                                        <li><a href="{{$child_2_adver->link}}"><img src="{{URL::to('public/upload/image/'. $child_2_adver->image)}}" alt="Image"></a></li>
                                                         @endif
                                                         @endforeach
                                                     </ul>                                                   
@@ -393,7 +419,7 @@
                                                     if($v_category_ad->id == $v_menu_cate['id'] ){  
                                         ?>
                                         <div class="banner-img">
-                                            <a href="#"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
+                                            <a href="{{$v_adver->link}}"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
                                         </div>
                                         <?php  } }
                                              }elseif($v_adver->type == 1 && $v_adver->parent_id == 1 ){ 
@@ -412,17 +438,30 @@
                                                 ?>
                                                 <li class="deal-product-content">
                                                     <div class="col-sm-5 deal-product-image">
-                                                        <a href="#"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Prodcut"></a>
+                                                        <a href="{{URL::route('product-front', [$child->alias,$child->product_id])}}"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Prodcut"></a>
                                                     </div>
                                                     <div class="col-sm-7 deal-product-info">
-                                                        <p><a href="#">Top Selling Product 1</a></p>
+                                                        <p><a href="{{URL::route('product-front', [$child->alias,$child->product_id])}}">{{$child->name}}</a></p>
                                                         <div class="price">
-                                                            <span class="product-price">$38.95</span>
+                                                             <span class="product-price">
+                                                                @if($child->price_sales == null)
+                                                                    {{number_format($child->price)}}
+                                                                    @else 
+                                                                     {{number_format($child->price_sales)}}
+                                                                    @endif
+                                                                 VNĐ
+                                                                </span>
+                                                                <span class="old-price">
+                                                                    @if($child->price_sales != null)
+                                                                        {{number_format($child->price)}}
+                                                                    @endif
+                                                                </span>
+                                                            <!-- <span class="product-price">$38.95</span>
                                                             <span class="old-price">$52.00</span>
-                                                            <span  class="sale-price">-15%</span>
+                                                            <span  class="sale-price">-15%</span> -->
                                                         </div>
                                                         <div class="product-desc">
-                                                            Sound performance tuning includes the smallest details like...
+                                                            {{word_limiter($child->short_detail,15)}}
                                                         </div>
                                                     </div>
                                                 </li>
@@ -506,7 +545,7 @@
                                                     <ul class="owl-intab owl-carousel" data-loop="true" data-items="1" data-autoplay="true" data-dots="false" data-nav="true">
                                                         @foreach($data_adver as $child_2_adver)
                                                         @if($child_2_adver->type == 2 && $child_2_adver->parent_id == null)
-                                                        <li><a href="#"><img src="{{URL::to('public/upload/image/'. $child_2_adver->image)}}" alt="Image"></a></li>
+                                                        <li><a href="{{$child_2_adver->link}}"><img src="{{URL::to('public/upload/image/'. $child_2_adver->image)}}" alt="Image"></a></li>
                                                         @endif
                                                         @endforeach
                                                     </ul>                                                   
@@ -518,7 +557,7 @@
                                                     if($v_category_ad->id == $v_menu_cate['id'] ){  
                                         ?>
                                         <div class="banner-img">
-                                            <a href="#"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
+                                            <a href="{{$v_adver->link}}"><img src="{{URL::to('public/upload/image/'. $v_adver->image)}}" alt="Banner Product"></a>                                       
                                         </div>
                                         <?php  } }
                                              }elseif($v_adver->type == 1 && $v_adver->parent_id == 1 ){ 
@@ -533,27 +572,36 @@
                                                 <h3><span>Tin khuyến mãi</span></h3>
                                             </div>
                                             <ul class="owl-carousel" data-items="1" data-nav="true" data-dots="false">
-                                                <?php 
-                                                // echo '<pre>';
-                                                // print_r($v_adver->category);
-                                                // echo '</pre>';
+                                                <?php
                                                 foreach($data_adver as $child){
                                                     if($child->type == 1 && $child->parent_id == null){
-                                                       //
                                                 ?>
                                                 <li class="deal-product-content">
                                                     <div class="col-sm-5 deal-product-image">
-                                                        <a href="#"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Prodcut"></a>
+                                                        <a href="{{URL::route('product-front', [$child->alias,$child->product_id])}}"><img src="{{URL::to('public/upload/image/'.$child->image)}}" alt="Prodcut"></a>
                                                     </div>
                                                     <div class="col-sm-7 deal-product-info">
-                                                        <p><a href="#">Top Selling Product 1</a></p>
+                                                        <p><a href="{{URL::route('product-front', [$child->alias,$child->product_id])}}">{{$child->name}}</a></p>
                                                         <div class="price">
-                                                            <span class="product-price">$38.95</span>
+                                                             <span class="product-price">
+                                                                @if($child->price_sales == null)
+                                                                    {{number_format($child->price)}}
+                                                                    @else 
+                                                                     {{number_format($child->price_sales)}}
+                                                                    @endif
+                                                                 VNĐ
+                                                                </span>
+                                                                <span class="old-price">
+                                                                    @if($child->price_sales != null)
+                                                                        {{number_format($child->price)}}
+                                                                    @endif
+                                                                </span>
+                                                            <!-- <span class="product-price">$38.95</span>
                                                             <span class="old-price">$52.00</span>
-                                                            <span  class="sale-price">-15%</span>
+                                                            <span  class="sale-price">-15%</span> -->
                                                         </div>
                                                         <div class="product-desc">
-                                                            Sound performance tuning includes the smallest details like...
+                                                            {{word_limiter($child->short_detail,15)}}
                                                         </div>
                                                     </div>
                                                 </li>
@@ -628,6 +676,24 @@
         } ?>
     </div>
 </div>
+<?php 
+function word_limiter($str, $limit = 100, $end_char = '&#8230;')
+{
+    if (trim($str) == '')
+    {
+        return $str;
+    }
+
+    preg_match('/^\s*+(?:\S++\s*+){1,'.(int) $limit.'}/', $str, $matches);
+
+    if (strlen($str) == strlen($matches[0]))
+    {
+        $end_char = '';
+    }
+
+    return rtrim($matches[0]).$end_char;
+}
+?>
 @stop
 <!-- Trigger the modal with a button -->
 <button style="display:none" type="button" id="front-ad" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>

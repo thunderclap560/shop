@@ -87,7 +87,7 @@
 <script>
   function redirect(data){
     if (confirm("Bạn có muốn xóa không ?") == true) {
-         <?php if (Auth::user()->status != 1){?>
+         <?php if (Auth::user()->status == 1){?>
           alert('Bạn không có quyền xóa');
           <?php }else{ ?>
             window.location.href = data;

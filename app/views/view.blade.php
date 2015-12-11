@@ -180,7 +180,7 @@
                                 <div class="info-orther">
                                     <p>Mã sản phẩm: {{$thum_off[0]->code}}</p>
                                     <p>Tình trạng: <span class="in-stock">@if($thum_off[0]->price == 0) Hết hàng @else Còn Hàng @endif</span></p>
-                                    <p>Condition: New</p>
+                                    <p><div class="addthis_native_toolbox"></div></p>
                                 </div>
                                 <div class="product-desc">
                                 {{$thum_off[0]->short_detail}}

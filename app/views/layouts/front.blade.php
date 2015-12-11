@@ -33,17 +33,18 @@
 <title>@if (isset($title)){{ $title.' - Giá Cực Rẻ' }} @else{{ $config->title  }} @endif </title>
 <meta name="robots" content="noodp,noydir">
 <meta name="description" content=" @if(isset($desc)){{$desc}}@else{{ $config->desc }}@endif">
-<link rel="canonical" href="http://saokpop.com/">
+<link rel="canonical" href="{{ Request::url() }}">
 <meta property="og:locale" content="vi_VN">
 <meta property="og:type" content="website">
 <meta property="og:title" content="@if(isset($title)){{$title}}@else{{ $config->title }}@endif">
 <meta property="og:description" content="@if(isset($desc)){{$desc}}@else{{ $config->desc }}@endif">
-<meta property="og:url" content="http://saokpop.com/">
+<meta property="og:url" content="{{ Request::url() }}">
 <meta property="og:image" content="@if(isset($og_image)){{ URL::asset('public/upload/image/'.$og_image)}}@else{{ URL::asset('public/upload/image/'.$config->logo) }}@endif"/>
 
 </head>
 <?php $action = Route::currentRouteAction();?>
 <body class="<?php if($action == 'HomeController@getIndex') {echo 'home option2';}else{echo 'option2 product-page right-sidebar';}?>">
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56694d7e439a45dd" async="async"></script>
 <!-- HEADER -->
 <!-- Facebook -->
 <div id="fb-root"></div>
