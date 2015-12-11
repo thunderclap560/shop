@@ -15,7 +15,13 @@ class DashboardController extends BaseController {
 	}
 	
 	public function index(){
-		$this->layout->content = View::make('admin.index');
+		$order = DB::table('orders')->count();
+		$product = DB::table('products')->count();
+		$user = DB::table('news')->count();
+		$comment = DB::table('comments')->count();
+		$this->layout->content = View::make('admin.index')->with([
+			'order'=>$order,'product'=>$product,'user'=>$user,'comment'=>$comment
+			]);
 	}
 	public function update(){
 		$data  =  Configs::find(1);

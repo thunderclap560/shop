@@ -55,7 +55,7 @@ class ProductController extends BaseController {
 		}
 
 	public function getIndex(){
-		$data = Product::all();
+		$data = Product::orderBy('id','desc')->get();
 		$this->layout->content = View::make('admin.product.index',['title'=>'Danh sách sản phẩm'])->with('data',$data);
 	}
 	public function getAdd(){
