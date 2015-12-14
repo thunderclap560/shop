@@ -256,6 +256,15 @@
         });
     }   
     $(document).ready(function(){
+        /* load-more-featured*/
+        $("#load-more-featured").click(function(){
+            var category_id = $(this).attr('data');
+            $.post("{{URL::to('load-more-featured')}}",{category_id:category_id},function(data){
+                $("#more-featured").html(data);
+            });
+        });
+        /* load-more-featured*/
+
         @if($config->popup == 1 && Session::get('cancel') != 2 )
         setTimeout(function() {
             $("#front-ad").click();

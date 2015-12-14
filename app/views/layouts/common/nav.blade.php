@@ -23,10 +23,14 @@
 		                                        <div class="mega-group col-sm-4">
 		                                            <h4 class="mega-group-header"><span>{{$v_sub['name']}}</span></h4>
 		                                            <?php if(isset($v_sub['product'])){?>
-		                                            <ul class="group-link-default">
-														<?php foreach($v_sub['product'] as $k_product_menu){?>
-		                                                <li><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></li>
-		                                              	<?php } ?>
+		                                            <ul class="group-link-default">                                                       
+														<?php 
+                                                        $limit = 0;   
+                                                        foreach($v_sub['product'] as $k_product_menu){?>
+		                                                <?php if($limit < 5) {?>
+                                                        <li><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></li>
+                                                        <?php }else{break;} $limit++;?>
+                                                        <?php } ?>
 		                                            </ul>
 		                                            <?php } ?>
 		                                        </div>

@@ -25,6 +25,15 @@ class HomeController extends BaseController {
         // });
 	}
 
+    public function featured(){
+        $data = Product::whereIn('category_id', function($query){
+        $query->select('id')
+        ->from(with(new Category)->getTable())
+        ->where('parent_id', $_POST['category_id']);
+        })->get();
+        return View::make('loadmore.featured',['data'=>$data]);
+    }
+
     public function getBlog(){
         $data = News::paginate(1);
         $popular = News::take(5)->orderBy('view', 'desc')->get();
