@@ -625,6 +625,7 @@
                                     
                         <?php if(isset($v_menu_cate['sub'])) 
                             {
+                        $tmp_arr_featured = array();
                         echo '<div class="more-featured">';      
                                foreach($v_menu_cate['sub'] as $k_sub => $v_sub)
                                 { 
@@ -672,12 +673,17 @@
                                                 }
                                             }
                                                 $limit_feature++;
+                                                if($limit_feature <= 5)
+                                                {
+                                                    $tmp_arr_featured[] = $limit_feature;
+                                                }
+
                                             }
                                         }
                                     }
                         echo '</div>';           
-                                if(isset($v_sub['product']) && count($v_sub['product']) > 5){    
-                                    echo '<input data="'.$v_menu_cate['id'].'" count = "'.count($v_sub['product']).'" num="5" style="width:97%;padding:5px 5px 5px 5px;margin:5px 0px 5px 10px" type="button" class="button load-more-featured" value="Xem Thêm">'; 
+                                if(count($tmp_arr_featured) > 5){    
+                                    echo '<input data="'.$v_menu_cate['id'].'" count = "'.count($tmp_arr_featured).'" num="5" style="width:97%;padding:5px 5px 5px 5px;margin:5px 0px 5px 10px" type="button" class="button load-more-featured" value="Xem Thêm">'; 
                                 }
                                 }
                             ?>
