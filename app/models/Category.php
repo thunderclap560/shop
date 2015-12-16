@@ -15,7 +15,7 @@ class Category extends Eloquent  {
 
 	public function products()
     {
-        return $this->hasMany('Product')->where('pick','=','1');
+        return $this->hasMany('Product')->where('pick','=','1')->orderBy('id','desc');
     }
 
     public function adver()

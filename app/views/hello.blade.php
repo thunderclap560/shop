@@ -622,16 +622,21 @@
                                    </div>
                                    <div class="box-right">
                                        <ul class="product-list row">
-                                        <?php 
-                                            if(isset($v_menu_cate['sub'])) {
-                                            foreach($v_menu_cate['sub'] as $k_sub => $v_sub){ ?>
-                                               <?php if(isset($v_sub['product'])){
-                                                $limit_feature = 0;
-                                                foreach($v_sub['product'] as $k_product_menu){
-                                                   if($limit_feature < 5){ 
-                                                    if($k_product_menu->featured == 0){
-                                                ?>
-                                            <div id="more-featured">
+                                    
+                        <?php if(isset($v_menu_cate['sub'])) 
+                            {
+                        echo '<div class="more-featured">';      
+                               foreach($v_menu_cate['sub'] as $k_sub => $v_sub)
+                                { 
+                                    if(isset($v_sub['product']))
+                                    {
+                                        $limit_feature = 0;
+                                        foreach($v_sub['product'] as $k_product_menu)
+                                        {
+                                           if($limit_feature < 5)
+                                           { 
+                                                if($k_product_menu->featured == 0)
+                                                {?>
                                                 <li class="col-sm-4">
                                                     <div class="right-block">
                                                         <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
@@ -662,14 +667,21 @@
                                                         @endif
                                                     </div>
                                                 </li>
-                                            </div>
-                                            <?php  }
-                                                } $limit_feature++;
+                                            
+                                            <?php  
+                                                }
                                             }
+                                                $limit_feature++;
                                             }
-                                            }
-                                            echo '<input data="'.$v_menu_cate['id'].'" id="load-more-featured" style="width:97%;padding:5px 5px 5px 5px;margin:5px 0px 5px 10px" type="button" class="button" value="Xem Thêm">'; 
-                                            }?>        
+                                        }
+                                    }
+                        echo '</div>';           
+                                if(isset($v_sub['product']) && count($v_sub['product']) > 5){    
+                                    echo '<input data="'.$v_menu_cate['id'].'" count = "'.count($v_sub['product']).'" num="5" style="width:97%;padding:5px 5px 5px 5px;margin:5px 0px 5px 10px" type="button" class="button load-more-featured" value="Xem Thêm">'; 
+                                }
+                                }
+                            ?>
+                                               
                                        </ul>
                                    </div>
                                 </div>

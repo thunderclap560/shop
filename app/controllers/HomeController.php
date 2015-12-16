@@ -30,8 +30,8 @@ class HomeController extends BaseController {
         $query->select('id')
         ->from(with(new Category)->getTable())
         ->where('parent_id', $_POST['category_id']);
-        })->get();
-        return View::make('loadmore.featured',['data'=>$data]);
+        })->limit(5)->offset($_POST['num'])->orderBy('id', 'DESC')->get();
+        return View::make('loadmore.featured',['data'=>$data,'cate'=>$_POST['category_id'],'num'=>$_POST['num']]);
     }
 
     public function getBlog(){

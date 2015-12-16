@@ -254,15 +254,24 @@
         $.get('{{URL::to("cancel")}}',function(){
             $(data).click();
         });
-    }   
+    } 
     $(document).ready(function(){
-        /* load-more-featured*/
-        $("#load-more-featured").click(function(){
+        /* load-more-featured*/         
+        $(".load-more-featured").on('click',function(){
             var category_id = $(this).attr('data');
-            $.post("{{URL::to('load-more-featured')}}",{category_id:category_id},function(data){
-                $("#more-featured").html(data);
+            var element = $(this);
+            var num = parseInt($(this).attr('num'));
+            var cd = parseInt($(this).attr('count'));
+            $.post("{{URL::to('load-more-featured')}}",{category_id:category_id,num:num},function(data){
+                element.attr('count',cd-=5);
+                element.prev().fadeOut(300);
+                element.prev().html(data).fadeIn(300);
+                element.attr('num',num+=5);
+                if(cd <= 5){
+                    element.remove();
+                }
             });
-        });
+        }); 
         /* load-more-featured*/
 
         @if($config->popup == 1 && Session::get('cancel') != 2 )
