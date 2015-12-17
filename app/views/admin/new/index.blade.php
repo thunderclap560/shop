@@ -47,7 +47,7 @@
                       <tr>
                         <td><?php echo $k +=1 ;?></td>
                         <td><?php echo $v->title ;?></td>
-                        <td><?php echo $v->content ;?></td>
+                        <td style="width:30%"><?php echo word_limiter($v->content,50) ;?></td>
                         <td><img src="{{ URL::asset('public/upload/image/'.$v->image)}}" style="width:100px" alt=""></td>
                         <td>
                           <a target="_blank" class="btn btn-app" href="{{URL::route('news-front', [$v->alias,$v->id])}}" >
@@ -81,3 +81,21 @@
 
   }
 </script>
+<?php 
+function word_limiter($str, $limit = 100, $end_char = '&#8230;')
+{
+    if (trim($str) == '')
+    {
+        return $str;
+    }
+
+    preg_match('/^\s*+(?:\S++\s*+){1,'.(int) $limit.'}/', $str, $matches);
+
+    if (strlen($str) == strlen($matches[0]))
+    {
+        $end_char = '';
+    }
+
+    return rtrim($matches[0]).$end_char;
+}
+?>

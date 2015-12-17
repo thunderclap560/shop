@@ -13,7 +13,6 @@
                         <ul class="vertical-menu-list">
                         	<style>
 								.icon-menu-next>i{
-									padding-top:10px;
 									width: 30px;
 								}
                         	</style>
@@ -130,20 +129,20 @@
                         <ul class="products-block">
                             <li>
                                 <div class="products-block-left">
-                                    <a href="{{URL::to('tin-tuc/'.$new[0]->id)}}">
+                                    <a href="{{URL::route('news-front', [$new[0]->alias,$new[0]->id])}}">
                                         <img src="{{URL::to('public/upload/image/'.$new[0]->image)}}" alt="SPECIAL PRODUCTS">
                                     </a>
                                 </div>
                                 <div class="products-block-right">
                                     <p class="product-name">
-                                        <a href="{{URL::to('tin-tuc/'.$new[0]->id)}}">{{$new[0]->title}}</a>
+                                        <a href="{{URL::route('news-front', [$new[0]->alias,$new[0]->id])}}">{{$new[0]->title}}</a>
                                     </p>
                                 </div>
                             </li>
                         </ul>
                         <div class="products-block">
                             <div class="products-block-bottom">
-                                <a class="link-all" href="{{URL::to('tin-tuc')}}">Tất cả</a>
+                                <a class="link-all" href="{{URL::to('blog')}}">Tất cả</a>
                             </div>
                         </div>
                     </div>

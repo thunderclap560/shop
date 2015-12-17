@@ -7,8 +7,7 @@
                   <h1 class="box-title">{{ $title }}</h1>
 
                 </div><!-- /.box-header -->
-                                            @include('layouts.common.thumb')
-
+                @include('layouts.common.thumb')
                 <div class="row">
                   <div class="box-header">
                   <div class="col-md-2">
@@ -73,9 +72,16 @@
                     
                     <li>
                     <?php if($v->pick == 0) {?>  
-                      <a data="0" href="javascript:void(0)" value="{{$v->id}}" onclick="turn_parent(this)">Hiển thị <span class="pull-right badge bg-blue">ON</span></a>
+                      <a data="0" href="javascript:void(0)" value="{{$v->id}}" onclick="turn_parent(this)">Hiển thị ngoài trang chủ<span class="pull-right badge bg-blue">ON</span></a>
                     <?php }else{?>
-                      <a data="1" href="javascript:void(0)" value="{{$v->id}}" onclick="turn_parent(this)">Hiển thị <span class="pull-right badge bg-red">OFF</span></a>
+                      <a data="1" href="javascript:void(0)" value="{{$v->id}}" onclick="turn_parent(this)">Hiển thị ngoài trang chủ <span class="pull-right badge bg-red">OFF</span></a>
+                    <?php } ?>
+                    </li>
+                    <li>
+                    <?php if($v->menu == 0) {?>  
+                      <a data="0" href="javascript:void(0)" value="{{$v->id}}" onclick="turn_parent_menu(this)">Hiển thị trên menu ngang<span class="pull-right badge bg-blue">ON</span></a>
+                    <?php }else{?>
+                      <a data="1" href="javascript:void(0)" value="{{$v->id}}" onclick="turn_parent_menu(this)">Hiển thị <span class="pull-right badge bg-red">OFF</span></a>
                     <?php } ?>
                     </li>
                      <!-- Modal edit -->

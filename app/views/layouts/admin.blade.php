@@ -387,10 +387,23 @@
           $.get('{{URL::asset("admin/category/turn?id=")}}'+id+'&pick='+pick,function(value){
               if(pick == 0){
                 $(data).attr('data','1');
-                $(data).html('Hiển thị <span class="pull-right badge bg-red">OFF</span>');
+                $(data).html('Hiển thị ngoài trang chủ <span class="pull-right badge bg-red">OFF</span>');
               }else{
                 $(data).attr('data','0'); 
-                $(data).html('Hiển thị <span class="pull-right badge bg-blue">ON</span>');
+                $(data).html('Hiển thị ngoài trang chủ <span class="pull-right badge bg-blue">ON</span>');
+              }
+           });
+      }
+      function turn_parent_menu(data){
+        var id = $(data).attr('value');
+        var pick = $(data).attr('data');
+          $.get('{{URL::asset("admin/category/menu?id=")}}'+id+'&pick='+pick,function(value){
+              if(pick == 0){
+                $(data).attr('data','1');
+                $(data).html('Hiển thị trên menu ngang<span class="pull-right badge bg-red">OFF</span>');
+              }else{
+                $(data).attr('data','0'); 
+                $(data).html('Hiển thị trên menu ngang<span class="pull-right badge bg-blue">ON</span>');
               }
            });
       }

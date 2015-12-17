@@ -39,7 +39,6 @@
 <!--                             <li><a href="#"><img class="icon-menu" alt="Funky roots" src="public/front/assets/data/12.png">Electronics</a></li>
  -->                           
                         </ul>
-                        <div class="all-category"><span class="open-cate">All Categories</span></div>
                     </div>
                 </div>
                 </div>
@@ -152,13 +151,13 @@
                         <ul class="products-block">
                             <li>
                                 <div class="products-block-left">
-                                    <a href="{{URL::to('tin-tuc/'.$new[0]->id)}}">
+                                    <a href="{{URL::route('news-front', [$new[0]->alias,$new[0]->id])}}">
                                         <img src="{{URL::to('public/upload/image/'.$new[0]->image)}}" alt="SPECIAL PRODUCTS">
                                     </a>
                                 </div>
                                 <div class="products-block-right">
                                     <p class="product-name">
-                                        <a href="{{URL::to('tin-tuc/'.$new[0]->id)}}">{{$new[0]->title}}</a>
+                                        <a href="{{URL::route('news-front', [$new[0]->alias,$new[0]->id])}}">{{$new[0]->title}}</a>
                                     </p>
                                 </div>
                             </li>

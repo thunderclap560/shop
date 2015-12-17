@@ -160,5 +160,18 @@ class CategoryController extends BaseController {
 		
 	}
 
+	public function getMenu(){
+		$this->layout->content = false;
+		$category = Category::find($_GET['id']);
+		if($_GET['pick'] == 0){
+			$category->menu = 1;
+			$category->save();
+		}else{
+			$category->menu = 0;
+			$category->save();
+		}		
+		
+	}
+
 
 }

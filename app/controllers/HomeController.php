@@ -9,6 +9,7 @@ class HomeController extends BaseController {
 	public $slide_footer;
 	public $news;
     public $page;
+    public $best;
 	
 	public function __construct(){
     	$this->config = Configs::find(1);
@@ -17,7 +18,8 @@ class HomeController extends BaseController {
     	$this->category = [''=>'Tất cả'] + DB::table('categories')->where('parent_id','!=',0)->lists('name','id');
     	$mainCategories = Category::where('parent_id', 0)->get();
 		$this->menu_home = $this->getAllCategories($mainCategories);
-		$this->menu = Category::remember(360)->where('parent_id','!=', 0)->where('pick',1)->get();
+		$this->best = Category::remember(360)->where('parent_id','!=', 0)->where('pick',1)->get();
+        $this->menu = $this->menu_home ;
 		$this->news = News::all();
         $this->page = Page::all();
         // Event::listen('illuminate.query', function( $query ) {
@@ -59,7 +61,7 @@ class HomeController extends BaseController {
     }
 
     public function getBlog(){
-        $data = News::paginate(1);
+        $data = News::paginate(10);
         $popular = News::take(5)->orderBy('view', 'desc')->get();
         $ads = Banners::where('parent_id','!=','0')->get();
         return View::make('blog')->with([
@@ -75,6 +77,7 @@ class HomeController extends BaseController {
             'page'=>$this->page,
             'ads'=>$ads,
             'popular'=>$popular,
+            'best'=>$this->best,
             ]); 
     }
     public function about($slug=null,$id = null){
@@ -91,7 +94,8 @@ class HomeController extends BaseController {
             'title'=>$data->name,
             'desc'=>$data->name,
             'page'=>$this->page,
-            'all'=>$all
+            'all'=>$all,
+            'best'=>$this->best,
             ]); 
     }
 
@@ -117,7 +121,8 @@ class HomeController extends BaseController {
             'desc'=>$desc,
             'popular'=>$popular,
             'featured'=>$featured,
-            'page'=>$this->page
+            'page'=>$this->page,
+            'best'=>$this->best,
             ]);    
     }
 
@@ -154,12 +159,12 @@ class HomeController extends BaseController {
             }
         $m++;
         }
-        $perPage = 2;
+        $perPage = 5;
         $currentPage = Input::get('page') - 1;
         $pagedData = array_slice($temp, $currentPage * $perPage, $perPage);
         $data = Paginator::make($pagedData, count($temp), $perPage);
         }else{
-        $data = Product::remember(360)->where('category_id',$id)->paginate(2);
+        $data = Product::remember(360)->where('category_id',$id)->paginate(5);
         }
         return View::make('category')->with([
             'config'=> $this->config,
@@ -175,22 +180,23 @@ class HomeController extends BaseController {
             'ads'=>$ads,
             'cate'=>$categoryName,
             'new'=>$new,
-            'page'=>$this->page
+            'page'=>$this->page,
+            'best'=>$this->best,
             ]);                    
     }
 
 
     public function getTimKiem(){
-        $latest = Product::orderBy('id','desc')->get();
+        $latest = Product::orderBy('id','desc')->take(5)->get();
         $ads = Banners::where('parent_id','!=','0')->get(); 
         $new = News::take(1)->get();
         if(isset($_GET['category_id']) && $_GET['category_id'] != 0) {
             $category_id = $_GET['category_id'];
             if(isset($_GET['keyword'])){
                 $key = $_GET['keyword']; 
-                $data = Product::where('category_id',$category_id)->where('name', 'LIKE', '%'. $key.'%')->paginate(2);
+                $data = Product::where('category_id',$category_id)->where('name', 'LIKE', '%'. $key.'%')->paginate(10);
             }else{
-                $data = Product::where('category_id',$category_id)->paginate(2);
+                $data = Product::where('category_id',$category_id)->paginate(10);
             }
         $category  = Category::find($category_id);
         return View::make('search')->with([
@@ -206,16 +212,17 @@ class HomeController extends BaseController {
             'ads'=>$ads,
             'data'=>$data->appends(Input::except('page')),
             'new'=>$new,
-            'page'=>$this->page
+            'page'=>$this->page,
+            'best'=>$this->best,
             ]);                    
         }else{
             if(isset($_GET['keyword'])){
                 $key = $_GET['keyword']; 
                 $search = 'Tìm kiếm với từ khóa ' .$key;
-                $data = Product::where('name', 'LIKE', '%'. $key.'%')->paginate(2);
+                $data = Product::where('name', 'LIKE', '%'. $key.'%')->paginate(10);
             }else{
                  $search = 'Không có dữ liệu';
-                $data = Product::paginate(2);
+                $data = Product::paginate(10);
             }
          return View::make('search')->with([
             'config'=> $this->config,
@@ -230,7 +237,8 @@ class HomeController extends BaseController {
             'ads'=>$ads,
             'data'=>$data->appends(Input::except('page')),
             'new'=>$new,
-            'page'=>$this->page
+            'page'=>$this->page,
+            'best'=>$this->best,
             ]);  
         }
         
@@ -277,7 +285,8 @@ class HomeController extends BaseController {
             'latest'=>$latest,
             'data'=>$data,
             'profile'=> $profile,
-            'page'=>$this->page
+            'page'=>$this->page,
+            'best'=>$this->best,
             ]);
     }
 
@@ -296,6 +305,7 @@ class HomeController extends BaseController {
             $subArr['icon'] = $category->icon;
             $subArr['color'] = $category->color;
             $subArr['pick'] = $category->pick;
+            $subArr['menu'] = $category->menu;
             $subCategories = Category::with('products','products_best_view','products_order_news')->where('parent_id', '=', $category->id)->get();
             if (!$subCategories->isEmpty()) {
                 $result = $this->getAllCategories($subCategories);
@@ -321,7 +331,8 @@ class HomeController extends BaseController {
 			'slide_footer'=>$this->slide_footer,
 			'new'=>$this->news,
             'data_adver'=>$data,
-            'page'=>$this->page
+            'page'=>$this->page,
+            'best'=>$this->best,
 			]);
 	}
 
@@ -363,7 +374,8 @@ class HomeController extends BaseController {
             'ads'=>$ads,
             'comment'=>$comment,
             'new'=>$new,
-            'page'=>$this->page
+            'page'=>$this->page,
+            'best'=>$this->best,
             ]);
     }
     public function getCart(){
@@ -529,7 +541,8 @@ class HomeController extends BaseController {
             'product'=>$product,
             'title'=>'Giỏ hàng của bạn',
             'data_coupon'=>$data_coupon,
-            'page'=>$this->page
+            'page'=>$this->page,
+            'best'=>$this->best,
             ]);
     }
     public function getOrder(){
@@ -563,13 +576,14 @@ class HomeController extends BaseController {
             'title'=>'Thanh toán',
             'product'=>$product,
             'data_coupon'=>$data_coupon,
-            'page'=>$this->page
+            'page'=>$this->page,
+            'best'=>$this->best,
             ]);
     }
     public function getWishList(){
        //Session::forget('favorite');
         $ads = Banners::where('parent_id','!=','0')->get();
-        $latest = Product::orderBy('id','desc')->get();
+        $latest = Product::orderBy('id','desc')->take(5)->get();
         $product = Session::get('favorite');
         $new = News::take(1)->get();
         $tmp = array();
@@ -591,7 +605,8 @@ class HomeController extends BaseController {
             'latest'=>$latest,
             'data'=>$tmp,
             'new'=>$new,
-            'page'=>$this->page
+            'page'=>$this->page,
+            'best'=>$this->best,
             ]);
     }
     public function getLogin(){
@@ -602,7 +617,8 @@ class HomeController extends BaseController {
             'menu'=>$this->menu,
             'slide_footer'=>$this->slide_footer,
             'title'=>'Đăng nhập tài khoản',
-            'page'=>$this->page
+            'page'=>$this->page,
+            'best'=>$this->best,
             ]);
     }
     public function getRegister(){
@@ -613,7 +629,8 @@ class HomeController extends BaseController {
             'menu'=>$this->menu,
             'slide_footer'=>$this->slide_footer,
             'title'=>'Đăng kí tài khoản',
-            'page'=>$this->page
+            'page'=>$this->page,
+            'best'=>$this->best,
             ]);
     }
     public function postOrderAddSpecial(){

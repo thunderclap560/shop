@@ -13,7 +13,6 @@
                         <ul class="vertical-menu-list">
                         	<style>
 								.icon-menu-next>i{
-									padding-top:10px;
 									width: 30px;
 								}
                         	</style>
