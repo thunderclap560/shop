@@ -225,15 +225,23 @@
                                                 
                                         <?php  } } }} ?>
                                    </div>
-                                   
                                    <div class="box-right">
                                        <ul class="product-list row">
-                                        <?php 
-                                            if(isset($v_menu_cate['sub'])) {
-                                            foreach($v_menu_cate['sub'] as $k_sub => $v_sub){ ?>
-                                               <?php if(isset($v_sub['products_best_view'])){
-                                                foreach($v_sub['products_best_view'] as $k_product_menu){
-                                                ?>
+            <?php 
+                    if(isset($v_menu_cate['sub'])) 
+                    {
+                        $tmp_arr_view = array();
+                        echo '<div class="more-view">'; 
+                        foreach($v_menu_cate['sub'] as $k_sub => $v_sub)
+                        {
+                            if(isset($v_sub['products_best_view']))
+                            {
+                                $limit_view = 0;
+                                foreach($v_sub['products_best_view'] as $k_product_menu)
+                                {
+                                    if($limit_view < 5)
+                                    {                                   
+            ?>
                                                 <li class="col-sm-4">
                                                     <div class="right-block">
                                                         <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
@@ -263,7 +271,21 @@
                                                         @endif
                                                     </div>
                                                 </li>
-                                            <?php  }}} }?>        
+        <?php                   
+                                    }
+                                    $limit_view++;
+                                    $tmp_arr_view[] =  $limit_view;
+
+                                }
+                            }
+                        }
+                        echo '</div>';
+                        if(count($tmp_arr_view) > 5)
+                            {    
+                                echo '<input data="'.$v_menu_cate['id'].'" count = "'.count($tmp_arr_view).'" num="5" style="width:97%;padding:5px 5px 5px 5px;margin:5px 0px 5px 10px" type="button" class="button load-more-view" value="Xem Thêm">'; 
+                            }  
+                    }
+                    ?>        
                                        </ul>
                                    </div>
                                 </div>
@@ -354,13 +376,23 @@
                                    
                                    <div class="box-right">
                                        <ul class="product-list row">
-                                        <?php 
-                                            if(isset($v_menu_cate['sub'])) {
-                                            foreach($v_menu_cate['sub'] as $k_sub => $v_sub){ ?>
-                                               <?php if(isset($v_sub['product'])){
-                                                foreach($v_sub['product'] as $k_product_menu){
-                                                    if($k_product_menu->sales == 1){
-                                                ?>
+                <?php 
+                        if(isset($v_menu_cate['sub']))
+                        {
+                            $tmp_arr_sales = array();
+                            echo '<div class="more-sales">'; 
+                            foreach($v_menu_cate['sub'] as $k_sub => $v_sub)
+                            { 
+                                if(isset($v_sub['product']))
+                                {
+                                    $limit_sales = 0;
+                                    foreach($v_sub['product'] as $k_product_menu)
+                                    {
+                                        if($k_product_menu->sales == 1)
+                                        {
+                                            if($limit_sales < 5)
+                                            {
+                ?>
                                                 <li class="col-sm-4">
                                                     <div class="right-block">
                                                         <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
@@ -390,7 +422,20 @@
                                                         @endif
                                                     </div>
                                                 </li>
-                                            <?php  }}}} }?>        
+                <?php                       }
+                                        $limit_sales++;
+                                        $tmp_arr_sales[] =  $limit_sales;
+                                        }
+                                    }
+                                }
+                            }
+                            echo '</div>';
+                            if(count($tmp_arr_sales) > 5)
+                            {    
+                                echo '<input data="'.$v_menu_cate['id'].'" count = "'.count($tmp_arr_sales).'" num="5" style="width:97%;padding:5px 5px 5px 5px;margin:5px 0px 5px 10px" type="button" class="button load-more-sales" value="Xem Thêm">'; 
+                            } 
+                        }
+                ?>        
                                        </ul>
                                    </div>
                                 </div>
@@ -480,58 +525,72 @@
                                                 
                                         <?php  } } }} ?>
                                    </div>
-                                   <div class="box-right">
-                                       <ul class="product-list row">
-                                        <?php 
-                                if(isset($v_menu_cate['sub'])) {
-                                    foreach($v_menu_cate['sub'] as $k_sub => $v_sub){ ?>
-                                <?php if(isset($v_sub['products_order_news']))
+           <div class="box-right">
+               <ul class="product-list row">
+                    <?php if(isset($v_menu_cate['sub'])) 
+                    {
+                        $tmp_arr_news = array();
+                        echo '<div class="more-news">'; 
+                        foreach($v_menu_cate['sub'] as $k_sub => $v_sub)
+                        { 
+                            if(isset($v_sub['products_order_news']))
                                 {
-                                            foreach($v_sub['products_order_news'] as $k_product_menu)
+                                   $limit_news = 0;
+                                    foreach($v_sub['products_order_news'] as $k_product_menu)
+                                        {
+                                            if($limit_news < 5)
                                             {
-                                                ?>
-                                                <li class="col-sm-4">
-                                                    <div class="right-block">
-                                                        <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
-                                                        <div class="content_price">
-                                                                <span class="price product-price">
-                                                                @if($k_product_menu->price_sales == null)
+
+                    ?>
+                                            <li class="col-sm-4">
+                                                <div class="right-block">
+                                                    <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><?php echo $k_product_menu->name;?></a></h5>
+                                                    <div class="content_price">
+                                                            <span class="price product-price">
+                                                            @if($k_product_menu->price_sales == null)
+                                                                {{number_format($k_product_menu->price)}}
+                                                                @else 
+                                                                 {{number_format($k_product_menu->price_sales)}}
+                                                                @endif
+                                                             VNĐ
+                                                            </span>
+                                                            <span class="price old-price">
+                                                                @if($k_product_menu->price_sales != null)
                                                                     {{number_format($k_product_menu->price)}}
-                                                                    @else 
-                                                                     {{number_format($k_product_menu->price_sales)}}
-                                                                    @endif
-                                                                 VNĐ
-                                                                </span>
-                                                                <span class="price old-price">
-                                                                    @if($k_product_menu->price_sales != null)
-                                                                        {{number_format($k_product_menu->price)}}
-                                                                    @endif
-                                                                </span>
-                                                        </div>
+                                                                @endif
+                                                            </span>
                                                     </div>
-                                                    <div class="left-block">
-                                                        <a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
-                                                        <!-- <div class="quick-view">
-                                                                <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                                <a title="Add to compare" class="compare" href="#"></a>
-                                                                <a title="Quick view" class="search" href="#"></a>
-                                                        </div> -->
-                                                        <div class="add-to-cart">
-                                                            <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Chi tiết sản phẩm</a>
-                                                        </div>
-                                                        @if($k_product_menu->price_sales != null)
-                                                        <div class="price-percent-reduction2">- {{number_format((($k_product_menu->price - $k_product_menu->price_sales)/$k_product_menu->price)*100)}}% OFF</div>
-                                                        @endif
+                                                </div>
+                                                <div class="left-block">
+                                                    <a href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}"><img class="img-responsive" alt="product" src="{{URL::asset('public/upload/image/'.$k_product_menu->image)}}" /></a>
+                                                    <!-- <div class="quick-view">
+                                                            <a title="Add to my wishlist" class="heart" href="#"></a>
+                                                            <a title="Add to compare" class="compare" href="#"></a>
+                                                            <a title="Quick view" class="search" href="#"></a>
+                                                    </div> -->
+                                                    <div class="add-to-cart">
+                                                        <a title="Add to Cart" href="{{URL::route('product-front', [$k_product_menu->alias,$k_product_menu->id])}}">Chi tiết sản phẩm</a>
                                                     </div>
-                                                </li>
-                                            <?php  
+                                                    @if($k_product_menu->price_sales != null)
+                                                    <div class="price-percent-reduction2">- {{number_format((($k_product_menu->price - $k_product_menu->price_sales)/$k_product_menu->price)*100)}}% OFF</div>
+                                                    @endif
+                                                </div>
+                                            </li>
+                    <?php  
                                             }
+                                            $limit_news++;
+                                            $tmp_arr_news[] = $limit_news;
                                         }
-                                    }
                                 }
-                                ?>        
-                                       </ul>
-                                   </div>
+                        }
+                        echo '</div>';
+                        if(count($tmp_arr_news) > 5)
+                        {    
+                            echo '<input data="'.$v_menu_cate['id'].'" count = "'.count($tmp_arr_news).'" num="5" style="width:97%;padding:5px 5px 5px 5px;margin:5px 0px 5px 10px" type="button" class="button load-more-news" value="Xem Thêm">'; 
+                        }
+                    }?>        
+               </ul>
+           </div>
                                 </div>
                                 <!-- News-->
                                 <!-- Featured-->
@@ -596,9 +655,6 @@
                                                                         {{number_format($child->price)}}
                                                                     @endif
                                                                 </span>
-                                                            <!-- <span class="product-price">$38.95</span>
-                                                            <span class="old-price">$52.00</span>
-                                                            <span  class="sale-price">-15%</span> -->
                                                         </div>
                                                         <div class="product-desc">
                                                             {{word_limiter($child->short_detail,15)}}
@@ -636,7 +692,7 @@
                                         {
                                            if($limit_feature < 5)
                                            { 
-                                                if($k_product_menu->featured == 0)
+                                                if($k_product_menu->feature == 1 && $k_product_menu->pick == 1)
                                                 {?>
                                                 <li class="col-sm-4">
                                                     <div class="right-block">
@@ -673,21 +729,18 @@
                                                 }
                                             }
                                                 $limit_feature++;
-                                                if($limit_feature <= 5)
-                                                {
-                                                    $tmp_arr_featured[] = $limit_feature;
-                                                }
+                                                $tmp_arr_featured[] = $limit_feature;
+        
 
                                             }
                                         }
                                     }
-                        echo '</div>';           
+                        echo '</div>';
                                 if(count($tmp_arr_featured) > 5){    
                                     echo '<input data="'.$v_menu_cate['id'].'" count = "'.count($tmp_arr_featured).'" num="5" style="width:97%;padding:5px 5px 5px 5px;margin:5px 0px 5px 10px" type="button" class="button load-more-featured" value="Xem Thêm">'; 
                                 }
                                 }
-                            ?>
-                                               
+                            ?>              
                                        </ul>
                                    </div>
                                 </div>

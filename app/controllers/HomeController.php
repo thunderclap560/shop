@@ -33,6 +33,30 @@ class HomeController extends BaseController {
         })->limit(5)->offset($_POST['num'])->orderBy('id', 'DESC')->get();
         return View::make('loadmore.featured',['data'=>$data,'cate'=>$_POST['category_id'],'num'=>$_POST['num']]);
     }
+    public function news_loadmore(){
+        $data = Product::whereIn('category_id', function($query){
+        $query->select('id')
+        ->from(with(new Category)->getTable())
+        ->where('parent_id', $_POST['category_id']);
+        })->limit(5)->offset($_POST['num'])->orderBy('id', 'DESC')->get();
+        return View::make('loadmore.news',['data'=>$data,'cate'=>$_POST['category_id'],'num'=>$_POST['num']]);
+    }
+    public function sales_loadmore(){
+        $data = Product::whereIn('category_id', function($query){
+        $query->select('id')
+        ->from(with(new Category)->getTable())
+        ->where('parent_id', $_POST['category_id']);
+        })->limit(5)->offset($_POST['num'])->orderBy('id', 'DESC')->get();
+        return View::make('loadmore.sales',['data'=>$data,'cate'=>$_POST['category_id'],'num'=>$_POST['num']]);
+    }
+    public function view_loadmore(){
+        $data = Product::whereIn('category_id', function($query){
+        $query->select('id')
+        ->from(with(new Category)->getTable())
+        ->where('parent_id', $_POST['category_id']);
+        })->limit(5)->offset($_POST['num'])->orderBy('view', 'DESC')->get();
+        return View::make('loadmore.view',['data'=>$data,'cate'=>$_POST['category_id'],'num'=>$_POST['num']]);
+    }
 
     public function getBlog(){
         $data = News::paginate(1);

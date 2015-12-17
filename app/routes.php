@@ -19,7 +19,10 @@ Route::controller('users', 'UsersController');
 Route::get('/account',['before'=>'filter.auth','uses'=>'HomeController@account']);
 Route::get('/tin-tuc/{alias}/{id}',['as'=>'news-front','uses'=>'HomeController@news']);
 
-Route::post('load-more-featured',array('uses'=>'HomeController@featured'));    
+Route::post('load-more-featured',array('uses'=>'HomeController@featured'));
+Route::post('load-more-news',array('uses'=>'HomeController@news_loadmore'));
+Route::post('load-more-sales',array('uses'=>'HomeController@sales_loadmore'));
+Route::post('load-more-view',array('uses'=>'HomeController@view_loadmore'));           
 
 Route::get('/san-pham/{alias}/{id}',['as'=>'product-front','uses'=>'HomeController@view']);
 Route::get('/ve-chung-toi/{alias}/{id}',['as'=>'about','uses'=>'HomeController@about']);

@@ -1,5 +1,5 @@
 @foreach($data as $k_product_featured)
-@if($k_product_featured->feature == 1 && $k_product_featured->pick == 1)
+@if($k_product_featured->pick == 1)
   <li class="col-sm-4">
     <div class="right-block">
         <h5 class="product-name"><a href="{{URL::route('product-front', [$k_product_featured->alias,$k_product_featured->id])}}"><?php echo $k_product_featured->name;?></a></h5>
